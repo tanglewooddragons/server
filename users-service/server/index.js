@@ -12,9 +12,9 @@ const serve = ({
   updateUser,
   createUser,
 }) => {
-  router.get('/users/user/:id', getUser)
-  router.put('/users/user/:id', updateUser)
-  router.post('/users/user/create', createUser)
+  router.get('/users/:id', getUser)
+  router.put('/users/:id', updateUser)
+  router.post('/users/create', createUser)
 
   app 
     .use(bodyParser())
