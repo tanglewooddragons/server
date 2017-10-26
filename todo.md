@@ -1,0 +1,2 @@
+- Add .env.example
+- Create env files for swarm config

@@ -1,0 +1,18 @@
+{
+  "development": [
+    {
+      "route": "/test-server",
+      "target": "http://test-server:8999"
+    },
+    {
+      "route": "/users",
+      "target": "http://users-service:9000"
+    }
+  ],
+  "staging": [
+    {
+      "route": "/users",
+      "target": "http://users-service"
+    }
+  ]
+}

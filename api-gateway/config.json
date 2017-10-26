@@ -1,0 +1,11 @@
+{
+  "development": {
+    "client": "pg",
+    "connection": {
+      "host": "users-db",
+      "user": "tanglewood",
+      "password": "931DzmN@95aU",
+      "database": "users"
+    }
+  }
+}

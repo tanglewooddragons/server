@@ -1,0 +1,11 @@
+{
+  "development": {
+    "host": "users-db",
+    "dialect": "postgres"
+  },
+  "test": {
+    "host": "localhost",
+    "dialect": "postgres",
+    "logging": false
+  }
+}
