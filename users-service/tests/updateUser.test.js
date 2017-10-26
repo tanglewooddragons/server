@@ -30,19 +30,20 @@ describe('updateUser', async () => {
     }
 
     const result = await updateUser(data)
-    const affectedRowsNum = result.body[0]
-    const affectedRows = result.body[1]
 
-    const username = affectedRows[0].username
-
-    assert.equal(affectedRowsNum, 1, 'It changed wrong amount of rows')
-    assert.equal(username, data.request.body.username, 'It didnt change the username')
+    assert.equal(result.body.username, data.request.body.username, 'It didnt change the username')
   })
 
   it('Does NOT allow to update secured fields', async () => {
+    const user = await User.create({
+      username: 'John',
+      email: 'John@Doe.com',
+      password: '123'
+    })
+    
     const data = {
       params: {
-        id: 1
+        id: user.id
       },
       request: {
         body: {
@@ -52,11 +53,7 @@ describe('updateUser', async () => {
     }
 
     const result = await updateUser(data)
-
-    const afftectedNumber = result.body[0]
-    const affectedRows = result.body[1]
-
-    assert.equal(afftectedNumber, 0, 'It updates fields')
-    assert.equal(affectedRows.length, 0, 'It updates fields')
+    
+    assert.equal(result.body.role, 'user', 'It allowed to change secured field')
   })
 })

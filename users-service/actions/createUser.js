@@ -26,7 +26,7 @@ module.exports = (User) => async (ctx) => {
     })
     .spread((user, created) => {
       if (!created) { 
-        ctx.throw(400, 'Email is already taken!')
+        ctx.throw(409, 'Email is already taken!')
         return
       }
 

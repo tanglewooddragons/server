@@ -23,9 +23,11 @@ module.exports = (User) => async (ctx) => {
     },
     fields: [ 'username', 'password', 'avatar', 'backgroundPicture', 'country', 'dataOfBirth', 'bio' ],
     returning: true,
+    raw: true
   })
     .then((updated) => {
-      ctx.body = updated
+      // updated is an array -> [affectedRows, [updatedUser]]
+      ctx.body = updated[1][0]
       return ctx
     })
     .catch((e) => {
