@@ -50,7 +50,7 @@ describe('getUserDragons', async () => {
 
     const result = await getUserDragons(request)
 
-    assert.equal(result.length, 2, 'It returns incorrect amount of dragons')
-    assert.equal(result[0].ownerId, user.id, 'It sets incorrect owner')
+    assert.equal(result.body.length, 2, 'It returns incorrect amount of dragons')
+    assert.equal(result.body[0].ownerId, user.id, 'It sets incorrect owner')
   })
 })

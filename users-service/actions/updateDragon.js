@@ -16,13 +16,11 @@ module.exports = (Dragon) => async (ctx) => {
       plain: true,
     })
     .then((updated) => {
-      ctx.status = 200
       ctx.body = updated
       return ctx
     })
     .catch((e) => {
-      ctx.status = 400
-      ctx.body = 'Error updating dragon!'
+      ctx.throw(400, 'Error updating dragon')
       return ctx
     })
 }

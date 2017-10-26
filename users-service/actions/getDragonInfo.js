@@ -3,12 +3,11 @@ module.exports = (Dragon) => async (ctx) => {
 
   const dragon = await Dragon.findById(id)
 
-  if (dragon) {
-    ctx.body = dragon
+  if (!dragon) {
+    ctx.throw(400, 'Dragon not found')
     return ctx
   }
 
-  ctx.status = 400
-  ctx.body = 'Dragon not found'
+  ctx.body = dragon
   return ctx
-}
+ }

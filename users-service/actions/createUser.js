@@ -3,7 +3,7 @@ const hash = require('../utils/hash')
 
 module.exports = (User) => async (ctx) => {
   const body = ctx.request.body
-  
+
   try {
     await validate(body, 'user')
   } catch (e) { 

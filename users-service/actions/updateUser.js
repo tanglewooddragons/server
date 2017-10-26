@@ -25,14 +25,11 @@ module.exports = (User) => async (ctx) => {
     returning: true,
   })
     .then((updated) => {
-      ctx.status = 200
       ctx.body = updated
       return ctx
     })
     .catch((e) => {
-      ctx.status = 400
-      console.log(e)
-      ctx.body = 'Error updating user!'
+      ctx.throw(400, 'Error updating user')
       return ctx
     })
 }

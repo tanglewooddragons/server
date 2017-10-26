@@ -23,19 +23,27 @@ describe('getUser', async () => {
 
     const data = {
       params: {
-        id: newUser.id
+        id: newUser.id 
       }
     }
 
-    const result = await getUser(data)
+    const result = await getUser(data) 
 
-    assert.equal(result.id, data.params.id, 'Returns wrong id')
-    assert.equal(result.email, user.email, 'Returns wrong email')
+    assert.equal(result.body.id, data.params.id, 'Returns wrong id')
+    assert.equal(result.body.email, user.email, 'Returns wrong email')
   })
 
   it('Does NOT return user password', async () => {
-    const result = await getUser({ params: { id: 1 } })
+    const user = {
+      username: 'Alice',
+      email: 'Alice@wonderland.co',
+      password: 'abc'
+    }
 
-    assert.equal(result.password, undefined, 'It returns user password')
+    const newUser = await User.create(user)
+
+    const result = await getUser({ params: { id: newUser.id } })
+
+    assert.equal(result.body.password, undefined, 'It returns user password')
   })
 })

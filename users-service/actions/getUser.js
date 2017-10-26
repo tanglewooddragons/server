@@ -3,12 +3,15 @@ module.exports = (User, Dragon) => async (ctx) => {
 
   const user = await User.findById(id, {
     attributes: { exclude: ['password'] },
-    include: [{ model: Dragon, as: 'dragons' }]
+    include: [{ model: Dragon, as: 'dragons' }],
+    raw: true
   })
 
-  if (user) {
-    return ctx.body = user
+  if (!user) {
+    ctx.throw(400, 'User not found')
+    return ctx
   }
-
-  return ctx.body = 'User not found'
+  
+  ctx.body = user
+  return ctx
 }

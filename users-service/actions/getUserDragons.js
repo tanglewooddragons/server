@@ -5,12 +5,15 @@ module.exports = (Dragon) => async (ctx) => {
     .findAll({
       where: {
         ownerId: ownerId
-      }
+      },
+      raw: true
     })
 
-  if (dragons) {
-    return ctx.body = dragons
+  if (!dragons) {
+    ctx.body = []
+    return ctx
   }
 
-  return ctx.body = 'Dragons not found'
+  ctx.body = dragons
+  return ctx
 }
