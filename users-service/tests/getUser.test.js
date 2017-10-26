@@ -28,7 +28,7 @@ describe('getUser', async () => {
     }
 
     const result = await getUser(data) 
-
+    
     assert.equal(result.body.id, data.params.id, 'Returns wrong id')
     assert.equal(result.body.email, user.email, 'Returns wrong email')
   })

@@ -22,7 +22,7 @@ const User = db.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
   },
-  registrasionDate: {
+  registrationDate: {
     type: Sequelize.DATE,
     defaultValue: Sequelize.NOW,
   },

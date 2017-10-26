@@ -8,6 +8,6 @@ module.exports = (Dragon) => async (ctx) => {
     return ctx
   }
 
-  ctx.body = dragon
+  ctx.body = dragon.toJSON()
   return ctx
  }
