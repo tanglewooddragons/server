@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('./')
+const hash = require('../utils/hash')
 
 const Dragon = require('./Dragon')
 
@@ -58,6 +59,11 @@ const User = db.define('user', {
       "items": []
     },
   },
+})
+
+User.beforeCreate(async (user, options) => {
+  user.password = await hash(user.password)
+  return
 })
 
 User.hasMany(Dragon, { as: 'dragons', foreignKey: 'ownerId' })

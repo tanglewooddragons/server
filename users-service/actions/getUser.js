@@ -1,4 +1,7 @@
-module.exports = (User, Dragon) => async (ctx) => {
+const User = require('../db/User')
+const Dragon = require('../db/Dragon')
+
+module.exports = async (ctx) => {
   const id = ctx.params.id
 
   const user = await User.findById(id, {

@@ -1,6 +1,7 @@
+const User = require('../db/User')
 const hash = require('../utils/hash')
 
-module.exports = (User) => async (ctx) => {
+module.exports = async (ctx) => {
   const id = ctx.params.id
   const update = ctx.request.body
 
@@ -9,7 +10,7 @@ module.exports = (User) => async (ctx) => {
   }
 
   if (update.password) {
-    const password = hash(body.password)
+    const password = await hash(body.password)
 
     update = {
       ...update,

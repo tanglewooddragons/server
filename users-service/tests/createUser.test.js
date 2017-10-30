@@ -2,16 +2,15 @@ const { assert } = require('chai')
 const sinon = require('sinon')
 
 const sequelize = require('../db')
-const { makeCreateUser } = require('../actions')
+const { createUser } = require('../actions')
 const User = require('../db/User')
 const Dragon = require('../db/Dragon')
 
-beforeEach(async () => {
+before(async () => {
   await User.sync({ force: true })
-  createUser = makeCreateUser(User, Dragon)
 })
 
-describe('createUser', async () => {
+describe('#createUser', async () => {
   it('Returns an error when invalid props are provided', async () => {
     const data = {
       request: {
@@ -48,7 +47,7 @@ describe('createUser', async () => {
     const response = await createUser(data)
     
     assert.equal(data.throw.calledOnce, true, 'It wwa not called')
-    assert.equal(data.throw.calledWith(400), true, 'It retuns wrong status code')
+    assert.equal(data.throw.calledWith(409), true, 'It retuns wrong status code')
   })
 
   it('Creates user when all props all correct', async () => {

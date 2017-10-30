@@ -1,17 +1,16 @@
 const { assert } = require('chai')
 
 const sequelize = require('../db')
-const { makeGetUserDragons } = require('../actions')
+const { getUserDragons } = require('../actions')
 const User = require('../db/User')
 const Dragon = require('../db/Dragon')
 
-beforeEach(async () => {
+before(async () => {
   await User.sync({ force: true })
   await Dragon.sync({ force: true })
-  getUserDragons = makeGetUserDragons(Dragon)
 })
 
-describe('getUserDragons', async () => {
+describe('#getUserDragons', async () => {
   it('Returns all user dragons', async () => {
     const user = await User.create({
       username: 'Jerry',

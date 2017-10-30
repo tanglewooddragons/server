@@ -1,15 +1,14 @@
 const { assert } = require('chai')
 
 const sequelize = require('../db')
-const { makeUpdateUser } = require('../actions')
+const { updateUser } = require('../actions')
 const User = require('../db/User')
 
-beforeEach(async () => {
+before(async () => {
   await User.sync({ force: true })
-  updateUser = makeUpdateUser(User)
 })
 
-describe('updateUser', async () => {
+describe('#updateUser', async () => {
   it('Updates data correcly', async () => {
     const user = await User.create({
       username: 'John',
@@ -37,7 +36,7 @@ describe('updateUser', async () => {
   it('Does NOT allow to update secured fields', async () => {
     const user = await User.create({
       username: 'John',
-      email: 'John@Doe.com',
+      email: 'Johnny@Doe.com',
       password: '123'
     })
     

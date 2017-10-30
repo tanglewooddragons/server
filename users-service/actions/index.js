@@ -1,16 +1,19 @@
-const makeGetUser = require('./getUser')
-const makeCreateUser = require('./createUser')
-const makeUpdateUser = require('./updateUser')
+const getUser = require('./getUser')
+const createUser = require('./createUser')
+const updateUser = require('./updateUser')
 
-const makeGetDragonInfo = require('./getDragonInfo')
-const makeUpdateDragon = require('./updateDragon')
-const makeGetUserDragons = require('./getUserDragons')
+const getDragonInfo = require('./getDragonInfo')
+const updateDragon = require('./updateDragon')
+const getUserDragons = require('./getUserDragons')
+
+const loginUser = require('./loginUser')
 
 module.exports = {
-  makeGetUser,
-  makeCreateUser,
-  makeUpdateUser,
-  makeGetDragonInfo,
-  makeUpdateDragon,
-  makeGetUserDragons,
+  getUser,
+  createUser,
+  updateUser,
+  getDragonInfo,
+  updateDragon,
+  getUserDragons,
+  loginUser
 }

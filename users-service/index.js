@@ -1,29 +1,37 @@
-const serve = require('./server')
-
-const User = require('./db/User')
-const Dragon = require('./db/Dragon')
-
 const {
-  makeGetUser,
-  makeCreateUser,
-  makeUpdateUser,
-  makeGetDragonInfo,
-  makeUpdateDragon,
-  makeGetUserDragons,
-} = require('./actions')
-
-const getUser = makeGetUser(User, Dragon)
-const createUser = makeCreateUser(User)
-const updateUser = makeUpdateUser(User)
-
-const getDragonInfo = makeGetDragonInfo(Dragon)
-const updateDragon = makeUpdateDragon(Dragon)
-const getUserDragons = makeGetUserDragons(Dragon)
-
-serve({
   getUser,
   createUser,
   updateUser,
-
   getDragonInfo,
-})
+  updateDragon,
+  getUserDragons,
+  loginUser
+} = require('./actions')
+
+const Koa = require('koa')
+const Router = require('koa-router')
+const bodyParser = require('koa-bodyparser')
+
+const app = new Koa()
+const router = new Router()
+
+const port = process.env.PORT || 80
+
+router.get('/users/user/:id', getUser)
+router.put('/users/user/:id', updateUser)
+router.get('/users/dragons', getUserDragons)
+
+router.post('/users/create', createUser)
+router.post('/users/login', loginUser)
+
+router.get('/users/dragon/:id', getDragonInfo)
+router.put('/users/dragon/:id', updateDragon)
+
+app 
+  .use(bodyParser())
+  .use(router.routes())
+  .use(router.allowedMethods())
+
+app.listen(port)
+
+

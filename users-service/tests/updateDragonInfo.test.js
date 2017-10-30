@@ -1,24 +1,24 @@
 const { assert } = require('chai')
 
 const sequelize = require('../db')
-const { makeUpdateDragon } = require('../actions')
+const { updateDragon } = require('../actions')
 const Dragon = require('../db/Dragon')
 
-beforeEach(async () => {
-  await Dragon.sync({ force: true })
-  updateDragon = makeUpdateDragon(Dragon)
-  Dragon.create({
-    name: 'Dinky',
-    gender: 'FEMALE',
-    description: 'update me please'
-  })
+before(async () => {
+  await Dragon.sync({ force: true }) 
 })
 
-describe('updateDragon', async () => {
+describe('#updateDragon', async () => {
   it('Updates data correcly', async () => {
+    const dragon = await Dragon.create({
+      name: 'Dinky',
+      gender: 'FEMALE',
+      description: 'update me please'
+    })
+
     const data = {
       params: {
-        id: 1
+        id: dragon.id
       },
       request: {
         body: {
@@ -34,9 +34,15 @@ describe('updateDragon', async () => {
   })
 
   it('Does NOT allow to update secured fields', async () => {
+    const dragon = await Dragon.create({
+      name: 'Dinky',
+      gender: 'FEMALE',
+      description: 'update me please'
+    })
+    
     const data = {
       params: {
-        id: 1
+        id: dragon.id
       },
       request: {
         body: {
