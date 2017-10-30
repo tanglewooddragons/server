@@ -1,18 +1,14 @@
 {
-  "development": [
-    {
-      "route": "/test-server",
-      "target": "http://test-server:8999"
-    },
-    {
+  "development": {
+    "users-service": {
       "route": "/users",
       "target": "http://users-service:9000"
     }
-  ],
-  "staging": [
-    {
+  },
+  "staging": {
+    "users-service": {
       "route": "/users",
       "target": "http://users-service"
     }
-  ]
+  }
 }
