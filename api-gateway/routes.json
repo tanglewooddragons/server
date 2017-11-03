@@ -10,5 +10,11 @@
       "route": "/users",
       "target": "http://users-service"
     }
+  },
+  "test": {
+    "users-service": {
+      "route": "/users",
+      "target": "http://users-service:9000"
+    }
   }
 }

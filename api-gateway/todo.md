@@ -1,0 +1,4 @@
+- Create db for holding tokens (redis?)
+- Invalidate old token when new one is aquired
+- Add logout which invalidates tokens
+- Write unit tests for tokens
