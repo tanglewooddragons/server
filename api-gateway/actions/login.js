@@ -1,5 +1,10 @@
 const jwt = require('jsonwebtoken')
 const { login } = require('../services/users-service')
+const {
+  getToken,
+  saveToken,
+  removeToken
+} = require('../redis/token')
 
 const loginUser = async (ctx) => {
   const body = ctx.request.body
@@ -10,13 +15,22 @@ const loginUser = async (ctx) => {
     return ctx
   }
 
+  if (await getToken(response.id)) {
+    await removeToken(response.id)
+  }
+
   const token = jwt.sign(
     response,
     process.env.JWT_SECRET,
     {
-      expiresIn: '24h'
+      expiresIn: Date.now() + 60*60*24
     }
   )
+
+  await saveToken(response.id, {
+    token,
+    exp: Date.now() + 60*60*24
+  })
 
   ctx.body = {
     ...response,

@@ -4,6 +4,7 @@ const helmet = require('koa-helmet')
 const proxy = require('koa-proxies')
 const bodyparser = require('koa-bodyparser')
 
+const auth = require('../middleware/auth')
 const jwt = require('../middleware/jwt')
 const guid = require('../middleware/guid')
 const logger = require('../middleware/logger')
@@ -26,7 +27,7 @@ const createProxy = ({ route, target }) => {
   app.use(proxy(route, {
     target,
     changeOrigin: true,
-    logs: true
+    logs: process.env.NODE_ENV !== 'test'
   }))
 }
 
@@ -37,6 +38,7 @@ app
   .use(logger)
   .use(router.routes())
   .use(router.allowedMethods())
+  .use(auth)
   .use(jwt)
 
 Object

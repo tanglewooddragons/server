@@ -14,7 +14,7 @@
   "test": {
     "users-service": {
       "route": "/users",
-      "target": "http://users-service:9000"
+      "target": "http://127.0.0.1:8080"
     }
   }
 }
