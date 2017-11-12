@@ -27,7 +27,20 @@ const createUser = async (body) => {
     .catch(e => ({ statusCode: e.statusCode, error: e.error }))
 }
 
+const deleteUser = async (body) => {
+  const options = {
+    method: 'DELETE',
+    uri: `${usersBaseUri}/user/${body.id}`,
+    body: body.user,
+    json: true
+  }
+
+  return request(options)
+    .catch(e => ({ statusCode: e.statusCode, error: e.error }))
+}
+
 module.exports = {
   login,
-  createUser
+  createUser,
+  deleteUser
 }

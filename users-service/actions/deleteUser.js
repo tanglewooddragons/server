@@ -3,6 +3,11 @@ const User = require('../db/User')
 const deleteUser = async (ctx) => {
   const id = ctx.params.id
 
+  if (id !== ctx.request.body.id) {
+    ctx.throw(401, 'You can only remove your own account!')
+    return
+  }
+
   try {
     const deleted = await User.destroy({
       where: {

@@ -2,6 +2,7 @@ const {
   getUser,
   createUser,
   updateUser,
+  deleteUser,
   getDragonInfo,
   updateDragon,
   getUserDragons,
@@ -19,6 +20,7 @@ const port = process.env.PORT || 80
 
 router.get('/users/user/:id', getUser)
 router.put('/users/user/:id', updateUser)
+router.delete('/users/user/:id', deleteUser)
 router.get('/users/dragons', getUserDragons)
 
 router.post('/users/create', createUser)

@@ -21,6 +21,8 @@ const auth = async (ctx, next) => {
     return
   }
 
+  ctx.state.user = decoded
+
   await next()
 }
 

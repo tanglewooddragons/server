@@ -11,8 +11,7 @@ const loginUser = async (ctx) => {
   const response = await login(body)
 
   if (response.error) {
-    ctx.body = response
-    return ctx
+    ctx.throw(response.statusCode, response.error)
   }
 
   if (await getToken(response.id)) {

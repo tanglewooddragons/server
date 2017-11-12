@@ -11,15 +11,21 @@ const logger = require('../middleware/logger')
 const routes = require('../routes')[process.env.NODE_ENV || 'development']
 const log = require('../util/logger')
 
+// Public links
 const loginUser = require('../actions/login')
 const registerUser = require('../actions/register')
+const deleteUser = require('../actions/delete')
 
 const app = new Koa()
-const router = new Router()
+const public = new Router()
+const private = new Router()
 
 // Auth routes
-router.post('/register', registerUser)
-router.post('/login', loginUser)
+public.post('/register', registerUser)
+public.post('/login', loginUser)
+
+// Private links (require auth)
+private.delete('/delete/:id', deleteUser)
 
 // Proxies
 const createProxy = ({ route, target }) => {
@@ -36,10 +42,20 @@ app
   .use(helmet())
   .use(guid)
   .use(logger)
-  .use(router.routes())
-  .use(router.allowedMethods())
+  .use(public.routes())
+  .use(public.allowedMethods())
   .use(auth)
   .use(jwt)
+  .use(private.routes())
+  .use(private.allowedMethods())
+  .use(async (ctx, next) => {
+    // Attach user to every proxied request
+    ctx.body = {
+      ...ctx.body,
+      user: ctx.state.user
+    }
+    await next()
+  })
 
 Object
   .values(routes)
