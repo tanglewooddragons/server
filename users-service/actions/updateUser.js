@@ -5,6 +5,11 @@ module.exports = async (ctx) => {
   const id = ctx.params.id
   const update = ctx.request.body
 
+  if (id !== ctx.request.body.id) {
+    ctx.throw(401, 'You can only edit your own profile')
+    return
+  }
+
   if (!update) {
     return ctx
   }
