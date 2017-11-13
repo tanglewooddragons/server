@@ -1,7 +1,7 @@
 const User = require('../db/User')
 
 const deleteUser = async (ctx) => {
-  const id = ctx.params.id
+  const id = ctx.params.id || ctx.request.body.id
 
   if (id !== ctx.request.body.id) {
     ctx.throw(401, 'You can only remove your own account!')

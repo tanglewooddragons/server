@@ -1,17 +1,18 @@
 const Sequelize = require('sequelize')
-const db = require('./')
+const uuid = require('uuid/v4')
 
+const db = require('./')
 const User = require('./User')
 
 const Dragon = db.define('dragon', {
   id: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.UUID,
     allowNull: false,
-    autoIncrement: true,
-    primaryKey: true
+    primaryKey: true,
+    defaultValue: uuid()
   },
   ownerId: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.UUID,
     references: {
       model: User,
       key: 'id'

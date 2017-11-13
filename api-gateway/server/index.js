@@ -14,18 +14,20 @@ const log = require('../util/logger')
 // Public links
 const loginUser = require('../actions/login')
 const registerUser = require('../actions/register')
+const logoutUser = require('../actions/logout')
 const deleteUser = require('../actions/delete')
 
 const app = new Koa()
 const public = new Router()
 const private = new Router()
 
-// Auth routes
+// Public routes
 public.post('/register', registerUser)
 public.post('/login', loginUser)
 
-// Private links (require auth)
-private.delete('/delete/:id', deleteUser)
+// Private routes (require auth)
+private.delete('/delete', deleteUser)
+private.get('/logout', logoutUser)
 
 // Proxies
 const createProxy = ({ route, target }) => {

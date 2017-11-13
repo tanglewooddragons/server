@@ -23,6 +23,7 @@ describe('#updateUser', async () => {
       },
       request: {
         body: {
+          id: user.id,
           username: 'Josh'
         }
       }
@@ -46,6 +47,7 @@ describe('#updateUser', async () => {
       },
       request: {
         body: {
+          id: user.id,
           role: 'Admin'
         }
       }

@@ -20,6 +20,11 @@ describe('#deleteUser', () => {
     const req = {
       params: {
         id: user.id
+      },
+      request: {
+        body: {
+          id: user.id
+        }
       }
     }
 

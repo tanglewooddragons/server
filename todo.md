@@ -4,6 +4,7 @@
 - Add account deletion
 - Send user data along with requests in api
 - Check if user edits/deletes his own account!
+- Fix checking id (decide on string/number)
 
 # Technical stuff
 

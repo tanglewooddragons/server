@@ -10,6 +10,6 @@ const sequelize = new Sequelize(
     logging: config.logging
 })
 
-// sequelize.sync({ force: true })
+sequelize.sync({ force: true })
 
 module.exports = sequelize

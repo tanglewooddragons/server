@@ -1,15 +1,16 @@
 const Sequelize = require('sequelize')
+const uuid = require('uuid/v4')
+
 const db = require('./')
 const hash = require('../utils/hash')
-
 const Dragon = require('./Dragon')
 
 const User = db.define('user', {
   id: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.UUID,
     allowNull: false,
-    autoIncrement: true,
-    primaryKey: true
+    primaryKey: true,
+    defaultValue: uuid()
   },
 
   username: Sequelize.STRING,

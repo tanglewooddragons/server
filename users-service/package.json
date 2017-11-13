@@ -6,7 +6,6 @@
     "start:dev": "NODE_ENV=test DB_USER=root DB_PASSWORD=root DATABASE=tw_users PORT=8080 node index",
     "db:create": "docker run --name tw_users -e POSTGRES_PASSWORD=root -e POSTGRES_USER=root -e POSTGRES_DB=tw_users -p 5432:5432 -d postgres",
     "db:start": "docker start tw_users",
-    "lint": "xo",
     "test": "NODE_ENV=test DB_USER=root DB_PASSWORD=root DATABASE=tw_users mocha tests/"
   },
   "main": "index.js",
@@ -24,6 +23,7 @@
     "pg": "6.4.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.10.3",
-    "sinon": "^4.0.1"
+    "sinon": "^4.0.1",
+    "uuid": "^3.1.0"
   }
 }
