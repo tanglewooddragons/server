@@ -29,11 +29,11 @@ router.post('/users/login', loginUser)
 router.get('/users/dragon/:id', getDragonInfo)
 router.put('/users/dragon/:id', updateDragon)
 
-app 
-  .use(bodyParser())
+app  
+  .use(bodyParser()) 
   .use(router.routes())
   .use(router.allowedMethods())
-
+  
 app.listen(port)
 
 

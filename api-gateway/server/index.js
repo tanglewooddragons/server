@@ -50,17 +50,17 @@ app
   .use(jwt)
   .use(private.routes())
   .use(private.allowedMethods())
-  .use(async (ctx, next) => {
-    // Attach user to every proxied request
-    ctx.body = {
-      ...ctx.body,
-      user: ctx.state.user
-    }
-    await next()
-  })
-
+  
 Object
   .values(routes)
   .forEach(createProxy)
+
+app
+  .use(async (ctx, next) => {
+    // Attach user to every proxied request
+    ctx.body = Object.assign({}, ctx.body, { user: ctx.state.user })
+    await next()
+  })
+
 
 module.exports = app

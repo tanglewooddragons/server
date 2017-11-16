@@ -1,10 +1,13 @@
 # Current goals
 
-- Add logout
-- Add account deletion
-- Send user data along with requests in api
-- Check if user edits/deletes his own account!
-- Fix checking id (decide on string/number)
+- Make storage a separete service
+
+# Todo
+
+- Add inventory
+- Add actions
+- Create chat service
+- Create email service
 
 # Technical stuff
 
