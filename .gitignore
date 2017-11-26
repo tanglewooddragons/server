@@ -12,9 +12,8 @@ yarn-error.log*
 .env
 config.json
 
-# Misc
-postgres-data
-redis
+# DB files
+rethinkdb_data/
 
 # Swap files
 *.swp

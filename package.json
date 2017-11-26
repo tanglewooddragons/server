@@ -1,0 +1,27 @@
+{
+  "name": "tanglewood-server",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js | ./node_modules/.bin/bunyan -o short",
+    "db:start": "docker start tanglewood",
+    "db:create": "node src/util/createDb",
+    "db:clean": "docker stop tanglewood && docker rm tanglewood",
+    "test": ""
+  },
+  "repository": "https://github.com/tanglewooddragons/server.git",
+  "author": "yoshuro <yoshuro@hotmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "bunyan": "^1.8.12",
+    "dotenv": "^4.0.0",
+    "jsonwebtoken": "^8.1.0",
+    "koa": "^2.4.1",
+    "koa-bodyparser": "^4.2.0",
+    "koa-helmet": "^3.3.0",
+    "koa-jwt": "^3.2.2",
+    "koa-router": "^7.3.0",
+    "thinky": "^2.3.9"
+  }
+}

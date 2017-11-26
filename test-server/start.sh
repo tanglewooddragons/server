@@ -1,1 +1,0 @@
-docker service create --replicas 1 --name test-server -l=apiRoute='/test' -p 3004:9000 test-server
