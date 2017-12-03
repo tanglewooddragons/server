@@ -6,9 +6,9 @@
   /user
 
 /src
-  - index.js - creates and exports the server | gather the routes from servies
+  - app.js - creates and exports the server | gather the routes from servies
     and bind them to server
-  - app.js - waits for db and starts the server
+  - index.js - waits for db and starts the server
 
   /db
     /models

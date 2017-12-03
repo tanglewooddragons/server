@@ -8,7 +8,7 @@
 - Migration to monolith
   - Create missing db interfaces
   - Get dragon service working
-  - Fix tests
+  - Fix dragon tests
   - Update schedule service
 
 # Todo

@@ -12,9 +12,9 @@ module.exports = function (app) {
           email: 'test@test.com',
           password: 'test',
         })
+        .expect(200)
         .end((err, res) => {
           assert.isNotOk(err, 'Request returned error')
-          assert.equal(res.status, 200, 'Returns invalid status')
           assert.exists(res.body.token, 'Response does not contain token')
           done()
         })

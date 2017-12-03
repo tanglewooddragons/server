@@ -13,9 +13,9 @@ module.exports = function (app) {
           password: 'test',
           passwordRepeat: 'test',
         })
-        .end((err, res) => {
+        .expect(400)
+        .end((err) => {
           assert.isNotOk(err, 'Request returned error')
-          assert.equal(res.status, 400, 'Returns invalid status')
           done()
         })
     })
@@ -27,9 +27,9 @@ module.exports = function (app) {
           password: 't',
           passwordRepeat: 't',
         })
-        .end((err, res) => {
+        .expect(400)
+        .end((err) => {
           assert.isNotOk(err, 'Request returned error')
-          assert.equal(res.status, 400, 'Returns invalid status')
           done()
         })
     })
@@ -42,9 +42,9 @@ module.exports = function (app) {
           password: 'test',
           passwordRepeat: 'tstetes',
         })
-        .end((err, res) => {
+        .expect(400)
+        .end((err) => {
           assert.isNotOk(err, 'Request returned error')
-          assert.equal(res.status, 400, 'Returns invalid status')
           done()
         })
     })
@@ -58,9 +58,9 @@ module.exports = function (app) {
           password: 'test',
           passwordRepeat: 'test',
         })
-        .end((err, res) => {
+        .expect(201)
+        .end((err) => {
           assert.isNotOk(err, 'Request returned error')
-          assert.equal(res.status, 201, 'Returns invalid status')
           done()
         })
     })
@@ -74,9 +74,9 @@ module.exports = function (app) {
           password: 'test',
           passwordRepeat: 'test',
         })
-        .end((err, res) => {
+        .expect(403)
+        .end((err) => {
           assert.isNotOk(err, 'Request returned error')
-          assert.equal(res.status, 403, 'Returns invalid status')
           done()
         })
     })

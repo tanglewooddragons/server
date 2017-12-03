@@ -46,7 +46,15 @@ module.exports = function (app) {
         })
     })
     it('Returns logged in user when no id is provided', (done) => {
-      done()
+      request(app)
+        .get('/api/user')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(200)
+        .end((err, res) => {
+          assert.isNotOk(err, 'Request returned error')
+          assert.equal(res.body.id, user.id, 'Returns wrong user')
+          done()
+        })
     })
   })
 }
