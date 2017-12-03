@@ -7,7 +7,7 @@
     "db:start": "docker start tanglewood",
     "db:create": "node src/util/createDb",
     "db:clean": "docker stop tanglewood && docker rm tanglewood",
-    "test": "mocha test/index",
+    "test": "NODE_ENV=test mocha test/index",
     "lint": "eslint src/"
   },
   "repository": "https://github.com/tanglewooddragons/server.git",

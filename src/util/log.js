@@ -4,11 +4,11 @@ const logger = (() => {
   if (process.env.NODE_ENV === 'test') {
     return bunyan.createLogger({
       name: 'tanglewood-api',
-      level: 'fatal'
+      level: 'fatal',
     })
   }
   return bunyan.createLogger({
-    name: 'tanglewood-api'
+    name: 'tanglewood-api',
   })
 })()
 

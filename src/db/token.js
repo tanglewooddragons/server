@@ -22,9 +22,10 @@ async function saveToken(context) {
   }
 }
 
-async function removeToken(token) {
+async function removeToken(userId) {
   try {
-    const tokenEntries = Token.filter({ token }).run()
+    const tokenEntries = await Token.filter({ userId }).run()
+
     if (!tokenEntries.length) return
     await tokenEntries.forEach(async t => t.delete())
   } catch (err) {

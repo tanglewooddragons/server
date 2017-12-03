@@ -19,7 +19,8 @@ const login = async (ctx) => {
     return
   }
 
-  if (await getToken(user.id)) {
+  const oldToken = await getToken(user.id)
+  if (oldToken) {
     await removeToken(user.id)
   }
 
