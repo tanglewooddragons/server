@@ -1,25 +1,19 @@
 const jwt = require('jsonwebtoken')
-const {
-  getToken,
-  saveToken,
-  removeToken
-} = require('../../db/token')
-const {
-  getUserByEmail
-} = require('../../db/user')
+const { getToken, saveToken, removeToken } = require('../../db/token')
+const { getUserByEmail } = require('../../db/user')
 const comparePasswords = require('../../util/comparePasswords')
 
 const login = async (ctx) => {
   const { email, password } = ctx.request.body
 
   const user = await getUserByEmail(email)
-  
+
   if (!user) {
     ctx.throw(400, 'Wrong email')
   }
 
   const isPasswordCorrect = await comparePasswords(password, user.password)
-  
+
   if (!isPasswordCorrect) {
     ctx.throw(401, 'Wrong password')
     return
@@ -31,30 +25,24 @@ const login = async (ctx) => {
 
   const tokenBody = {
     id: user.id,
-    role: user.role
+    role: user.role,
   }
 
-  const token = jwt.sign(
-    tokenBody,
-    process.env.JWT_SECRET,
-    {
-      expiresIn: Date.now() + 60*60*24
-    }
-  )
+  const token = jwt.sign(tokenBody, process.env.JWT_SECRET, {
+    expiresIn: Date.now() + (60 * 60 * 24),
+  })
 
   await saveToken({
     userId: user.id,
-    token
+    token,
   })
 
   delete user.password
 
   ctx.body = {
     ...user,
-    token
+    token,
   }
-
-  return ctx
 }
 
 module.exports = login

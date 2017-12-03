@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken')
 const {
-  getToken
+  getToken,
 } = require('../../db/token')
 
 const auth = async (ctx, next) => {
-  const header = ctx.headers['authorization']
+  const header = ctx.headers.authorization
 
   if (!header) {
     ctx.throw(401, 'Authentication error')

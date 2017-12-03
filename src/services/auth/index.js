@@ -1,8 +1,8 @@
+const Router = require('koa-router')
 const register = require('./register')
 const login = require('./login')
 const logout = require('./logout')
 
-const Router = require('koa-router')
 const router = new Router()
 
 router.post('/register', register)

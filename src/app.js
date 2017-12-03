@@ -1,3 +1,5 @@
+require('dotenv').load()
+
 const Koa = require('koa')
 const Router = require('koa-router')
 const helmet = require('koa-helmet')

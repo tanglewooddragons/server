@@ -7,7 +7,8 @@
     "db:start": "docker start tanglewood",
     "db:create": "node src/util/createDb",
     "db:clean": "docker stop tanglewood && docker rm tanglewood",
-    "test": ""
+    "test": "mocha test/*",
+    "lint": "eslint src/"
   },
   "repository": "https://github.com/tanglewooddragons/server.git",
   "author": "yoshuro <yoshuro@hotmail.com>",
@@ -23,5 +24,13 @@
     "koa-jwt": "^3.2.2",
     "koa-router": "^7.3.0",
     "thinky": "^2.3.9"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.12.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "mocha": "^4.0.1",
+    "supertest": "^3.0.0"
   }
 }

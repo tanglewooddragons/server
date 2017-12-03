@@ -1,4 +1,3 @@
-require('dotenv').load()
 const app = require('./app')
 const log = require('./util/log')
 const thinky = require('./db/thinky')

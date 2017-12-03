@@ -1,20 +1,17 @@
-const User = require('../db/User')
-const Dragon = require('../db/Dragon')
+const {
+  getUserById,
+} = require('../../../db/user')
 
-module.exports = async (ctx) => {
-  const id = ctx.params.id
-
-  const user = await User.findById(id, {
-    attributes: { exclude: ['password'] },
-    include: [{ model: Dragon, as: 'dragons' }],
-    plain: true
-  })
+const getUser = async (ctx) => {
+  const id = (ctx.params.id) ? ctx.params.id : ctx.state.user.id
+  const user = await getUserById(id)
 
   if (!user) {
     ctx.throw(400, 'User not found')
-    return ctx
   }
 
-  ctx.body = user.toJSON()
-  return ctx
+  delete user.password
+  ctx.body = user
 }
+
+module.exports = getUser

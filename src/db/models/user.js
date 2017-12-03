@@ -6,12 +6,16 @@ const User = thinky.createModel('User', {
     .string()
     .email()
     .required(),
-  password: thinky.type.string().required(),
+  password: thinky.type
+    .string()
+    .min(3)
+    .required(),
   registrationDate: thinky.type.date().default(thinky.r.now()),
   username: thinky.type
     .string()
     .min(3)
-    .max(24),
+    .max(24)
+    .required(),
   profile: {
     avatar: thinky.type.string(),
     backgroundPicture: thinky.type.string(),

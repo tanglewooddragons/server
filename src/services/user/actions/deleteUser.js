@@ -1,29 +1,14 @@
-const User = require('../db/User')
+const {
+  deleteUserById,
+} = require('../../../db/user')
 
 const deleteUser = async (ctx) => {
-  const id = ctx.params.id || ctx.request.body.id
+  const id = ctx.state.user.id
 
-  if (id !== ctx.request.body.id) {
-    ctx.throw(401, 'You can only remove your own account!')
-    return
-  }
+  const deleted = await deleteUserById(id)
 
-  try {
-    const deleted = await User.destroy({
-      where: {
-        id
-      }
-    })
-
-    if (!deleted) {
-      ctx.throw(400, 'Error removing user')
-    }
-
-    ctx.body = deleted
-    return ctx
-  } catch (e) {
-    ctx.throw(400, 'Error removing user')
-    return
+  if (!deleted) {
+    ctx.throw(400, 'Error deleting user')
   }
 }
 

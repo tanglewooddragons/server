@@ -1,9 +1,7 @@
-const {
-  emailTaken,
-  createUser
-} = require('../../db/user')
+const { emailTaken, createUser } = require('../../db/user')
 const hash = require('../../util/hash')
 const log = require('../../util/log')
+const validate = require('../../validation')
 
 const register = async (ctx) => {
   const data = ctx.request.body
@@ -19,17 +17,24 @@ const register = async (ctx) => {
     return
   }
 
+  try {
+    await validate(data, 'user')
+  } catch (err) {
+    // @TODO Dać tu jakiś normalny error
+    ctx.throw(400, err)
+  }
+
   const hashedPassword = await hash(data.password)
 
   const user = {
     email: data.email,
     password: hashedPassword,
-    username: data.username
+    username: data.username,
   }
-  // @TODO validate user data
 
-  return createUser(user)
+  createUser(user)
     .then((newUser) => {
+      // eslint-disable-next-line
       delete newUser.password
       ctx.status = 201
       ctx.body = newUser
