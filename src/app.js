@@ -11,38 +11,43 @@ const auth = require('./services/auth/auth')
 const jwt = require('./services/auth/jwt')
 
 const authRouter = require('./services/auth')
+const userRouter = require('./services/user')
 
-const public = new Router({
-  prefix: '/api'
+const publicRouter = new Router({
+  prefix: '/api',
 })
 
-public.get('/hello', async (ctx) => {
+publicRouter.get('/hello', async (ctx) => {
   ctx.body = 'wrlod'
   return ctx
 })
 
-public.use(authRouter.routes())
-public.use(authRouter.allowedMethods())
+publicRouter.use(authRouter.routes())
+publicRouter.use(authRouter.allowedMethods())
 
-const private = new Router({
-  prefix: '/api'
+const privateRouter = new Router({
+  prefix: '/api',
 })
 
-private.get('/secret', async (ctx) => {
+privateRouter.get('/secret', async (ctx) => {
   ctx.body = 'admin password'
   return ctx
 })
+
+// User routes
+privateRouter.use(userRouter.routes())
+privateRouter.use(userRouter.allowedMethods())
 
 app
   .use(bodyparser())
   .use(helmet())
   // Public routes
-  .use(public.routes())
-  .use(public.allowedMethods())
+  .use(publicRouter.routes())
+  .use(publicRouter.allowedMethods())
   .use(auth)
   .use(jwt)
   // Private routes (token required)
-  .use(private.routes())
-  .use(private.allowedMethods())
+  .use(privateRouter.routes())
+  .use(privateRouter.allowedMethods())
 
 module.exports = app

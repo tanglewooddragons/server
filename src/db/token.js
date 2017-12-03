@@ -2,9 +2,13 @@ const Token = require('./models/token')
 const log = require('../util/log')
 
 async function getToken(userId) {
-  const token = await Token.filter({ userId }).run()
-  if (!token[0]) return null
-  return token[0]
+  try {
+    const token = await Token.filter({ userId }).limit(1).run()
+    return token[0]
+  } catch (err) {
+    log.error(`Error getting token: ${err}`)
+    return null
+  }
 }
 
 async function saveToken(context) {
@@ -19,14 +23,17 @@ async function saveToken(context) {
 }
 
 async function removeToken(token) {
-  const tokenEntry = Token.filter({ token }).run()
-  if (!tokenEntry[0]) return
-
-  await tokenEntry[0].delete()
+  try {
+    const tokenEntries = Token.filter({ token }).run()
+    if (!tokenEntries.length) return
+    await tokenEntries.forEach(async t => t.delete())
+  } catch (err) {
+    log.error(`Error removing token: ${err}`)
+  }
 }
 
 module.exports = {
   getToken,
   saveToken,
-  removeToken
+  removeToken,
 }

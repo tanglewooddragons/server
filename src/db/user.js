@@ -1,5 +1,3 @@
-import { isNullOrUndefined } from 'util';
-
 const User = require('./models/user')
 const log = require('../util/log')
 

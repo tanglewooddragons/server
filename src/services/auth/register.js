@@ -32,7 +32,7 @@ const register = async (ctx) => {
     username: data.username,
   }
 
-  createUser(user)
+  await createUser(user)
     .then((newUser) => {
       // eslint-disable-next-line
       delete newUser.password

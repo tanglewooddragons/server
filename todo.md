@@ -5,11 +5,8 @@
 - Structure the files in auth service
 - Finish tests for auth service
 
-# Current plan
-
 - Migration to monolith
   - Create missing db interfaces
-  - Get user service working
   - Get dragon service working
   - Fix tests
   - Update schedule service

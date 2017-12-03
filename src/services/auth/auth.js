@@ -4,7 +4,8 @@ const {
 } = require('../../db/token')
 
 const auth = async (ctx, next) => {
-  const header = ctx.headers.authorization
+  // Supertest sends headers lowercase
+  const header = ctx.headers.Authorization || ctx.headers.authorization
 
   if (!header) {
     ctx.throw(401, 'Authentication error')
@@ -13,7 +14,7 @@ const auth = async (ctx, next) => {
 
   const token = header.split(' ')[1]
   const decoded = jwt.verify(token, process.env.JWT_SECRET)
-  
+
   const entry = await getToken(decoded.id)
 
   if (!entry || entry.token !== token) {
