@@ -7,6 +7,7 @@ const register = require('./auth/register')
 const token = require('./auth/token')
 
 const getUser = require('./user/getUser')
+const updateUser = require('./user/updateUser')
 const deleteUser = require('./user/deleteUser')
 
 before(async () => {
@@ -25,6 +26,7 @@ describe('#tanglewood-api', () => {
 
   describe('#user', () => {
     getUser(app)
+    updateUser(app)
     deleteUser(app)
   })
 

@@ -10,6 +10,7 @@
     "func-names": "off",
     "space-before-function-paren": 1,
     "prefer-destructuring": 0,
+    "no-param-reassign": 0,
     "max-len": ["error", 120, 4],
     "no-unused-vars": ["error", {"argsIgnorePattern": "next"}],
     "import/prefer-default-export": "off",

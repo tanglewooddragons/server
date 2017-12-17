@@ -9,7 +9,27 @@ const updateUser = async (ctx) => {
   // @TODO Require some sort of confirmation maybe password?
   // @TODO validate provided data
   // @TODO hash password
-  const update = await updateUserById(id, updateData)
+  const secured = [
+    'registartionDate',
+    'confirmed',
+    'premium',
+    'role',
+    'silver',
+    'sapphires',
+    'inventory',
+  ]
+
+  const validKeys = Object
+    .keys(updateData)
+    .filter(key => !secured.includes(key))
+
+  const filteredUpdate = validKeys
+    .reduce((data, key) => {
+      data[key] = updateData[key]
+      return data
+    }, {})
+
+  const update = await updateUserById(id, filteredUpdate)
 
   if (!update) {
     ctx.throw(400, 'Error updating user')
