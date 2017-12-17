@@ -38,7 +38,6 @@ const register = async (ctx) => {
       delete newUser.password
       ctx.status = 201
       ctx.body = newUser
-      log.debug(`Created new user: ${newUser.username}`)
     })
     .catch((err) => {
       log.error(err)

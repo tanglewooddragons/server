@@ -1,15 +1,16 @@
 const bunyan = require('bunyan')
 
-const logger = (() => {
-  if (process.env.NODE_ENV === 'test') {
-    return bunyan.createLogger({
-      name: 'tanglewood-api',
-      level: 'fatal',
-    })
-  }
-  return bunyan.createLogger({
-    name: 'tanglewood-api',
-  })
-})()
+const logLevel = () => {
+  const env = process.env.NODE_ENV
+
+  if (env === 'test') return 'fatal'
+  if (env === 'production') return 'info'
+  return 'debug'
+}
+
+const logger = bunyan.createLogger({
+  name: 'tanglewood-api',
+  level: logLevel(),
+})
 
 module.exports = logger
