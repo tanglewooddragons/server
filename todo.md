@@ -1,20 +1,17 @@
 # Current goals
 
-- Add validation to user service
-- Structure the files in auth service
 - Finish tests for auth service
 
 - Add debug logs
 
 - Migration to monolith
-  - Create missing db interfaces
+  - Create missing db interfaces (~~user~~, ~~token~~, dragon)
   - Get dragon service working
   - Fix dragon tests
   - Update schedule service
 
 # Todo
 
-- Add validation module
 - Add confirmation to deleting account (provide password?)
 - Add inventory
 - Add actions

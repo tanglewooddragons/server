@@ -7,8 +7,8 @@ const bodyparser = require('koa-bodyparser')
 
 const app = new Koa()
 
-const auth = require('./services/auth/auth')
-const jwt = require('./services/auth/jwt')
+const auth = require('./services/auth/middleware/auth')
+const jwt = require('./services/auth/middleware/jwt')
 
 const authRouter = require('./services/auth')
 const userRouter = require('./services/user')
@@ -17,21 +17,11 @@ const publicRouter = new Router({
   prefix: '/api',
 })
 
-publicRouter.get('/hello', async (ctx) => {
-  ctx.body = 'wrlod'
-  return ctx
-})
-
 publicRouter.use(authRouter.routes())
 publicRouter.use(authRouter.allowedMethods())
 
 const privateRouter = new Router({
   prefix: '/api',
-})
-
-privateRouter.get('/secret', async (ctx) => {
-  ctx.body = 'admin password'
-  return ctx
 })
 
 // User routes

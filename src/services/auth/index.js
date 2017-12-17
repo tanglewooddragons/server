@@ -1,7 +1,7 @@
 const Router = require('koa-router')
-const register = require('./register')
-const login = require('./login')
-const logout = require('./logout')
+const register = require('./actions/register')
+const login = require('./actions/login')
+const logout = require('./actions/logout')
 
 const router = new Router()
 

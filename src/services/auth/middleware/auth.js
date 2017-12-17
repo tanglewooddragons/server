@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const {
   getToken,
-} = require('../../db/token')
+} = require('../../../db/token')
 
 const auth = async (ctx, next) => {
   // Supertest sends headers lowercase
