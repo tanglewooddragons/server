@@ -13,7 +13,7 @@ module.exports = function (app) {
           password: 'test',
           passwordRepeat: 'test',
         })
-        .expect(400)
+        .expect(422)
         .end((err) => {
           assert.isNotOk(err, 'Request returned error')
           done()
@@ -27,7 +27,7 @@ module.exports = function (app) {
           password: 't',
           passwordRepeat: 't',
         })
-        .expect(400)
+        .expect(422)
         .end((err) => {
           assert.isNotOk(err, 'Request returned error')
           done()

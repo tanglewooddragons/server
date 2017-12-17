@@ -18,10 +18,10 @@ const register = async (ctx) => {
   }
 
   try {
-    await validate(data, 'user')
+    await validate(data, 'register')
   } catch (err) {
     // @TODO Dać tu jakiś normalny error
-    ctx.throw(400, err)
+    ctx.throw(422, err)
   }
 
   const hashedPassword = await hash(data.password)

@@ -1,6 +1,5 @@
 # Current goals
 
-- Write tests for user service
 - Add validation to user service
 - Structure the files in auth service
 - Finish tests for auth service

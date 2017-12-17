@@ -1,12 +1,14 @@
 const joi = require('joi')
-const user = require('./user.model')(joi)
+const register = require('./register.model')(joi)
+const updateUser = require('./updateUser.model')(joi)
 
 const schemas = Object.create({
-  user
+  register,
+  updateUser,
 })
 
-const validate = (object, type) => {
-  return new Promise((resolve, reject) => {
+const validate = (object, type) =>
+  new Promise((resolve, reject) => {
     const { error, value } = joi.validate(object, schemas[type])
 
     if (error) {
@@ -15,6 +17,5 @@ const validate = (object, type) => {
 
     resolve(value)
   })
-}
 
 module.exports = validate

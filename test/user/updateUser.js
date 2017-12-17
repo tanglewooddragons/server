@@ -48,10 +48,10 @@ module.exports = function (app) {
           role: 'admin',
         })
         .set('Authorization', `Bearer ${token}`)
-        .expect(200)
+        .expect(422)
         .end((err, res) => {
           assert.isNotOk(err, 'Request returned error')
-          assert.equal(res.body.role, 'user', 'It updated secured field')
+          assert.deepEqual(res.body, {}, 'It updated secured field')
           done()
         })
     })

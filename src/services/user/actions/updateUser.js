@@ -1,14 +1,19 @@
 const {
   updateUserById,
 } = require('../../../db/user')
+const validate = require('../../../validation')
+const hash = require('../../../util/hash')
 
 const updateUser = async (ctx) => {
   const id = ctx.state.user.id
   const updateData = ctx.request.body
 
-  // @TODO Require some sort of confirmation maybe password?
-  // @TODO validate provided data
-  // @TODO hash password
+  try {
+    await validate(updateData, 'updateUser')
+  } catch (validationError) {
+    ctx.throw(422, validationError)
+  }
+
   const secured = [
     'registartionDate',
     'confirmed',
@@ -25,6 +30,11 @@ const updateUser = async (ctx) => {
 
   const filteredUpdate = validKeys
     .reduce((data, key) => {
+      if (key === 'password') {
+        return hash(updateData[key])
+          .then(hashed => Object.assign(data, { password: hashed }))
+      }
+
       data[key] = updateData[key]
       return data
     }, {})
