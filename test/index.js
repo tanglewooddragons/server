@@ -7,6 +7,7 @@ const register = require('./auth/register')
 const token = require('./auth/token')
 
 const getUser = require('./user/getUser')
+const deleteUser = require('./user/deleteUser')
 
 before(async () => {
   await thinky.dbReady()
@@ -16,12 +17,16 @@ before(async () => {
 
 describe('#tanglewood-api', () => {
   const app = server.listen(3000)
-  // Auth
-  register(app)
-  token(app)
 
-  // User
-  getUser(app)
+  describe('#auth', () => {
+    register(app)
+    token(app)
+  })
+
+  describe('#user', () => {
+    getUser(app)
+    deleteUser(app)
+  })
 
   app.close()
 })

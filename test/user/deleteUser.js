@@ -4,7 +4,7 @@ const request = require('supertest')
 const { assert } = chai
 
 module.exports = function (app) {
-  describe('getUser', async () => {
+  describe('deleteUser', async () => {
     /*
     Login to get token
     */
@@ -24,35 +24,25 @@ module.exports = function (app) {
         })
     })
 
-    it('Returns error when user does NOT exist', (done) => {
+    it('Should delete tokens owner', (done) => {
       request(app)
-        .get('/api/user/idonotexistlala')
+        .delete('/api/user')
         .set('Authorization', `Bearer ${token}`)
-        .expect(400)
+        .expect(200)
+        .end((err, res) => {
+          assert.isNotOk(err, 'Request returned error')
+          assert.equal(res.body, true, 'It failed to delete user')
+          done()
+        })
+    })
+
+    it('Should delete token', (done) => {
+      request(app)
+        .get('/api/user/123')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(401)
         .end((err) => {
           assert.isNotOk(err, 'Request returned error')
-          done()
-        })
-    })
-    it('Returns correct user', (done) => {
-      request(app)
-        .get(`/api/user/${user.id}`)
-        .set('Authorization', `Bearer ${token}`)
-        .expect(200)
-        .end((err, res) => {
-          assert.isNotOk(err, 'Request returned error')
-          assert.equal(res.body.id, user.id, 'Returns wrong user')
-          done()
-        })
-    })
-    it('Returns logged in user when no id is provided', (done) => {
-      request(app)
-        .get('/api/user')
-        .set('Authorization', `Bearer ${token}`)
-        .expect(200)
-        .end((err, res) => {
-          assert.isNotOk(err, 'Request returned error')
-          assert.equal(res.body.id, user.id, 'Returns wrong user')
           done()
         })
     })

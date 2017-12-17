@@ -5,6 +5,8 @@
 - Structure the files in auth service
 - Finish tests for auth service
 
+- Add debug logs
+
 - Migration to monolith
   - Create missing db interfaces
   - Get dragon service working
@@ -14,6 +16,7 @@
 # Todo
 
 - Add validation module
+- Add confirmation to deleting account (provide password?)
 - Add inventory
 - Add actions
 - Create chat service
