@@ -49,7 +49,7 @@ async function getUserById(id) {
 
 async function updateUserById(id, update) {
   try {
-    log.debug(update, `Updating user by id: ${id}`)
+    log.debug(`Updating user by id: ${id}`)
     const user = await User.get(id).run()
     await user.merge(update)
     await user.save()

@@ -5,7 +5,7 @@ async function getToken(userId) {
   try {
     log.debug(`Getting token for ${userId}..`)
     const token = await Token.filter({ userId }).limit(1).run()
-    log.debug(`Get token for ${userId}`)
+    log.debug(`Got token for ${userId}`)
     return token[0]
   } catch (err) {
     log.error(`Error getting token: ${err}`)
@@ -15,10 +15,10 @@ async function getToken(userId) {
 
 async function saveToken(context) {
   try {
-    log.debug(context, 'Saving token')
+    log.debug(`Saving token for ${context.userId}`)
     const token = new Token(context)
     await token.save()
-    log.debug(token, 'Token saved')
+    log.debug(`Token saved for ${context.userId}`)
     return token
   } catch (err) {
     log.error(`Error saving token: ${err}`)
