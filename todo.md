@@ -2,8 +2,6 @@
 
 - Finish tests for auth service
 
-- Add debug logs
-
 - Migration to monolith
   - Create missing db interfaces (~~user~~, ~~token~~, dragon)
   - Get dragon service working

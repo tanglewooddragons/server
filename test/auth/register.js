@@ -4,7 +4,7 @@ const request = require('supertest')
 const { assert } = chai
 
 module.exports = function (app) {
-  describe('#register', () => {
+  describe('register', () => {
     it('Fails to register with missing data', (done) => {
       request(app)
         .post('/api/register')

@@ -4,7 +4,7 @@ const User = require('../src/db/models/user')
 const Token = require('../src/db/models/token')
 
 const register = require('./auth/register')
-const token = require('./auth/token')
+const login = require('./auth/login')
 
 const getUser = require('./user/getUser')
 const updateUser = require('./user/updateUser')
@@ -21,7 +21,7 @@ describe('#tanglewood-api', () => {
 
   describe('#auth', () => {
     register(app)
-    token(app)
+    login(app)
   })
 
   describe('#user', () => {
