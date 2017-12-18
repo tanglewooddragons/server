@@ -1,12 +1,11 @@
 # Current goals
 
-- Finish tests for auth service
+- Create missing db interfaces (~~user~~, ~~token~~, dragon)
+- Get dragon service working
+- Fix dragon tests
+- Update schedule service
 
-- Migration to monolith
-  - Create missing db interfaces (~~user~~, ~~token~~, dragon)
-  - Get dragon service working
-  - Fix dragon tests
-  - Update schedule service
+- Add getUserDragon to user service
 
 # Todo
 
