@@ -1,11 +1,12 @@
 # Current goals
 
-- Create missing db interfaces (~~user~~, ~~token~~, dragon)
-- Get dragon service working
-- Fix dragon tests
+- Add test for updating dragon
 - Update schedule service
 
 - Add getUserDragon to user service
+- Create directory with constants
+- Move aspects from creating dragon to constants
+- Implement dragon limit
 
 # Todo
 

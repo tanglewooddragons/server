@@ -4,7 +4,7 @@ const Dragon = thinky.createModel('Dragon', {
   name: thinky.type.string().required(),
   description: thinky.type.string().default(''),
   owner: thinky.type.string().required(),
-  gender: thinky.type.boolean().required(),
+  gender: thinky.type.string().enum('male', 'female').required(),
   born: thinky.type.date().default(thinky.r.now()),
   bgImage: thinky.type.string().default(''),
   fed: thinky.type.boolean().default(false),

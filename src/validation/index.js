@@ -1,10 +1,12 @@
 const joi = require('joi')
 const register = require('./register.model')(joi)
 const updateUser = require('./updateUser.model')(joi)
+const dragon = require('./dragon.model')(joi)
 
 const schemas = Object.create({
   register,
   updateUser,
+  dragon,
 })
 
 const validate = (object, type) =>

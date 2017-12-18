@@ -21,7 +21,7 @@ const User = thinky.createModel('User', {
     backgroundPicture: thinky.type.string(),
     country: thinky.type.string(),
     dateOfBirth: thinky.type.date(),
-    bio: thinky.type.string()
+    bio: thinky.type.string(),
   },
   confirmed: thinky.type.boolean().default(false),
   premium: thinky.type.boolean().default(false),
@@ -32,9 +32,9 @@ const User = thinky.createModel('User', {
     .object()
     .schema({
       ingredients: thinky.type.object(),
-      items: thinky.type.object()
+      items: thinky.type.object(),
     })
-    .default({ ingredients: {}, items: {} })
+    .default({ ingredients: {}, items: {} }),
 })
 
 User.hasMany(Dragon, 'dragons', 'id', 'owner')
