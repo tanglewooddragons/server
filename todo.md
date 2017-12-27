@@ -1,13 +1,12 @@
 # Current goals
 
-- Add test for updating dragon
 - Update schedule service
+
+# Todo
 
 - Create directory with constants
 - Move aspects from creating dragon to constants
 - Implement dragon limit
-
-# Todo
 
 - Add confirmation to deleting account (provide password?)
 - Add inventory
