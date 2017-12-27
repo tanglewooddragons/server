@@ -3,7 +3,6 @@
 - Add test for updating dragon
 - Update schedule service
 
-- Add getUserDragon to user service
 - Create directory with constants
 - Move aspects from creating dragon to constants
 - Implement dragon limit
