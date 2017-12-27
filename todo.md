@@ -20,4 +20,4 @@
 
 # Ideas
 
-- Dispose of thinky in favor of ReQL? (or rethinkdbdash)
+- Think about url of getUserDragons (its kinda bad rn)

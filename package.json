@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js | ./node_modules/.bin/bunyan -o short",
+    "start": "NODE_ENV=debug node src/index.js | ./node_modules/.bin/bunyan -o short",
+    "start:production": "NODE_ENV=production node src/index.js | ./node_modules/.bin/bunyan -o short",
     "db:start": "docker start tanglewood",
     "db:create": "node src/util/createDb",
     "db:clean": "docker stop tanglewood && docker rm tanglewood",

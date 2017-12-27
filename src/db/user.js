@@ -74,7 +74,7 @@ async function deleteUserById(id) {
   }
 }
 
-async function getUserDragons(id) {
+async function getUserDragonsById(id) {
   try {
     log.debug(`Getting dragons of ${id}`)
     const user = await User.get(id).getJoin({ dragons: true }).run()
@@ -92,5 +92,5 @@ module.exports = {
   getUserById,
   updateUserById,
   deleteUserById,
-  getUserDragons,
+  getUserDragonsById,
 }
