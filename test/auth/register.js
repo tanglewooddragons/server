@@ -80,5 +80,21 @@ module.exports = function (app) {
           done()
         })
     })
+
+    it('Should register properly using another email', (done) => {
+      request(app)
+        .post('/api/register')
+        .send({
+          email: 'test2@test.com',
+          username: 'tester',
+          password: 'test',
+          passwordRepeat: 'test',
+        })
+        .expect(201)
+        .end((err) => {
+          assert.isNotOk(err, 'Request returned error')
+          done()
+        })
+    })
   })
 }

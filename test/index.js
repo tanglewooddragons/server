@@ -35,6 +35,7 @@ describe('#tanglewood-api', () => {
   describe('#user', () => {
     getUser(app)
     updateUser(app)
+    deleteUser(app)
   })
 
   describe('#dragon', () => {
@@ -42,9 +43,6 @@ describe('#tanglewood-api', () => {
     getDragon(app)
     removeDragon(app)
   })
-
-  // Fix the test to use other account and move it back to user group
-  deleteUser(app)
 
   app.close()
 })

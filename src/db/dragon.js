@@ -54,12 +54,9 @@ async function getDragonById(id) {
   }
 }
 
-async function getUserDragons(userId) {}
-
 module.exports = {
   createDragon,
   updateDragon,
   removeDragonById,
-  getUserDragons,
   getDragonById,
 }

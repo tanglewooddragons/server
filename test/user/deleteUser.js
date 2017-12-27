@@ -14,7 +14,7 @@ module.exports = function (app) {
       request(app)
         .post('/api/login')
         .send({
-          email: 'test@test.com',
+          email: 'test2@test.com',
           password: 'test',
         })
         .end((err, res) => {

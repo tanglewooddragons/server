@@ -4,7 +4,7 @@ const request = require('supertest')
 const { assert } = chai
 
 module.exports = function (app) {
-  describe('getDragon', () => {
+  describe('removeDragon', () => {
     /*
     Login to get token
     */
