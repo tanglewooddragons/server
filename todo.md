@@ -1,8 +1,8 @@
 # Current goals
 
-- Finish scheduler service actions
-- Create chat service
-- Create directory with constants
+- Add dragon feeding action
+- Add sending dragons on tasks
+- Add training dragons
 
 # Todo
 
@@ -13,6 +13,7 @@
 - Add confirmation to deleting account (provide password?)
 - Add inventory
 - Add actions
+- Create chat service
 - Create email service (Welcome email, Reset password and general spam)
 - Add notification service (SSE/WS?)
 - Move secured fields somewhere to db directiories
