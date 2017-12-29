@@ -1,14 +1,21 @@
 const chai = require('chai')
 
 const { assert } = chai
-const { scheduleAction } = require('../../src/services/scheduler')
+const {
+  scheduleAction,
+  registerHandler,
+} = require('../../src/services/scheduler')
 
 module.exports = function () {
   describe('#scheduleAction', () => {
+    before(() => {
+      registerHandler('test', () => {})
+    })
+
     it('Fails to schedule with missing data', () => {
       const options = {
         scheduledBy: 'mocha',
-        type: 'task',
+        type: 'test',
       }
 
       const resolve = async () => new Error('It should have not been called')
@@ -19,7 +26,7 @@ module.exports = function () {
     it('Schedules given task', () => {
       const options = {
         scheduledBy: 'mocha',
-        type: 'task',
+        type: 'test',
         scheduledFor: Date.now() + 100,
       }
 
@@ -32,7 +39,7 @@ module.exports = function () {
     it('Calls the resolve function on scheduled time', () => {
       const options = {
         scheduledBy: 'mocha',
-        type: 'task',
+        type: 'test',
         scheduledFor: Date.now() + 200,
       }
 

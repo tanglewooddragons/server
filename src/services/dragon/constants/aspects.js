@@ -23,7 +23,7 @@ const getBasicAspect = () => {
   const basicAspects = Object
     .keys(aspects)
     .reduce((arr, aspect) => {
-      if (aspect.tier === 0) arr.push(aspect)
+      if (aspects[aspect].tier === 0) arr.push(aspect)
       return arr
     }, [])
 

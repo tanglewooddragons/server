@@ -2,7 +2,7 @@ const {
   createDragon,
 } = require('../../../db/dragon')
 const validate = require('../../../validation')
-const getBasicAspect = require('../constants/aspects')
+const { getBasicAspect } = require('../constants/aspects')
 
 const getRandomGender = () => ((Math.random() > 0.5) ? 'male' : 'female')
 

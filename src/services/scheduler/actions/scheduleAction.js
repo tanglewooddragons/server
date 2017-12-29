@@ -3,10 +3,9 @@ const {
 } = require('../../../db/schedule')
 const validate = require('../../../validation')
 const log = require('../../../util/log')
-const getResolver = require('../resolvers')
 const scheduleJob = require('./scheduleJob')
 
-async function scheduleAction(options, resolve) {
+async function scheduleAction(options) {
   // Validate task options
   try {
     await validate(options, 'schedule')
@@ -18,11 +17,8 @@ async function scheduleAction(options, resolve) {
   // Save task to db
   const job = await setSchedule(options)
 
-  // Get type resolver
-  const resolver = resolve || getResolver(job.type)
-
   // Set schedule
-  scheduleJob(job, resolver)
+  scheduleJob(job)
 }
 
 module.exports = scheduleAction
