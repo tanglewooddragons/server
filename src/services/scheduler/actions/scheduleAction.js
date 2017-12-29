@@ -9,7 +9,7 @@ const scheduleJob = require('./scheduleJob')
 async function scheduleAction(options, resolve) {
   // Validate task options
   try {
-    await validate(options, options.type || 'task')
+    await validate(options, 'schedule')
   } catch (err) {
     log.error(err)
     return

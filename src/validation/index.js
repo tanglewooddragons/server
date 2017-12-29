@@ -2,13 +2,13 @@ const joi = require('joi')
 const register = require('./register.model')(joi)
 const updateUser = require('./updateUser.model')(joi)
 const dragon = require('./dragon.model')(joi)
-const task = require('./task.model')(joi)
+const schedule = require('./schedule.model')(joi)
 
 const schemas = Object.create({
   register,
   updateUser,
   dragon,
-  task,
+  schedule,
 })
 
 const validate = (object, type) =>
