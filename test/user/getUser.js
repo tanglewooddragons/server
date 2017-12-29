@@ -3,6 +3,8 @@ const request = require('supertest')
 
 const { assert } = chai
 
+const Dragon = require('../../src/db/models/dragon')
+
 module.exports = function (app) {
   describe('getUser', async () => {
     /*
@@ -10,18 +12,33 @@ module.exports = function (app) {
     */
     let user
     let token
-    before((done) => {
-      request(app)
+    before(async () => {
+      const response = await request(app)
         .post('/api/login')
         .send({
           email: 'test@test.com',
           password: 'test',
         })
-        .end((err, res) => {
-          user = res.body
-          token = res.body.token
-          done()
-        })
+
+      user = response.body
+      token = response.body.token
+
+      const d1 = new Dragon({
+        name: 'Jeff',
+        gender: 'male',
+        owner: user.id,
+        aspect: 'light',
+      })
+
+      const d2 = new Dragon({
+        name: 'Geoff',
+        gender: 'male',
+        owner: user.id,
+        aspect: 'earth',
+      })
+
+      await d1.save()
+      await d2.save()
     })
 
     it('Returns error when user does NOT exist', (done) => {
@@ -34,6 +51,7 @@ module.exports = function (app) {
           done()
         })
     })
+
     it('Returns correct user', (done) => {
       request(app)
         .get(`/api/user/${user.id}`)
@@ -45,6 +63,7 @@ module.exports = function (app) {
           done()
         })
     })
+
     it('Returns logged in user when no id is provided', (done) => {
       request(app)
         .get('/api/user')
@@ -53,6 +72,19 @@ module.exports = function (app) {
         .end((err, res) => {
           assert.isNotOk(err, 'Request returned error')
           assert.equal(res.body.id, user.id, 'Returns wrong user')
+          done()
+        })
+    })
+
+    it('Returns dragons', (done) => {
+      request(app)
+        .get(`/api/user/${user.id}`)
+        .set('Authorization', `Bearer ${token}`)
+        .expect(200)
+        .end((err, res) => {
+          assert.isNotOk(err, 'Request returned error')
+          assert.equal(res.body.dragons.length, 2, 'Returns wrong amount of dragons')
+          assert.equal(res.body.dragons[0].owner, user.id, 'Returns wrong user dragons')
           done()
         })
     })

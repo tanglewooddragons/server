@@ -37,7 +37,7 @@ async function getUserByEmail(email) {
 async function getUserById(id) {
   try {
     log.debug(`Getting user by id: ${id}`)
-    const user = await User.get(id).run()
+    const user = await User.get(id).getJoin({ dragons: true }).run()
 
     if (!user) return null
     return user
@@ -74,17 +74,6 @@ async function deleteUserById(id) {
   }
 }
 
-async function getUserDragonsById(id) {
-  try {
-    log.debug(`Getting dragons of ${id}`)
-    const user = await User.get(id).getJoin({ dragons: true }).run()
-    return user.dragons
-  } catch (err) {
-    log.debug(`Error getting dragons: ${err}`)
-    return null
-  }
-}
-
 module.exports = {
   emailTaken,
   createUser,
@@ -92,5 +81,4 @@ module.exports = {
   getUserById,
   updateUserById,
   deleteUserById,
-  getUserDragonsById,
 }

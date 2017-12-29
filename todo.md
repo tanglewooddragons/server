@@ -7,6 +7,7 @@
 - Create directory with constants
 - Move aspects from creating dragon to constants
 - Implement dragon limit
+- Move db to services
 
 - Add confirmation to deleting account (provide password?)
 - Add inventory

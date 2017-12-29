@@ -10,7 +10,6 @@ const login = require('./auth/login')
 const getUser = require('./user/getUser')
 const updateUser = require('./user/updateUser')
 const deleteUser = require('./user/deleteUser')
-const getUserDragons = require('./user/getUserDragons')
 
 const createDragon = require('./dragon/createDragon')
 const getDragon = require('./dragon/getDragon')
@@ -38,7 +37,6 @@ describe('#tanglewood-api', () => {
     getUser(app)
     updateUser(app)
     deleteUser(app)
-    getUserDragons(app)
   })
 
   describe('#dragon', () => {
