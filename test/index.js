@@ -16,7 +16,7 @@ const getDragon = require('./dragon/getDragon')
 const removeDragon = require('./dragon/removeDragon')
 const updateDragon = require('./dragon/updateDragon')
 
-const scheduleTask = require('./scheduler/scheduleTask')
+const scheduleAction = require('./scheduler/scheduleAction')
 
 before(async () => {
   await thinky.dbReady()
@@ -49,7 +49,7 @@ describe('#tanglewood-api', () => {
   })
 
   describe('#scheduler', () => {
-    scheduleTask()
+    scheduleAction()
   })
 
   app.close()

@@ -1,5 +1,6 @@
 # Current goals
 
+- Finish scheduler service actions
 - Create chat service
 - Create directory with constants
 
