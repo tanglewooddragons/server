@@ -13,7 +13,7 @@ const scheduleJob = function (job) {
     job.id,
     job.scheduledFor,
     async () => {
-      log.debug(`Job ${job.id} fired`)
+      log.debug(`[Schedule] Job ${job.id} fired`)
       const handler = getHandler(job.type)
       await handler(job)
       await markScheduleAsFired(job.id)

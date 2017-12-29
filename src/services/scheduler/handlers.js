@@ -3,7 +3,7 @@ const log = require('../../util/log')
 const handlers = {}
 
 const registerHandler = (type, handler) => {
-  log.debug(`Registering handler for type ${type}`)
+  log.debug(`[Schedule] Registering handler for type ${type}`)
   handlers[type] = handler
 }
 

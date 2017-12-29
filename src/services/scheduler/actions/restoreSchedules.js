@@ -18,7 +18,7 @@ async function restoreSchedules() {
 
     // Return if no handler (error)
     if (!handler) {
-      log.error(`No handler registered for type: ${schedule.type}`)
+      log.error(`[Schedule] No handler registered for type: ${schedule.type}`)
       return
     }
 
