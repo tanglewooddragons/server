@@ -2,7 +2,7 @@ const {
   updateDragon,
 } = require('db/dragon')
 
-const getUser = async (ctx) => {
+module.exports = async (ctx) => {
   const id = ctx.params.id
   const update = ctx.request.body
 
@@ -24,5 +24,3 @@ const getUser = async (ctx) => {
   const updated = await updateDragon(id, cleanedUpdate)
   ctx.body = updated
 }
-
-module.exports = getUser

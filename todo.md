@@ -1,14 +1,12 @@
 # Current goals
 
-- Add dragon feeding action
+- Add dragon feeding test
 - Add sending dragons on tasks
 - Add training dragons
 
 # Todo
 
-- Move aspects from creating dragon to constants
 - Implement dragon limit
-- Move db to services
 
 - Add confirmation to deleting account (provide password?)
 - Add inventory
