@@ -1,6 +1,6 @@
 const {
   getUserById,
-} = require('../../../db/user')
+} = require('db/user')
 
 const getUser = async (ctx) => {
   const id = (ctx.params.id) ? ctx.params.id : ctx.state.user.id

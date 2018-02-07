@@ -1,9 +1,9 @@
 const {
   deleteUserById,
-} = require('../../../db/user')
+} = require('db/user')
 const {
   removeToken,
-} = require('../../../db/token')
+} = require('db/token')
 
 const deleteUser = async (ctx) => {
   const id = ctx.state.user.id

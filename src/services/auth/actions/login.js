@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
-const { getToken, saveToken, removeToken } = require('../../../db/token')
-const { getUserByEmail } = require('../../../db/user')
-const comparePasswords = require('../../../util/comparePasswords')
+const { getToken, saveToken, removeToken } = require('db/token')
+const { getUserByEmail } = require('db/user')
+const comparePasswords = require('util/comparePasswords')
 
 const login = async (ctx) => {
   const { email, password } = ctx.request.body

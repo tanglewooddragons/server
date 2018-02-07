@@ -1,4 +1,4 @@
-const { removeToken } = require('../../../db/token')
+const { removeToken } = require('db/token')
 
 const logout = async (ctx, next) => {
   const header = ctx.headers.authorization

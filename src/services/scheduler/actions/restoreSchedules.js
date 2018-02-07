@@ -3,11 +3,11 @@ const scheduleJob = require('./scheduleJob')
 const {
   getUnfiredSchedules,
   markScheduleAsFired,
-} = require('../../../db/schedule')
+} = require('db/schedule')
 const {
   getHandler,
 } = require('../handlers')
-const log = require('../../../util/log')
+const log = require('util/log')
 
 async function restoreSchedules() {
   const schedules = await getUnfiredSchedules()

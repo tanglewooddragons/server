@@ -1,8 +1,8 @@
 const {
   setSchedule,
-} = require('../../../db/schedule')
-const validate = require('../../../validation')
-const log = require('../../../util/log')
+} = require('db/schedule')
+const validate = require('services/validation')
+const log = require('util/log')
 const scheduleJob = require('./scheduleJob')
 
 async function scheduleAction(options) {

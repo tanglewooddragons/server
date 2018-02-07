@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=debug node src/index.js | ./node_modules/.bin/bunyan -o short",
-    "start:production": "NODE_ENV=production node src/index.js | ./node_modules/.bin/bunyan -o short",
+    "start": "NODE_PATH=src NODE_ENV=debug node src/index.js | ./node_modules/.bin/bunyan -o short",
+    "start:production": "NODE_PATH=src NODE_ENV=production node src/index.js | ./node_modules/.bin/bunyan -o short",
     "db:start": "docker start tanglewood",
     "db:create": "node src/util/createDb",
     "db:clean": "docker stop tanglewood && docker rm tanglewood",
-    "test": "NODE_ENV=test mocha test/index",
-    "test:watch": "NODE_ENV=test mocha test/index --watch",
+    "test": "NODE_PATH=src NODE_ENV=test mocha test/index",
+    "test:watch": "NODE_PATH=src NODE_ENV=test mocha test/index --watch",
     "lint": "eslint src/"
   },
   "repository": "https://github.com/tanglewooddragons/server.git",

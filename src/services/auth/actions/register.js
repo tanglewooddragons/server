@@ -1,7 +1,7 @@
-const { emailTaken, createUser } = require('../../../db/user')
-const hash = require('../../../util/hash')
-const log = require('../../../util/log')
-const validate = require('../../../validation')
+const { emailTaken, createUser } = require('db/user')
+const hash = require('util/hash')
+const log = require('util/log')
+const validate = require('services/validation')
 
 const register = async (ctx) => {
   const data = ctx.request.body

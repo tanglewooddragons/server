@@ -1,6 +1,6 @@
 const {
   getDragonById,
-} = require('../../../db/dragon')
+} = require('db/dragon')
 
 module.exports = async (ctx) => {
   const id = ctx.params.id

@@ -1,8 +1,8 @@
 const {
   updateUserById,
-} = require('../../../db/user')
-const validate = require('../../../validation')
-const hash = require('../../../util/hash')
+} = require('db/user')
+const validate = require('services/validation')
+const hash = require('util/hash')
 
 const updateUser = async (ctx) => {
   const id = ctx.state.user.id

@@ -2,11 +2,11 @@ const schedule = require('node-schedule')
 
 const {
   markScheduleAsFired,
-} = require('../../../db/schedule')
+} = require('db/schedule')
 const {
   getHandler,
 } = require('../handlers')
-const log = require('../../../util/log')
+const log = require('util/log')
 
 const scheduleJob = function (job) {
   schedule.scheduleJob(

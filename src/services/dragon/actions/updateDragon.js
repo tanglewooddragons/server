@@ -1,6 +1,6 @@
 const {
   updateDragon,
-} = require('../../../db/dragon')
+} = require('db/dragon')
 
 const getUser = async (ctx) => {
   const id = ctx.params.id

@@ -1,6 +1,6 @@
 const {
   removeDragonById,
-} = require('../../../db/dragon')
+} = require('db/dragon')
 
 const removeDragon = async (ctx) => {
   const id = ctx.params.id
