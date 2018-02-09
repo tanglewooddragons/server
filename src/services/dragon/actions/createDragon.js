@@ -2,7 +2,6 @@ const {
   createDragon,
 } = require('db/dragon')
 const validate = require('services/validation')
-const { getBasicAspect } = require('../constants/aspects')
 
 const getRandomGender = () => ((Math.random() > 0.5) ? 'male' : 'female')
 
@@ -19,7 +18,7 @@ const create = async (ctx) => {
     owner: ctx.state.user.id,
     name: body.name,
     gender: getRandomGender(),
-    aspect: getBasicAspect(),
+    aspect: body.aspect.toLowerCase(),
   }
 
   const created = await createDragon(dragonData)

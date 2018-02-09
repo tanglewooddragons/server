@@ -26,6 +26,7 @@ module.exports = function (app) {
         .post('/api/dragon/create')
         .send({
           name: 'Geoff',
+          aspect: 'fire',
         })
         .set('Authorization', `Bearer ${token}`)
         .then((res) => {

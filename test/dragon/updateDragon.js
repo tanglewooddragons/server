@@ -26,6 +26,7 @@ module.exports = function (app) {
         .post('/api/dragon/create')
         .send({
           name: 'Marley',
+          aspect: 'chaos',
         })
         .set('Authorization', `Bearer ${token}`)
         .then((res) => {
@@ -38,6 +39,7 @@ module.exports = function (app) {
         .post(`/api/dragon/${dragon.id}`)
         .send({
           name: 'Jeremy',
+          aspect: 'light',
         })
         .set('Authorization', `Bearer ${token}`)
         .expect(200)
