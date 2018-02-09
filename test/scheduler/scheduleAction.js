@@ -7,7 +7,7 @@ const {
 } = require('../../src/services/scheduler')
 
 module.exports = function () {
-  describe('#scheduleAction', () => {
+  describe('scheduleAction', () => {
     before(() => {
       registerHandler('test', () => {})
     })
