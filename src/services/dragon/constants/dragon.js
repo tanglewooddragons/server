@@ -1,4 +1,4 @@
-const aspects = require('./aspects')
+const { aspects } = require('./aspects')
 
 const DRAGON_IS_STILL_EGG = 6
 

@@ -39,32 +39,38 @@ module.exports = async (ctx) => {
     dragon.level += 1
     dragon.fed = true
     await dragon.save()
+    ctx.body = dragon
     return ctx
   }
 
   // Check if food type is proper and feed dragon
-  const foodType = ctx.body.food
+  const foodType = ctx.request.body.food.toLowerCase()
 
-  const stat = Object
+  if (!foodType) {
+    ctx.throw(400, 'Invalid food type')
+    return ctx
+  }
+
+  const stat = (Object
     .entries(food)
     .filter((type) => {
       if (type[1] === foodType) return true
       return false
-    })
+    }))[0]
 
   if (!stat) {
     ctx.throw(400, 'Invalid food type')
     return ctx
   }
 
-  const statIndex = stat[1]
+  const statIndex = Object.keys(food).indexOf(stat[0])
 
   // Get the aspect bonus to stats
   const modifier = getModifier(dragon.aspect)
   const bonus = modifier[statIndex] + 1
 
   // Add stat to dragon
-  dragon.stats[stat] += bonus
+  dragon.stats[stat[0]] += bonus
 
   dragon.level += 1
   dragon.fed = true

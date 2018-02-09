@@ -10,14 +10,21 @@ const Dragon = thinky.createModel('Dragon', {
   fed: thinky.type.boolean().default(false),
   level: thinky.type.number().default(0),
   aspect: thinky.type.string().required(),
-  stats: {
+  stats: thinky.type.object().schema({
     con: thinky.type.number(),
     int: thinky.type.number(),
     str: thinky.type.number(),
     agl: thinky.type.number(),
     wlp: thinky.type.number(),
     lck: thinky.type.number(),
-  },
+  }).default({
+    con: 0,
+    int: 0,
+    str: 0,
+    agl: 0,
+    wlp: 0,
+    lck: 0,
+  }),
 })
 
 Dragon.hasOne(Dragon, 'father', 'fatherId', 'id')

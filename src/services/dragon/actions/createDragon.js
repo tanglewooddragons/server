@@ -14,6 +14,9 @@ const create = async (ctx) => {
     ctx.throw(422, validationError)
   }
 
+  // @TODO
+  // Check if aspect exists and is of basic tier
+
   const dragonData = {
     owner: ctx.state.user.id,
     name: body.name,

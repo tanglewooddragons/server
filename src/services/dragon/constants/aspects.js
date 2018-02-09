@@ -25,19 +25,14 @@ const aspects = {
   },
 }
 
-const getBasicAspect = () => {
-  const basicAspects = Object
-    .keys(aspects)
-    .reduce((arr, aspect) => {
-      if (aspects[aspect].tier === 0) arr.push(aspect)
-      return arr
-    }, [])
-
-  const idx = Math.floor(Math.random() * basicAspects.length)
-  return basicAspects[idx]
-}
+const getBasicAspects = () => Object
+  .keys(aspects)
+  .reduce((arr, aspect) => {
+    if (aspects[aspect].tier === 0) arr.push(aspect)
+    return arr
+  }, [])
 
 module.exports = {
   aspects,
-  getBasicAspect,
+  getBasicAspects,
 }
