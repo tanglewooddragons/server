@@ -15,7 +15,12 @@ const scheduleJob = function (job) {
     async () => {
       log.debug(`[Schedule] Job ${job.id} fired`)
       const handler = getHandler(job.type)
-      await handler(job)
+      try {
+        await handler(job)
+      } catch (handlerErr) {
+        log.error(`[Schedule] Handler for ${job.id} returned error: ${handlerErr}`)
+        return
+      }
       await markScheduleAsFired(job.id)
     }
   )

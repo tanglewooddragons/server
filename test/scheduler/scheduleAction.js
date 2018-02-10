@@ -1,4 +1,5 @@
 const chai = require('chai')
+const schedule = require('node-schedule')
 
 const { assert } = chai
 const {
@@ -6,48 +7,66 @@ const {
   registerHandler,
 } = require('../../src/services/scheduler')
 
+const sleep = time => new Promise((resolve) => {
+  setTimeout(resolve, time)
+})
+
 module.exports = function () {
   describe('scheduleAction', () => {
-    before(() => {
-      registerHandler('test', () => {})
-    })
-
-    it('Fails to schedule with missing data', () => {
+    it('Fails to schedule with missing data', async () => {
       const options = {
         scheduledBy: 'mocha',
         type: 'test',
       }
 
-      const resolve = async () => new Error('It should have not been called')
+      const resolve = async () => {
+        throw new Error('It should have not been called')
+      }
 
-      return scheduleAction(options, resolve)
+      registerHandler('test', resolve)
+
+      await scheduleAction(options)
+
+      const registeredJobAmount = Object.keys(schedule.scheduledJobs).length
+      assert.equal(registeredJobAmount, 0, 'It registered the job')
     })
 
-    it('Schedules given task', () => {
+    it('Schedules given task', async () => {
       const options = {
         scheduledBy: 'mocha',
         type: 'test',
-        scheduledFor: Date.now() + 100,
+        scheduledFor: Date.now() + 1000,
       }
 
       const resolve = async (data) => {
         assert.equal(data.scheduledBy, options.scheduledBy, 'It returns wrong data')
       }
 
-      return scheduleAction(options, resolve)
+      registerHandler('test', resolve)
+
+      await scheduleAction(options)
+
+      const registeredJobAmount = Object.keys(schedule.scheduledJobs).length
+      assert.equal(registeredJobAmount, 1, 'It didnt register the job')
+
+      await sleep(1000)
     })
-    it('Calls the resolve function on scheduled time', () => {
+
+    it('Calls the resolve function on scheduled time', async () => {
       const options = {
         scheduledBy: 'mocha',
         type: 'test',
-        scheduledFor: Date.now() + 200,
+        scheduledFor: Date.now() + 1000,
       }
 
       const resolve = async () => {
         assert(Date.now() >= options.scheduledFor, 'It fired too quickly')
       }
 
-      return scheduleAction(options, resolve)
+      registerHandler('test', resolve)
+
+      await scheduleAction(options)
+      await sleep(1000)
     })
   })
 }
