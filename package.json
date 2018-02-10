@@ -6,7 +6,7 @@
     "start": "NODE_PATH=src NODE_ENV=debug node src/index.js | ./node_modules/.bin/bunyan -o short",
     "start:production": "NODE_PATH=src NODE_ENV=production node src/index.js | ./node_modules/.bin/bunyan -o short",
     "db:start": "docker start tanglewood",
-    "db:create": "node src/util/createDb",
+    "db:create": "node util/createDb",
     "db:clean": "docker stop tanglewood && docker rm tanglewood",
     "test": "NODE_PATH=src NODE_ENV=test mocha test/index",
     "test:watch": "NODE_PATH=src NODE_ENV=test mocha test/index --watch",
