@@ -10,7 +10,9 @@
     "db:clean": "docker stop tanglewood && docker rm tanglewood",
     "test": "NODE_PATH=src NODE_ENV=test mocha test/index",
     "test:watch": "NODE_PATH=src NODE_ENV=test mocha test/index --watch",
-    "lint": "eslint src/"
+    "lint": "eslint src/",
+    "profile:setup": "NODE_PATH=src NODE_ENV=production node --prof src/index.js",
+    "profile:run": "node util/profile.js"
   },
   "repository": "https://github.com/tanglewooddragons/server.git",
   "author": "yoshuro <yoshuro@hotmail.com>",
