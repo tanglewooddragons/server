@@ -1,12 +1,12 @@
-const bcrypt = require('bcryptjs')
+const argon2 = require('argon2')
 
-const comparePasswords = (password, hash) =>
-  new Promise((resolve, reject) => {
-    bcrypt.compare(password, hash, (err, isMatching) => {
-      if (err) reject(err)
-
-      resolve(isMatching)
-    })
-  })
+const comparePasswords = async (password, hash) => {
+  try {
+    const isMatching = await argon2.verify(hash, password)
+    return isMatching
+  } catch (err) {
+    return null
+  }
+}
 
 module.exports = comparePasswords
