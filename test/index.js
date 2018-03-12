@@ -20,6 +20,8 @@ const feedDragon = require('./dragon/feedDragon')
 
 const scheduleAction = require('./scheduler/scheduleAction')
 
+const wsServer = require('./ws/server')
+
 before(async () => {
   await thinky.dbReady()
   const users = await User.filter({}).run()
@@ -53,6 +55,10 @@ describe('#tanglewood-api', () => {
 
   describe('#scheduler', () => {
     scheduleAction()
+  })
+
+  describe('#ws', () => {
+    wsServer(app)
   })
 
   app.close()
