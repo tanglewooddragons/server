@@ -1,5 +1,5 @@
 const updateUserSchema = joi => ({
-  username: joi.string().min(3).max(24).optional(),
+  username: joi.string().min(3).max(48).optional(),
   email: joi.string().email().optional(),
   password: joi.string().min(3).optional(),
   passwordRepeat: joi.string().min(3).optional(),
