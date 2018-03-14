@@ -2,11 +2,11 @@ const {
   getDragonById,
 } = require('db/dragon')
 
+const food = require('constants/food')
 const {
   DRAGON_IS_STILL_EGG,
-  getModifier,
-} = require('../constants/dragon')
-const food = require('../constants/food')
+} = require('constants/dragon')
+const getModifier = require('../util/getModifier')
 
 module.exports = async (ctx) => {
   const id = ctx.params.id

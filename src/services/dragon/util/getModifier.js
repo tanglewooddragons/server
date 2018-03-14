@@ -1,6 +1,4 @@
-const { aspects } = require('./aspects')
-
-const DRAGON_IS_STILL_EGG = 6
+const { aspects } = require('constants/aspects')
 
 function getAllModifiers(aspect) {
   const entry = aspects[aspect]
@@ -46,7 +44,4 @@ function calculateStats(tiers) {
 
 const getModifier = type => calculateStats(transform(getAllModifiers(type)))
 
-module.exports = {
-  DRAGON_IS_STILL_EGG,
-  getModifier,
-}
+module.exports = getModifier

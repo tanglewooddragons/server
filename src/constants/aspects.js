@@ -25,14 +25,6 @@ const aspects = {
   },
 }
 
-const getBasicAspects = () => Object
-  .keys(aspects)
-  .reduce((arr, aspect) => {
-    if (aspects[aspect].tier === 0) arr.push(aspect)
-    return arr
-  }, [])
-
 module.exports = {
   aspects,
-  getBasicAspects,
 }
