@@ -21,13 +21,13 @@ const registerHandler = (type, handler) => {
 const getHandler = type => handlers[type]
 
 function initWsServer({ port = 8081 } = {}) {
-  log.debug('Starting WebSocket server..')
+  log.info('Starting WebSocket server..')
 
   const wss = new ws.Server({
     port,
   })
 
-  log.debug(`WebSocket server listening at port ${port}`)
+  log.info(`WebSocket server listening at port ${port}`)
 
   wss.on('connection', (socket) => {
     log.debug(socket, 'New WebSocket connection')

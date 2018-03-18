@@ -4,8 +4,12 @@ const Koa = require('koa')
 const Router = require('koa-router')
 const helmet = require('koa-helmet')
 const bodyparser = require('koa-bodyparser')
+const locale = require('koa-locale')
+const i18n = require('koa-i18n')
+const path = require('path')
 
 const app = new Koa()
+locale(app)
 
 const auth = require('./services/auth/middleware/auth')
 const jwt = require('./services/auth/middleware/jwt')
@@ -34,6 +38,10 @@ privateRouter.use(dragonRouter.allowedMethods())
 app
   .use(bodyparser())
   .use(helmet())
+  .use(i18n(app, {
+    directory: path.resolve(__dirname, 'constants', 'locales'),
+    locales: ['en', 'pl'],
+  }))
   // Public routes
   .use(publicRouter.routes())
   .use(publicRouter.allowedMethods())

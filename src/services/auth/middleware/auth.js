@@ -8,7 +8,7 @@ const auth = async (ctx, next) => {
   const header = ctx.headers.Authorization || ctx.headers.authorization
 
   if (!header) {
-    ctx.throw(401, 'Authorization error')
+    ctx.throw(401, ctx.i18n.__('AUTHORIZATION_ERROR'))
     return
   }
 
@@ -18,7 +18,7 @@ const auth = async (ctx, next) => {
   const entry = await getToken(decoded.id)
 
   if (!entry || entry.token !== token) {
-    ctx.throw(401, 'Authorization error')
+    ctx.throw(401, ctx.i18n.__('AUTHORIZATION_ERROR'))
     return
   }
 

@@ -1,0 +1,9 @@
+{
+  "WRONG_PASSWORD": "The password is incorrect",
+  "WRONG_EMAIL": "The email is not a registered account",
+  "EMAIL_TAKEN": "The email is already taken",
+  "PASSWORD_MISMATCH": "The passwords do not match",
+  "REGISTER_VALIDATION_ERROR": "Informations provided are not valid",
+  "ERROR_CREATING_USER": "There was an error creating user",
+  "AUTHORIZATION_ERROR": "Authorization error"
+}

@@ -11,6 +11,7 @@
     "space-before-function-paren": 1,
     "prefer-destructuring": 0,
     "no-param-reassign": 0,
+    "no-underscore-dangle": 0,
     "import/no-unresolved": 0,
     "import/no-extraneous-dependencies": 0,
     "max-len": ["error", 120, 4],
