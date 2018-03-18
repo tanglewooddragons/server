@@ -6,22 +6,22 @@ const validate = require('services/validation')
 const register = async (ctx) => {
   const data = ctx.request.body
 
+  try {
+    await validate(data, 'register')
+  } catch (err) {
+    // @TODO Possibly add the result of validation to error
+    ctx.throw(422, ctx.i18n.__('REGISTER_VALIDATION_ERROR'))
+  }
+
   const exists = await emailTaken(data.email)
   if (exists) {
-    ctx.throw(403, 'Email is already taken')
+    ctx.throw(403, ctx.i18n.__('EMAIL_TAKEN'))
     return
   }
 
   if (data.password !== data.passwordRepeat) {
-    ctx.throw(400, 'Passwords do not match')
+    ctx.throw(400, ctx.i18n.__('PASSWORD_MISMATCH'))
     return
-  }
-
-  try {
-    await validate(data, 'register')
-  } catch (err) {
-    // @TODO Dać tu jakiś normalny error
-    ctx.throw(422, err)
   }
 
   const hashedPassword = await hash(data.password)
@@ -34,14 +34,13 @@ const register = async (ctx) => {
 
   await createUser(user)
     .then((newUser) => {
-      // eslint-disable-next-line
-      delete newUser.password
+      newUser.password = null
       ctx.status = 201
       ctx.body = newUser
     })
     .catch((err) => {
       log.error(err)
-      ctx.throw(400, 'Error creating user')
+      ctx.throw(400, ctx.i18n.__('ERROR_CREATING_USER'))
     })
 }
 

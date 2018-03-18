@@ -9,13 +9,13 @@ const login = async (ctx) => {
   const user = await getUserByEmail(email)
 
   if (!user) {
-    ctx.throw(400, 'Wrong email')
+    ctx.throw(400, ctx.i18n.__('WRONG_EMAIL'))
   }
 
   const isPasswordCorrect = await comparePasswords(password, user.password)
 
   if (!isPasswordCorrect) {
-    ctx.throw(401, 'Wrong password')
+    ctx.throw(401, ctx.i18n.__('WRONG_PASSWORD'))
     return
   }
 

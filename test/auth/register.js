@@ -23,6 +23,7 @@ module.exports = function (app) {
       request(app)
         .post('/api/register')
         .send({
+          email: 'test@test.com',
           username: 'tester',
           password: 't',
           passwordRepeat: 't',
@@ -38,6 +39,7 @@ module.exports = function (app) {
       request(app)
         .post('/api/register')
         .send({
+          email: 'test@test.com',
           username: 'tester',
           password: 'test',
           passwordRepeat: 'tstetes',

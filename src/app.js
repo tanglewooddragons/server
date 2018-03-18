@@ -40,6 +40,7 @@ app
   .use(helmet())
   .use(i18n(app, {
     directory: path.resolve(__dirname, 'constants', 'locales'),
+    extension: '.json',
     locales: ['en', 'pl'],
   }))
   // Public routes

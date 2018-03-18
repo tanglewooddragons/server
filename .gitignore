@@ -15,9 +15,6 @@ config.json
 # DB files
 rethinkdb_data/
 
-# Files created by i18n module
-src/constants/locales/*.js
-
 # Swap files
 *.swp
 *.swo
