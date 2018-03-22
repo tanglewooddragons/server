@@ -8,7 +8,7 @@ module.exports = async (ctx) => {
   const dragon = await getDragonById(id)
 
   if (!dragon) {
-    ctx.throw(400, 'Dragon not found')
+    ctx.throw(400, ctx.i18n.__('DRAGON_NOT_FOUND'))
     return ctx
   }
 

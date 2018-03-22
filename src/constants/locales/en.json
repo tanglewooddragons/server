@@ -5,5 +5,14 @@
   "PASSWORD_MISMATCH": "The passwords do not match",
   "REGISTER_VALIDATION_ERROR": "Informations provided are not valid",
   "ERROR_CREATING_USER": "There was an error creating user",
-  "AUTHORIZATION_ERROR": "Authorization error"
+  "AUTHORIZATION_ERROR": "Authorization error",
+  "NOT_BASIC_TIER": "Aspect must be of basic tier",
+  "ERROR_CREATING_DRAGON": "There was an error creating dragon",
+  "DRAGON_NOT_FOUND": "The dragon was not found",
+  "EGG_ALREADY_WARMED": "The egg has already been warmed",
+  "DRAGON_ALREADY_FED": "The dragon was already fed",
+  "NO_FOOD_TYPE": "You need to provide a food type",
+  "INVALID_FOOD_TYPE": "The food type is invalid",
+  "REMOVING_DRAGON_ERROR": "There was an error removing dragon",
+  "NO_UPDATE_BODY": "No update provided"
 }

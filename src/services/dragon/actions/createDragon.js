@@ -18,7 +18,7 @@ const create = async (ctx) => {
   }
 
   if (!isBasicAspect(body.aspect)) {
-    ctx.throw(400, 'Aspect must be of basic tier')
+    ctx.throw(400, ctx.i18n.__('NOT_BASIC_TIER'))
   }
 
   const dragonData = {
@@ -31,7 +31,7 @@ const create = async (ctx) => {
   const created = await createDragon(dragonData)
 
   if (!created) {
-    ctx.throw(400, 'Error creating dragon')
+    ctx.throw(400, ctx.i18n.__('ERROR_CREATING_DRAGON'))
   }
 
   ctx.status = 201
