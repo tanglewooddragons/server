@@ -1,9 +1,10 @@
 const server = require('../src/app')
-const thinky = require('../src/db/thinky')
-const User = require('../src/db/models/user')
-const Dragon = require('../src/db/models/dragon')
-const Token = require('../src/db/models/token')
-const Schedule = require('../src/db/models/schedule')
+const thinky = require('db/thinky')
+const User = require('db/models/user')
+const Dragon = require('db/models/dragon')
+const Token = require('db/models/token')
+const Schedule = require('db/models/schedule')
+const ChatMessage = require('db/models/chatMessage')
 
 const register = require('./auth/register')
 const login = require('./auth/login')
@@ -22,6 +23,8 @@ const scheduleAction = require('./scheduler/scheduleAction')
 
 const wsServer = require('./ws/server')
 
+const sendMessage = require('./chat/sendMessage')
+
 before(async () => {
   await thinky.dbReady()
   const users = await User.filter({}).run()
@@ -29,6 +32,9 @@ before(async () => {
 
   const dragons = await Dragon.filter({}).run()
   dragons.forEach(dragon => dragon.delete())
+
+  const chatMessages = await ChatMessage.filter({}).run()
+  chatMessages.forEach(msg => msg.delete())
 })
 
 describe('#tanglewood-api', () => {
@@ -59,6 +65,10 @@ describe('#tanglewood-api', () => {
 
   describe('#ws', () => {
     wsServer(app)
+  })
+
+  describe('#chat', () => {
+    sendMessage()
   })
 
   app.close()

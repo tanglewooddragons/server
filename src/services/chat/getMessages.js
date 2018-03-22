@@ -23,7 +23,7 @@ const getMessages = async (socket, data) => {
     return
   }
 
-  if (!CHANNELS.includes(channel)) {
+  if (!CHANNELS.includes(channel.toLowerCase())) {
     socket.send(stringify({
       type: MESSAGES_TYPE,
       payload: {
