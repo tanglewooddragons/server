@@ -24,6 +24,7 @@ const scheduleAction = require('./scheduler/scheduleAction')
 const wsServer = require('./ws/server')
 
 const sendMessage = require('./chat/sendMessage')
+const getMessages = require('./chat/getMessages')
 
 before(async () => {
   await thinky.dbReady()
@@ -69,6 +70,7 @@ describe('#tanglewood-api', () => {
 
   describe('#chat', () => {
     sendMessage()
+    getMessages()
   })
 
   app.close()

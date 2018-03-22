@@ -20,7 +20,7 @@ const getMessages = async (socket, data) => {
       },
     }))
 
-    return
+    return null
   }
 
   if (!CHANNELS.includes(channel.toLowerCase())) {
@@ -31,7 +31,7 @@ const getMessages = async (socket, data) => {
       },
     }))
 
-    return
+    return null
   }
 
   const messages = await getMessagesByChannel(channel)
@@ -43,6 +43,8 @@ const getMessages = async (socket, data) => {
       messages,
     },
   }))
+
+  return messages
 }
 
 module.exports = getMessages
