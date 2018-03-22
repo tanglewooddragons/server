@@ -65,5 +65,20 @@ module.exports = function (app) {
           done()
         })
     })
+
+    it('Fails to create dragon with non-basic tier provided', (done) => {
+      request(app)
+        .post('/api/dragon/create')
+        .send({
+          name: 'Geoff',
+          aspect: 'clockwork',
+        })
+        .set('Authorization', `Bearer ${token}`)
+        .expect(400)
+        .end((err) => {
+          assert.isNotOk(err, 'Request returned error')
+          done()
+        })
+    })
   })
 }

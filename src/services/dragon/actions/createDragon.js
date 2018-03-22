@@ -1,6 +1,9 @@
 const {
   createDragon,
 } = require('db/dragon')
+const {
+  isBasicAspect,
+} = require('constants/aspects')
 const validate = require('services/validation')
 
 const getRandomGender = () => ((Math.random() > 0.5) ? 'male' : 'female')
@@ -14,8 +17,9 @@ const create = async (ctx) => {
     ctx.throw(422, validationError)
   }
 
-  // @TODO
-  // Check if aspect exists and is of basic tier
+  if (!isBasicAspect(body.aspect)) {
+    ctx.throw(400, 'Aspect must be of basic tier')
+  }
 
   const dragonData = {
     owner: ctx.state.user.id,
