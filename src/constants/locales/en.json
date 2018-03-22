@@ -14,5 +14,8 @@
   "NO_FOOD_TYPE": "You need to provide a food type",
   "INVALID_FOOD_TYPE": "The food type is invalid",
   "REMOVING_DRAGON_ERROR": "There was an error removing dragon",
-  "NO_UPDATE_BODY": "No update provided"
+  "NO_UPDATE_BODY": "No update provided",
+  "REMOVING_USER_ERROR": "There was an error removing user",
+  "USER_NOT_FOUND": "The user was not found",
+  "UPDATING_USER_ERROR": "There was an error updating user"
 }

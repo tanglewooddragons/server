@@ -7,7 +7,7 @@ const getUser = async (ctx) => {
   const user = await getUserById(id)
 
   if (!user) {
-    ctx.throw(400, 'User not found')
+    ctx.throw(400, ctx.i18n.__('USER_NOT_FOUND'))
   }
 
   delete user.password
