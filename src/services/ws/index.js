@@ -32,6 +32,14 @@ function initWsServer({ port = 8081 } = {}) {
   wss.on('connection', (socket) => {
     log.debug(socket, 'New WebSocket connection')
 
+    socket.broadcast = (message) => {
+      wss.clients.forEach((client) => {
+        if (client !== socket && client.readyState === ws.OPEN) {
+          client.send(message)
+        }
+      })
+    }
+
     socket.on('message', async (message) => {
       // Parse the message
       const msg = parse(message)

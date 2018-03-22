@@ -1,9 +1,10 @@
 const app = require('./app')
-const { initWsServer } = require('./services/ws')
-const log = require('./util/log')
-const thinky = require('./db/thinky')
+const { initWsServer } = require('services/ws')
+const log = require('util/log')
+const thinky = require('db/thinky')
 
-const { restoreSchedules } = require('./services/scheduler')
+const { restoreSchedules } = require('services/scheduler')
+const initChatService = require('services/chat')
 
 const APP_PORT = 8080
 const WS_PORT = 8081
@@ -14,6 +15,7 @@ thinky.dbReady().then(() => {
     const host = this.address().address
     const port = this.address().port
     log.info(`listening at http://${host}:${port}`)
+    initChatService()
     initWsServer({ port: WS_PORT })
     restoreSchedules()
   })

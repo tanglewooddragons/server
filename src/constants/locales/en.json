@@ -17,5 +17,7 @@
   "NO_UPDATE_BODY": "No update provided",
   "REMOVING_USER_ERROR": "There was an error removing user",
   "USER_NOT_FOUND": "The user was not found",
-  "UPDATING_USER_ERROR": "There was an error updating user"
+  "UPDATING_USER_ERROR": "There was an error updating user",
+  "NO_CHANNEL": "You need to specify a channel",
+  "INVALID_CHANNEL": "The channel you provided is invalid"
 }
