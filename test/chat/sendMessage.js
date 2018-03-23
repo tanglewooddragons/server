@@ -14,14 +14,19 @@ chai.use(spies)
 module.exports = function () {
   describe('sendMessage', () => {
     it('Should return early when data is missing', async () => {
+      const send = chai.spy()
+      const socket = {
+        send,
+      }
       const missingData = {
         payload: {
           text: 'I do not have a channel',
         },
       }
 
-      const result = await sendMessage(null, missingData)
+      const result = await sendMessage(socket, missingData)
       assert.equal(result, null, 'It did not return early')
+      expect(send).to.have.been.called()
     })
 
     it('Should call the broadcast function on socket when data is correct', async () => {

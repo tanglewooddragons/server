@@ -16,12 +16,24 @@ const sendMessage = async (socket, data) => {
   try {
     await validate(msgData, 'chatMessage')
   } catch (err) {
-    // Send error eventually maybe?
+    socket.send(stringify({
+      type: NEW_MESSAGE,
+      payload: {
+        error: err,
+      },
+    }))
+
     return null
   }
 
   if (!CHANNELS.includes(msgData.channel.toLowerCase())) {
-    // Send error?
+    socket.send(stringify({
+      type: NEW_MESSAGE,
+      payload: {
+        error: 'Invalid channel',
+      },
+    }))
+
     return null
   }
 
