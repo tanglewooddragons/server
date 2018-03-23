@@ -54,9 +54,26 @@ async function getDragonById(id) {
   }
 }
 
+async function resetFeedStatus() {
+  log.debug('Reseting dragons feed status..')
+  try {
+    const dragons = await Dragon.filter({}).run()
+    dragons.forEach(async (dragon) => {
+      dragon.fed = false
+      await dragon.save()
+    })
+    log.debug('Successfully reseted dragons feed status')
+    return true
+  } catch (err) {
+    log.error(`Error reseting feed status: ${err}`)
+    return null
+  }
+}
+
 module.exports = {
   createDragon,
   updateDragon,
   removeDragonById,
   getDragonById,
+  resetFeedStatus,
 }

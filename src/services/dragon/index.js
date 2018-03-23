@@ -6,15 +6,29 @@ const updateDragon = require('./actions/updateDragon')
 const removeDragon = require('./actions/removeDragon')
 const feedDragon = require('./actions/feedDragon')
 
+const { resetFeedStatus } = require('db/dragon')
+
 const {
   registerHandler,
-} = require('../scheduler/handlers')
+  scheduleAction,
+} = require('services/scheduler')
 
 const resolveTask = require('./actions/resolveTask')
 const resolveTraining = require('./actions/resolveTraining')
 
-registerHandler('task', resolveTask)
-registerHandler('training', resolveTraining)
+function initSchedules() {
+  registerHandler('task', resolveTask)
+  registerHandler('training', resolveTraining)
+  registerHandler('resetFeed', resetFeedStatus)
+
+  scheduleAction({
+    scheduledBy: '[SYSTEM]',
+    // Midnight
+    scheduledFor: '0 0 * * *',
+    type: 'resetFeed',
+  })
+}
+
 
 const router = new Router()
 
@@ -24,4 +38,7 @@ router.get('/dragon/:id', getDragon)
 router.post('/dragon/:id', updateDragon)
 router.delete('/dragon/:id', removeDragon)
 
-module.exports = router
+module.exports = {
+  router,
+  initSchedules,
+}

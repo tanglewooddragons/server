@@ -36,6 +36,9 @@ before(async () => {
 
   const chatMessages = await ChatMessage.filter({}).run()
   chatMessages.forEach(msg => msg.delete())
+
+  const schedules = await Schedule.filter({}).run()
+  schedules.forEach(s => s.delete())
 })
 
 describe('#tanglewood-api', () => {

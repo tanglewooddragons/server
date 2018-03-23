@@ -16,7 +16,7 @@ const jwt = require('./services/auth/middleware/jwt')
 
 const authRouter = require('./services/auth')
 const userRouter = require('./services/user')
-const dragonRouter = require('./services/dragon')
+const dragonRouter = require('./services/dragon').router
 
 const publicRouter = new Router({
   prefix: '/api',

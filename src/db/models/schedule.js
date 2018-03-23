@@ -5,7 +5,7 @@ const Schedule = thinky.createModel('Schedule', {
   type: thinky.type.string().required(),
   data: thinky.type.object(),
   scheduledBy: thinky.type.string().required(),
-  scheduledFor: thinky.type.date().required(),
+  scheduledFor: thinky.type.any().required(),
 })
 
 module.exports = Schedule

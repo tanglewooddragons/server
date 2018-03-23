@@ -1,6 +1,10 @@
 const scheduleSchema = joi => ({
   scheduledBy: joi.string().required(),
-  scheduledFor: joi.date().required(),
+  scheduledFor: joi.alternatives().try(
+    joi.date(),
+    joi.string(),
+    joi.object(),
+  ).required(),
   data: joi.object().optional(),
   type: joi.string().required(),
 })

@@ -5,6 +5,7 @@ const thinky = require('db/thinky')
 
 const { restoreSchedules } = require('services/scheduler')
 const initChatService = require('services/chat')
+const initDragonSchedules = require('services/dragon').initSchedules
 
 thinky.dbReady().then(() => {
   log.info('Database ready, starting server...')
@@ -14,6 +15,7 @@ thinky.dbReady().then(() => {
     log.info(`listening at http://${host}:${port}`)
     initChatService()
     initWsServer({ port: process.env.WS_PORT })
+    initDragonSchedules()
     restoreSchedules()
   })
 })
