@@ -6,17 +6,14 @@ const thinky = require('db/thinky')
 const { restoreSchedules } = require('services/scheduler')
 const initChatService = require('services/chat')
 
-const APP_PORT = 8080
-const WS_PORT = 8081
-
 thinky.dbReady().then(() => {
   log.info('Database ready, starting server...')
-  app.listen(APP_PORT, function () {
+  app.listen(process.env.APP_PORT, function () {
     const host = this.address().address
     const port = this.address().port
     log.info(`listening at http://${host}:${port}`)
     initChatService()
-    initWsServer({ port: WS_PORT })
+    initWsServer({ port: process.env.WS_PORT })
     restoreSchedules()
   })
 })
