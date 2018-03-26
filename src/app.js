@@ -6,6 +6,7 @@ const helmet = require('koa-helmet')
 const bodyparser = require('koa-bodyparser')
 const locale = require('koa-locale')
 const i18n = require('koa-i18n')
+const compress = require('koa-compress')
 const path = require('path')
 
 const app = new Koa()
@@ -37,6 +38,7 @@ privateRouter.use(dragonRouter.allowedMethods())
 
 app
   .use(bodyparser())
+  .use(compress())
   .use(helmet())
   .use(i18n(app, {
     directory: path.resolve(__dirname, 'constants', 'locales'),
