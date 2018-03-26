@@ -1,5 +1,5 @@
 const app = require('./app')
-const { initWsServer } = require('services/ws')
+const { wss } = require('services/ws')
 const log = require('util/log')
 const thinky = require('db/thinky')
 
@@ -14,7 +14,7 @@ thinky.dbReady().then(() => {
     const port = this.address().port
     log.info(`listening at http://${host}:${port}`)
     initChatService()
-    initWsServer({ port: process.env.WS_PORT })
+    wss.init({ port: process.env.WS_PORT })
     initDragonSchedules()
     restoreSchedules()
   })

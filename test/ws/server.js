@@ -5,7 +5,7 @@ const WebSocket = require('uws')
 const { assert } = chai
 
 const {
-  initWsServer,
+  wss,
   registerHandler,
 } = require('services/ws')
 
@@ -17,7 +17,6 @@ const {
 module.exports = function (app) {
   describe('Server', async () => {
     let token
-    let wss
     let socket
     before(async () => {
       // Login to get token
@@ -29,7 +28,7 @@ module.exports = function (app) {
         })
 
       token = response.body.token
-      wss = initWsServer()
+      wss.init()
     })
 
     beforeEach(() => {
@@ -40,10 +39,11 @@ module.exports = function (app) {
       socket.close()
     })
 
-    it('Returns error when no token is provided', () => {
+    it('Returns error when no token is provided', (done) => {
       socket.on('message', (message) => {
         const msg = parse(message)
         assert.equal(msg.type, 'AUTH_ERROR', 'Message type is invalid')
+        done()
       })
 
       socket.on('open', () => {
@@ -56,10 +56,11 @@ module.exports = function (app) {
       })
     })
 
-    it('Returns error when wrong token is provided', () => {
+    it('Returns error when wrong token is provided', (done) => {
       socket.on('message', (message) => {
         const msg = parse(message)
         assert.equal(msg.type, 'AUTH_ERROR', 'Message type is invalid')
+        done()
       })
 
       socket.on('open', () => {
@@ -73,10 +74,11 @@ module.exports = function (app) {
       })
     })
 
-    it('Does not crash on unknown type of message', () => {
+    it('Does not crash on unknown type of message', (done) => {
       socket.on('message', (message) => {
         const msg = parse(message)
-        assert.equal(msg.type, 'ERROR', 'Message type is invalid')
+        assert.equal(msg.type, 'TYPE_ERROR', 'Message type is invalid')
+        done()
       })
 
       socket.on('open', () => {
@@ -90,11 +92,12 @@ module.exports = function (app) {
       })
     })
 
-    it('Calls handler with correct data', () => {
+    it('Calls handler with correct data', (done) => {
       const testHandler = (ws, data) => {
         assert(data.payload.testId === 321, 'Returns wrong data')
         assert.ok(data.user.id, 'It should send user id')
         assert.notOk(data.payload.token, 'Should not send token back')
+        done()
       }
 
       registerHandler('test', testHandler)

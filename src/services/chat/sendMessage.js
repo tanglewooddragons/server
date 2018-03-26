@@ -41,7 +41,6 @@ const sendMessage = async (socket, data) => {
 
   const message = await addMessage(msgData)
 
-  // Broadcast new state to every socket
   socket.broadcast(stringify({
     type: NEW_MESSAGE,
     payload: {

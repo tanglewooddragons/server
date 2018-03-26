@@ -20,103 +20,147 @@ const registerHandler = (type, handler) => {
 }
 const getHandler = type => handlers[type]
 
-function initWsServer({ port = 8081 } = {}) {
-  log.info('Starting WebSocket server..')
+class WSServer {
+  conststructor() {
+    this.wss = null
+    this.clients = {}
+  }
 
-  const wss = new ws.Server({
-    port,
-  })
+  init({ port = 8081 } = {}) {
+    log.info('Starting WebSocket server..')
 
-  log.info(`WebSocket server listening at port ${port}`)
+    this.wss = new ws.Server({
+      port,
+    })
 
-  wss.on('connection', (socket) => {
-    log.debug(socket, 'New WebSocket connection')
+    log.info(`WebSocket server listening at port ${port}`)
+    this.initHandlers()
+  }
 
-    socket.broadcast = (message) => {
-      wss.clients.forEach((client) => {
-        if (client !== socket && client.readyState === ws.OPEN) {
-          client.send(message)
+  initHandlers() {
+    this.wss.on('connection', (socket) => {
+      log.debug(socket, 'New WebSocket connection')
+
+      socket.broadcast = (message) => {
+        if (!this.wss.clients) return
+
+        this.wss.clients.forEach((client) => {
+          if (client !== socket && client.readyState === ws.OPEN) {
+            client.send(message)
+          }
+        })
+      }
+
+      socket.on('message', async (message) => {
+        // Parse the message
+        const msg = parse(message)
+
+        log.debug(msg, 'Received Websocket message')
+
+        if (!msg.payload) return
+
+        // Check if user is authenticated
+        const token = msg.payload.token
+
+        if (!token) {
+          // Return auth error - no token
+          socket.send(stringify({
+            type: 'AUTH_ERROR',
+            payload: {
+              message: 'Token required to perform this action',
+            },
+          }))
+          return
         }
+
+        let decoded
+
+        try {
+          decoded = jwt.verify(token, process.env.JWT_SECRET)
+        } catch (err) {
+          log.error(`Error decoding token: ${err}`)
+          socket.send(stringify({
+            type: 'AUTH_ERROR',
+            payload: {
+              message: 'Provided token is invalid',
+            },
+          }))
+          return
+        }
+
+        const entry = await getToken(decoded.id)
+
+        if (!entry || entry.token !== token) {
+          // Return auth error - invalid token
+          socket.send(stringify({
+            type: 'AUTH_ERROR',
+            payload: {
+              message: 'Provided token is invalid',
+            },
+          }))
+          return
+        }
+
+        // Attach user object to data
+        const data = {
+          payload: msg.payload,
+          user: {
+            id: decoded.id,
+          },
+        }
+
+        socket.userId = data.user.id
+
+        delete data.payload.token
+
+        // Determine handler
+        const type = msg.type
+        const handler = getHandler(type)
+
+        if (!handler) {
+          socket.send(stringify({
+            type: 'TYPE_ERROR',
+            payload: {
+              message: 'Invalid type property',
+            },
+          }))
+          return
+        }
+
+        // Fire handler
+        handler(socket, data)
       })
+    })
+  }
+
+  broadcast(message) {
+    if (!this.wss) {
+      log.error('[WS] Server must be initialzied first')
+      return
     }
 
-    socket.on('message', async (message) => {
-      // Parse the message
-      const msg = parse(message)
+    if (!this.wss.clients) return
 
-      log.debug(msg, 'Received Websocket message')
-
-      if (!msg.payload) return
-
-      // Check if user is authenticated
-      const token = msg.payload.token
-
-      if (!token) {
-        // Return auth error - no token
-        socket.send(stringify({
-          type: 'AUTH_ERROR',
-          payload: {
-            message: 'Token required to perform this action',
-          },
-        }))
-        return
+    this.wss.clients.forEach((client) => {
+      if (client.readyState === ws.OPEN) {
+        client.send(message)
       }
-
-      let decoded
-
-      try {
-        decoded = jwt.verify(token, process.env.JWT_SECRET)
-      } catch (err) {
-        log.error(`Error decoding token: ${err}`)
-        return
-      }
-
-      const entry = await getToken(decoded.id)
-
-      if (!entry || entry.token !== token) {
-        // Return auth error - invalid token
-        socket.send(stringify({
-          type: 'AUTH_ERROR',
-          payload: {
-            message: 'PRovided token is invalid',
-          },
-        }))
-        return
-      }
-
-      // Attach user object to data
-      const data = {
-        payload: msg.payload,
-        user: {
-          id: decoded.id,
-        },
-      }
-
-      delete data.payload.token
-
-      // Determine handler
-      const type = msg.type
-      const handler = getHandler(type)
-
-      if (!handler) {
-        socket.send(stringify({
-          type: 'TYPE_ERROR',
-          payload: {
-            message: 'Invalid type property',
-          },
-        }))
-        return
-      }
-
-      // Fire handler
-      handler(socket, data)
     })
-  })
+  }
 
-  return wss
+  close() {
+    if (!this.wss) {
+      log.error('[WS] Server must be initialzied first')
+      return
+    }
+
+    this.wss.close()
+  }
 }
 
+const wss = new WSServer()
+
 module.exports = {
-  initWsServer,
+  wss,
   registerHandler,
 }
