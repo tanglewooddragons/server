@@ -133,6 +133,22 @@ class WSServer {
     })
   }
 
+  send(userId, message) {
+    if (!this.wss.clients) return
+
+    /*
+      Think about holding a clients map as this loop
+      could easily go out of hand with a lot of users
+    */
+
+    this.wss.clients.forEach((client) => {
+      if (client.userId === userId) {
+        client.send(message)
+        log.debug(message, `Send a message to user: ${userId}`)
+      }
+    })
+  }
+
   broadcast(message) {
     if (!this.wss) {
       log.error('[WS] Server must be initialzied first')
