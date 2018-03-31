@@ -1,4 +1,5 @@
 const Dragon = require('./models/dragon')
+const DragonStatus = require('./models/dragonStatus')
 const log = require('../util/log')
 
 async function createDragon(options) {
@@ -6,6 +7,10 @@ async function createDragon(options) {
     log.debug(`Creating new dragon: ${options.name}`)
     const dragon = new Dragon(options)
     await dragon.save()
+    const status = new DragonStatus({
+      dragonId: dragon.id,
+    })
+    await status.save()
     log.debug(`Dragon ${options.name} created successfully!`)
     return dragon
   } catch (err) {

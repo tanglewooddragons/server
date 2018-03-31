@@ -5,6 +5,7 @@ const getDragon = require('./actions/getDragon')
 const updateDragon = require('./actions/updateDragon')
 const removeDragon = require('./actions/removeDragon')
 const feedDragon = require('./actions/feedDragon')
+const getStatuses = require('./actions/getStatuses')
 
 const { resetFeedStatus } = require('db/dragon')
 
@@ -32,6 +33,7 @@ function initSchedules() {
 
 const router = new Router()
 
+router.get('/dragon/statuses', getStatuses)
 router.post('/dragon/create', createDragon)
 router.post('/dragon/feed/:id', feedDragon)
 router.get('/dragon/:id', getDragon)

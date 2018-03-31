@@ -15,6 +15,9 @@ config.json
 # DB files
 rethinkdb_data/
 
+# Sandbox file
+sandbox.js
+
 # Swap files
 *.swp
 *.swo

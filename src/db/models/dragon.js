@@ -1,4 +1,5 @@
 const thinky = require('../thinky')
+const DragonStatus = require('./dragonStatus')
 
 const Dragon = thinky.createModel('Dragon', {
   name: thinky.type.string().required(),
@@ -29,5 +30,7 @@ const Dragon = thinky.createModel('Dragon', {
 
 Dragon.hasOne(Dragon, 'father', 'fatherId', 'id')
 Dragon.hasOne(Dragon, 'mother', 'motherId', 'id')
+
+Dragon.hasOne(DragonStatus, 'status', 'id', 'dragonId')
 
 module.exports = Dragon

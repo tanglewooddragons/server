@@ -9,6 +9,7 @@
     "db:create": "node util/createDb",
     "db:clean": "docker stop tanglewood && docker rm tanglewood",
     "test": "NODE_PATH=src NODE_ENV=test mocha test/index",
+    "test:debug": "NODE_PATH=src NODE_ENV=debug mocha test/index | ./node_modules/.bin/bunyan -o short",
     "test:watch": "NODE_PATH=src NODE_ENV=test mocha test/index --watch",
     "lint": "eslint src/",
     "profile:setup": "NODE_PATH=src NODE_ENV=production node --prof src/index.js",
@@ -20,6 +21,7 @@
   "dependencies": {
     "argon2": "^0.17.2",
     "bunyan": "^1.8.12",
+    "date-fns": "^1.29.0",
     "dotenv": "^4.0.0",
     "joi": "^13.0.2",
     "jsonwebtoken": "^8.1.0",

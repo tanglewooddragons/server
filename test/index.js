@@ -18,6 +18,7 @@ const getDragon = require('./dragon/getDragon')
 const removeDragon = require('./dragon/removeDragon')
 const updateDragon = require('./dragon/updateDragon')
 const feedDragon = require('./dragon/feedDragon')
+const getStatuses = require('./dragon/getStatuses')
 
 const scheduleAction = require('./scheduler/scheduleAction')
 
@@ -61,6 +62,7 @@ describe('#tanglewood-api', () => {
     removeDragon(app)
     updateDragon(app)
     feedDragon(app)
+    getStatuses(app)
   })
 
   describe('#scheduler', () => {
