@@ -1,8 +1,8 @@
 const Router = require('koa-router')
 
-const getUser = require('./actions/getUser')
-const updateUser = require('./actions/updateUser')
-const deleteUser = require('./actions/deleteUser')
+const getUser = require('./routes/getUser')
+const updateUser = require('./routes/updateUser')
+const deleteUser = require('./routes/deleteUser')
 
 const router = new Router()
 

@@ -1,11 +1,11 @@
 const Router = require('koa-router')
 
-const createDragon = require('./actions/createDragon')
-const getDragon = require('./actions/getDragon')
-const updateDragon = require('./actions/updateDragon')
-const removeDragon = require('./actions/removeDragon')
-const feedDragon = require('./actions/feedDragon')
-const getStatuses = require('./actions/getStatuses')
+const createDragon = require('./routes/createDragon')
+const getDragon = require('./routes/getDragon')
+const updateDragon = require('./routes/updateDragon')
+const removeDragon = require('./routes/removeDragon')
+const feedDragon = require('./routes/feedDragon')
+const getStatuses = require('./routes/getStatuses')
 
 const { resetFeedStatus } = require('db/dragon')
 
@@ -14,8 +14,8 @@ const {
   scheduleAction,
 } = require('services/scheduler')
 
-const resolveTask = require('./actions/resolveTask')
-const resolveTraining = require('./actions/resolveTraining')
+const resolveTask = require('./resolvers/resolveTask')
+const resolveTraining = require('./resolvers/resolveTraining')
 
 function initSchedules() {
   registerHandler('task', resolveTask)

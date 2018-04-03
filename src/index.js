@@ -13,8 +13,8 @@ thinky.dbReady().then(() => {
     const host = this.address().address
     const port = this.address().port
     log.info(`listening at http://${host}:${port}`)
-    initChatService()
     wss.init({ port: process.env.WS_PORT })
+    initChatService()
     initDragonSchedules()
     restoreSchedules()
   })
