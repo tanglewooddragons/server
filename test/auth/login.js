@@ -49,14 +49,11 @@ module.exports = function (app) {
 
     it('Should NOT be able to get resource with an old token', (done) => {
       request(app)
-        .post('/api/login')
-        .send({
-          email: 'test@test.com',
-          password: 'test',
-        })
+        .get('/api/logout')
+        .set('Authorization', `Bearer ${token}`)
         .end(() => {
           request(app)
-            .get('/users/user/1')
+            .get(`/api/user/${user.id}`)
             .set('Authorization', `Bearer ${token}`)
             .end((err, res) => {
               assert.isNotOk(err, 'Request returns error')

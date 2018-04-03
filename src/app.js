@@ -12,7 +12,6 @@ const path = require('path')
 const app = new Koa()
 locale(app)
 
-const auth = require('./services/auth/middleware/auth')
 const jwt = require('./services/auth/middleware/jwt')
 
 const authRouter = require('./services/auth')
@@ -36,6 +35,18 @@ privateRouter.use(userRouter.allowedMethods())
 privateRouter.use(dragonRouter.routes())
 privateRouter.use(dragonRouter.allowedMethods())
 
+// Custom auth error handler
+app.use((ctx, next) =>
+  next().catch((err) => {
+    if (err.status === 401) {
+      ctx.status = 401
+      ctx.body = ctx.i18n.__('AUTHORIZATION_ERROR')
+    } else {
+      throw err
+    }
+  })
+)
+
 app
   .use(bodyparser())
   .use(compress())
@@ -48,7 +59,6 @@ app
   // Public routes
   .use(publicRouter.routes())
   .use(publicRouter.allowedMethods())
-  .use(auth)
   .use(jwt)
   // Private routes (token required)
   .use(privateRouter.routes())

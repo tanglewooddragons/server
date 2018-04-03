@@ -2,7 +2,7 @@ const ws = require('uws')
 const jwt = require('jsonwebtoken')
 
 const {
-  getToken,
+  getTokens,
 } = require('db/token')
 
 const log = require('util/log')
@@ -88,7 +88,8 @@ class WSServer {
           return
         }
 
-        const entry = await getToken(decoded.id)
+        const entries = await getTokens(decoded.id)
+        const entry = entries.find(e => e.token === token)
 
         if (!entry || entry.token !== token) {
           // Return auth error - invalid token

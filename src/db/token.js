@@ -1,14 +1,14 @@
 const Token = require('./models/token')
 const log = require('../util/log')
 
-async function getToken(userId) {
+async function getTokens(userId) {
   try {
-    log.debug(`Getting token for ${userId}..`)
-    const token = await Token.filter({ userId }).limit(1).run()
-    log.debug(`Got token for ${userId}`)
-    return token[0]
+    log.debug(`Getting tokens for ${userId}..`)
+    const tokens = await Token.filter({ userId }).run()
+    log.debug(`Got tokens for ${userId}`)
+    return tokens
   } catch (err) {
-    log.error(`Error getting token: ${err}`)
+    log.error(`Error getting tokens: ${err}`)
     return null
   }
 }
@@ -26,13 +26,11 @@ async function saveToken(context) {
   }
 }
 
-async function removeToken(userId) {
+async function removeToken(token) {
   try {
-    log.debug(`Removing token for ${userId}`)
-    const tokenEntries = await Token.filter({ userId }).run()
-
-    if (!tokenEntries.length) return true
-    await tokenEntries.forEach(async t => t.delete())
+    log.debug(`Removing token: ${token}`)
+    const tokenEntry = await Token.filter({ token }).run()
+    await tokenEntry[0].delete()
     return true
   } catch (err) {
     log.error(`Error removing token: ${err}`)
@@ -40,8 +38,23 @@ async function removeToken(userId) {
   }
 }
 
+async function removeAllTokens(userId) {
+  try {
+    log.debug(`Removing all tokens for ${userId}`)
+    const tokenEntries = await Token.filter({ userId }).run()
+
+    if (!tokenEntries.length) return true
+    await tokenEntries.forEach(async t => t.delete())
+    return true
+  } catch (err) {
+    log.error(`Error removing tokens: ${err}`)
+    return null
+  }
+}
+
 module.exports = {
-  getToken,
+  getTokens,
   saveToken,
   removeToken,
+  removeAllTokens,
 }

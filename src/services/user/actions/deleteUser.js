@@ -2,14 +2,14 @@ const {
   deleteUserById,
 } = require('db/user')
 const {
-  removeToken,
+  removeAllTokens,
 } = require('db/token')
 
 const deleteUser = async (ctx) => {
   const id = ctx.state.user.id
 
   const deleted = await deleteUserById(id)
-  await removeToken(id)
+  await removeAllTokens(id)
 
   if (!deleted) {
     ctx.throw(400, ctx.i18n.__('REMOVING_USER_ERROR'))

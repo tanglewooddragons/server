@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const { getToken, saveToken, removeToken } = require('db/token')
+const { saveToken } = require('db/token')
 const { getUserByEmail } = require('db/user')
 const comparePasswords = require('util/comparePasswords')
 
@@ -19,11 +19,6 @@ const login = async (ctx) => {
     return
   }
 
-  const oldToken = await getToken(user.id)
-  if (oldToken) {
-    await removeToken(user.id)
-  }
-
   const tokenBody = {
     id: user.id,
     role: user.role,
@@ -38,7 +33,7 @@ const login = async (ctx) => {
     token,
   })
 
-  delete user.password
+  user.password = null
 
   ctx.body = {
     ...user,
