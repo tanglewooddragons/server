@@ -7,6 +7,7 @@
   "ERROR_CREATING_USER": "There was an error creating user",
   "AUTHORIZATION_ERROR": "Authorization error",
   "NOT_BASIC_TIER": "Aspect must be of basic tier",
+  "MAX_AMOUNT_OF_DRAGONS": "You have maximal amount of dragons",
   "ERROR_CREATING_DRAGON": "There was an error creating dragon",
   "DRAGON_NOT_FOUND": "The dragon was not found",
   "EGG_ALREADY_WARMED": "The egg has already been warmed",

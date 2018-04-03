@@ -1,9 +1,7 @@
-const {
-  createDragon,
-} = require('db/dragon')
-const {
-  isBasicAspect,
-} = require('constants/aspects')
+const { createDragon } = require('db/dragon')
+const { getUserById } = require('db/user')
+const { isBasicAspect } = require('constants/aspects')
+const { DRAGON_LIMIT } = require('constants/dragon')
 const validate = require('services/validation')
 
 const getRandomGender = () => ((Math.random() > 0.5) ? 'male' : 'female')
@@ -15,6 +13,13 @@ const create = async (ctx) => {
     await validate(body, 'dragon')
   } catch (validationError) {
     ctx.throw(422, validationError)
+  }
+
+  const user = await getUserById(ctx.state.user.id)
+  const amountOfDragons = user.dragons.length
+
+  if (amountOfDragons >= DRAGON_LIMIT) {
+    ctx.throw(400, ctx.i18n.__('MAX_AMOUNT_OF_DRAGONS'))
   }
 
   if (!isBasicAspect(body.aspect)) {
