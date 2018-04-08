@@ -45,7 +45,7 @@ class WSServer {
         if (!this.wss.clients) return
 
         this.wss.clients.forEach((client) => {
-          if (client !== socket && client.readyState === ws.OPEN) {
+          if (client.readyState === ws.OPEN) {
             client.send(message)
           }
         })

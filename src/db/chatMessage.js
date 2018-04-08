@@ -9,6 +9,14 @@ async function getMessagesByChannel(channel) {
   const messages = await ChatMessage
     .filter({ channel })
     .limit(MESSAGE_FETCH_LIMIT)
+    .orderBy('posted')
+    .getJoin({
+      author: {
+        _apply(sequence) {
+          return sequence.without('password')
+        },
+      },
+    })
     .run()
 
   if (!messages) return null
