@@ -5,6 +5,7 @@ const {
   stringify,
 } = require('util/json')
 const {
+  SEND_MESSAGE,
   NEW_MESSAGE,
   CHANNELS,
 } = require('constants/chat')
@@ -17,7 +18,7 @@ const sendMessage = async (socket, data) => {
     await validate(msgData, 'chatMessage')
   } catch (err) {
     socket.send(stringify({
-      type: NEW_MESSAGE,
+      type: SEND_MESSAGE,
       payload: {
         error: err,
       },
@@ -28,7 +29,7 @@ const sendMessage = async (socket, data) => {
 
   if (!CHANNELS.includes(msgData.channel.toLowerCase())) {
     socket.send(stringify({
-      type: NEW_MESSAGE,
+      type: SEND_MESSAGE,
       payload: {
         error: 'Invalid channel',
       },
