@@ -10,7 +10,7 @@ module.exports = function (app) {
     */
     let user
     let token
-    before((done) => {
+    beforeAll((done) => {
       request(app)
         .post('/api/login')
         .send({
@@ -24,7 +24,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Should delete tokens owner', (done) => {
+    test('Should delete tokens owner', (done) => {
       request(app)
         .delete('/api/user')
         .set('Authorization', `Bearer ${token}`)
@@ -36,7 +36,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Should delete token', (done) => {
+    test('Should delete token', (done) => {
       request(app)
         .get('/api/user/123')
         .set('Authorization', `Bearer ${token}`)

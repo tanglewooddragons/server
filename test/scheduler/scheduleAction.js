@@ -13,7 +13,7 @@ const sleep = time => new Promise((resolve) => {
 
 module.exports = function () {
   describe('scheduleAction', () => {
-    it('Fails to schedule with missing data', async () => {
+    test('Fails to schedule with missing data', async () => {
       const options = {
         scheduledBy: 'mocha',
         type: 'test',
@@ -31,7 +31,7 @@ module.exports = function () {
       assert.equal(registeredJobAmount, 0, 'It registered the job')
     })
 
-    it('Schedules given task', async () => {
+    test('Schedules given task', async () => {
       const options = {
         scheduledBy: 'mocha',
         type: 'test',
@@ -52,7 +52,7 @@ module.exports = function () {
       await sleep(200)
     })
 
-    it('Calls the resolve function on scheduled time', async () => {
+    test('Calls the resolve function on scheduled time', async () => {
       const options = {
         scheduledBy: 'mocha',
         type: 'test',

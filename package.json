@@ -8,9 +8,9 @@
     "db:start": "docker start tanglewood",
     "db:create": "node util/createDb",
     "db:clean": "docker stop tanglewood && docker rm tanglewood",
-    "test": "NODE_PATH=src NODE_ENV=test mocha test/index",
-    "test:debug": "NODE_PATH=src NODE_ENV=debug mocha test/index | ./node_modules/.bin/bunyan -o short",
-    "test:watch": "NODE_PATH=src NODE_ENV=test mocha test/index --watch",
+    "test": "NODE_PATH=src NODE_ENV=test jest",
+    "test:debug": "NODE_PATH=src NODE_ENV=debug jest | ./node_modules/.bin/bunyan -o short",
+    "test:watch": "NODE_PATH=src NODE_ENV=test jest --watch",
     "lint": "eslint src/",
     "profile:setup": "NODE_PATH=src NODE_ENV=production node --prof src/index.js",
     "profile:run": "node util/profile.js"
@@ -44,7 +44,7 @@
     "eslint": "^4.12.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
-    "mocha": "^4.0.1",
+    "jest": "^22.4.3",
     "supertest": "^3.0.0"
   }
 }

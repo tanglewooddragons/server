@@ -9,7 +9,7 @@ module.exports = function (app) {
     Login to get token
     */
     let token
-    before(async () => {
+    beforeAll(async () => {
       await request(app)
         .post('/api/login')
         .send({
@@ -30,7 +30,7 @@ module.exports = function (app) {
         .set('Authorization', `Bearer ${token}`)
     })
 
-    it('Returns dragon statuses', (done) => {
+    test('Returns dragon statuses', (done) => {
       request(app)
         .get('/api/dragon/statuses')
         .set('Authorization', `Bearer ${token}`)

@@ -8,7 +8,7 @@ module.exports = function (app) {
     let token
     let user
 
-    it('Should recieve token on login', (done) => {
+    test('Should recieve token on login', (done) => {
       request(app)
         .post('/api/login')
         .send({
@@ -25,7 +25,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Should not be able to get resource without token', (done) => {
+    test('Should not be able to get resource without token', (done) => {
       request(app)
         .get(`/api/user/${user.id}`)
         .end((err, res) => {
@@ -35,7 +35,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Should be able to get resource with valid token', (done) => {
+    test('Should be able to get resource with valid token', (done) => {
       request(app)
         .get(`/api/user/${user.id}`)
         .set('Authorization', `Bearer ${token}`)
@@ -47,7 +47,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Should NOT be able to get resource with an old token', (done) => {
+    test('Should NOT be able to get resource with an old token', (done) => {
       request(app)
         .get('/api/logout')
         .set('Authorization', `Bearer ${token}`)

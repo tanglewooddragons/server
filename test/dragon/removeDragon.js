@@ -10,7 +10,7 @@ module.exports = function (app) {
     */
     let dragon
     let token
-    before(async () => {
+    beforeAll(async () => {
       await request(app)
         .post('/api/login')
         .send({
@@ -34,7 +34,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Removes correct dragon', (done) => {
+    test('Removes correct dragon', (done) => {
       request(app)
         .delete(`/api/dragon/${dragon.id}`)
         .set('Authorization', `Bearer ${token}`)

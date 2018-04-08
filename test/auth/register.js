@@ -5,7 +5,7 @@ const { assert } = chai
 
 module.exports = function (app) {
   describe('register', () => {
-    it('Fails to register with missing data', (done) => {
+    test('Fails to register with missing data', (done) => {
       request(app)
         .post('/api/register')
         .send({
@@ -19,7 +19,7 @@ module.exports = function (app) {
           done()
         })
     })
-    it('Fails to register when data is NOT valid', (done) => {
+    test('Fails to register when data is NOT valid', (done) => {
       request(app)
         .post('/api/register')
         .send({
@@ -35,7 +35,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Fails to register if passwords do NOT match', (done) => {
+    test('Fails to register if passwords do NOT match', (done) => {
       request(app)
         .post('/api/register')
         .send({
@@ -51,7 +51,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Registers when everything is ok', (done) => {
+    test('Registers when everything is ok', (done) => {
       request(app)
         .post('/api/register')
         .send({
@@ -67,7 +67,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Fails to register when email is taken', (done) => {
+    test('Fails to register when email is taken', (done) => {
       request(app)
         .post('/api/register')
         .send({
@@ -83,7 +83,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Should register properly using another email', (done) => {
+    test('Should register properly using another email', (done) => {
       request(app)
         .post('/api/register')
         .send({

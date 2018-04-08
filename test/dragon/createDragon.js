@@ -10,7 +10,7 @@ module.exports = function (app) {
     */
     let user
     let token
-    before((done) => {
+    beforeAll((done) => {
       request(app)
         .post('/api/login')
         .send({
@@ -24,7 +24,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Fails to register with missing name', (done) => {
+    test('Fails to register with missing name', (done) => {
       request(app)
         .post('/api/dragon/create')
         .set('Authorization', `Bearer ${token}`)
@@ -35,7 +35,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Creates dragon with proper data provided', (done) => {
+    test('Creates dragon with proper data provided', (done) => {
       request(app)
         .post('/api/dragon/create')
         .send({
@@ -50,7 +50,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Sets current user as dragon owner', (done) => {
+    test('Sets current user as dragon owner', (done) => {
       request(app)
         .post('/api/dragon/create')
         .send({
@@ -66,7 +66,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Fails to create dragon with non-basic tier provided', (done) => {
+    test('Fails to create dragon with non-basic tier provided', (done) => {
       request(app)
         .post('/api/dragon/create')
         .send({

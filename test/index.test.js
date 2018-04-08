@@ -27,7 +27,7 @@ const wsServer = require('./ws/server')
 const sendMessage = require('./chat/sendMessage')
 const getMessages = require('./chat/getMessages')
 
-before(async () => {
+beforeAll(async () => {
   await thinky.dbReady()
   const users = await User.filter({}).run()
   users.forEach(user => user.delete())
@@ -81,7 +81,7 @@ describe('#tanglewood-api', () => {
   app.close()
 })
 
-after(async () => {
+afterAll(async () => {
   // Remove ghost tokens
   const tokens = await Token.filter({}).run()
   tokens.forEach(async t => t.delete())

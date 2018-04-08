@@ -10,7 +10,7 @@ module.exports = function (app) {
     */
     let user
     let token
-    before((done) => {
+    beforeAll((done) => {
       request(app)
         .post('/api/login')
         .send({
@@ -24,7 +24,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Should update fields', (done) => {
+    test('Should update fields', (done) => {
       request(app)
         .put('/api/user')
         .send({
@@ -41,7 +41,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Should NOT update secured fields', (done) => {
+    test('Should NOT update secured fields', (done) => {
       request(app)
         .put('/api/user')
         .send({

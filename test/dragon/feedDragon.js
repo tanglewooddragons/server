@@ -13,7 +13,7 @@ module.exports = function (app) {
     let dragon
     let adultDragon
     let token
-    before(async () => {
+    beforeAll(async () => {
       await request(app)
         .post('/api/login')
         .send({
@@ -46,7 +46,7 @@ module.exports = function (app) {
       })
     })
 
-    it('Does not modify dragon statistics when its still egg', (done) => {
+    test('Does not modify dragon statistics when its still egg', (done) => {
       request(app)
         .post(`/api/dragon/feed/${dragon.id}`)
         .set('Authorization', `Bearer ${token}`)
@@ -67,7 +67,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Fails to feed when type of food is invalid', (done) => {
+    test('Fails to feed when type of food is invalid', (done) => {
       request(app)
         .post(`/api/dragon/feed/${adultDragon.id}`)
         .send({
@@ -81,7 +81,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Updates dragon statistics properly', (done) => {
+    test('Updates dragon statistics properly', (done) => {
       request(app)
         .post(`/api/dragon/feed/${adultDragon.id}`)
         .send({
@@ -97,7 +97,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Fails to feed dragon when it has already been fed', (done) => {
+    test('Fails to feed dragon when it has already been fed', (done) => {
       request(app)
         .post(`/api/dragon/feed/${adultDragon.id}`)
         .send({

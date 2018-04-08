@@ -12,7 +12,7 @@ module.exports = function (app) {
     */
     let user
     let token
-    before(async () => {
+    beforeAll(async () => {
       const response = await request(app)
         .post('/api/login')
         .send({
@@ -41,7 +41,7 @@ module.exports = function (app) {
       await d2.save()
     })
 
-    it('Returns error when user does NOT exist', (done) => {
+    test('Returns error when user does NOT exist', (done) => {
       request(app)
         .get('/api/user/idonotexistlala')
         .set('Authorization', `Bearer ${token}`)
@@ -52,7 +52,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Returns correct user', (done) => {
+    test('Returns correct user', (done) => {
       request(app)
         .get(`/api/user/${user.id}`)
         .set('Authorization', `Bearer ${token}`)
@@ -64,7 +64,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Returns logged in user when no id is provided', (done) => {
+    test('Returns logged in user when no id is provided', (done) => {
       request(app)
         .get('/api/user')
         .set('Authorization', `Bearer ${token}`)
@@ -76,7 +76,7 @@ module.exports = function (app) {
         })
     })
 
-    it('Returns dragons', (done) => {
+    test('Returns dragons', (done) => {
       request(app)
         .get(`/api/user/${user.id}`)
         .set('Authorization', `Bearer ${token}`)

@@ -6,7 +6,7 @@ const { assert } = chai
 
 module.exports = function () {
   describe('getMessages', () => {
-    it('Should return null when no channel is specified', async () => {
+    test('Should return null when no channel is specified', async () => {
       const socket = {
         send: () => {},
       }
@@ -19,7 +19,7 @@ module.exports = function () {
       assert.equal(messages, null, 'It returned messages')
     })
 
-    it('Should return null when channel is incorrect', async () => {
+    test('Should return null when channel is incorrect', async () => {
       const socket = {
         send: () => {},
       }
@@ -34,7 +34,7 @@ module.exports = function () {
       assert.equal(messages, null, 'It returned messages')
     })
 
-    it('Should returns messages when channel is correct', async () => {
+    test('Should returns messages when channel is correct', async () => {
       const socket = {
         send: () => {},
       }

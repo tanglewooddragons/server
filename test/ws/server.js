@@ -18,7 +18,7 @@ module.exports = function (app) {
   describe('Server', async () => {
     let token
     let socket
-    before(async () => {
+    beforeAll(async () => {
       // Login to get token
       const response = await request(app)
         .post('/api/login')
@@ -39,7 +39,7 @@ module.exports = function (app) {
       socket.close()
     })
 
-    it('Returns error when no token is provided', (done) => {
+    test('Returns error when no token is provided', (done) => {
       socket.on('message', (message) => {
         const msg = parse(message)
         assert.equal(msg.type, 'AUTH_ERROR', 'Message type is invalid')
@@ -56,7 +56,7 @@ module.exports = function (app) {
       })
     })
 
-    it('Returns error when wrong token is provided', (done) => {
+    test('Returns error when wrong token is provided', (done) => {
       socket.on('message', (message) => {
         const msg = parse(message)
         assert.equal(msg.type, 'AUTH_ERROR', 'Message type is invalid')
@@ -74,7 +74,7 @@ module.exports = function (app) {
       })
     })
 
-    it('Does not crash on unknown type of message', (done) => {
+    test('Does not crash on unknown type of message', (done) => {
       socket.on('message', (message) => {
         const msg = parse(message)
         assert.equal(msg.type, 'TYPE_ERROR', 'Message type is invalid')
@@ -92,7 +92,7 @@ module.exports = function (app) {
       })
     })
 
-    it('Calls handler with correct data', (done) => {
+    test('Calls handler with correct data', (done) => {
       const testHandler = (ws, data) => {
         assert(data.payload.testId === 321, 'Returns wrong data')
         assert.ok(data.user.id, 'It should send user id')
@@ -113,7 +113,7 @@ module.exports = function (app) {
       })
     })
 
-    after(() => {
+    afterAll(() => {
       wss.close()
     })
   })
