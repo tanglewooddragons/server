@@ -7,6 +7,7 @@ const bodyparser = require('koa-bodyparser')
 const locale = require('koa-locale')
 const i18n = require('koa-i18n')
 const compress = require('koa-compress')
+const cors = require('@koa/cors')
 const path = require('path')
 
 const app = new Koa()
@@ -56,6 +57,7 @@ app
     extension: '.json',
     locales: ['en', 'pl'],
   }))
+  .use(cors())
   // Public routes
   .use(publicRouter.routes())
   .use(publicRouter.allowedMethods())
