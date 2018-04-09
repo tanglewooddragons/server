@@ -1,7 +1,4 @@
-const chai = require('chai')
 const request = require('supertest')
-
-const { assert } = chai
 
 module.exports = function (app) {
   describe('login', () => {
@@ -17,8 +14,8 @@ module.exports = function (app) {
         })
         .expect(200)
         .end((err, res) => {
-          assert.isNotOk(err, 'Request returned error')
-          assert.exists(res.body.token, 'Response does not contain token')
+          expect(err).toBeNull()
+          expect(res.body.token).toBeDefined()
           token = res.body.token
           user = res.body
           done()
@@ -29,8 +26,8 @@ module.exports = function (app) {
       request(app)
         .get(`/api/user/${user.id}`)
         .end((err, res) => {
-          assert.isNotOk(err, 'Request returned error')
-          assert.equal(res.status, 401, 'Returns invalid status')
+          expect(err).toBeNull()
+          expect(res.status).toBe(401)
           done()
         })
     })
@@ -41,8 +38,8 @@ module.exports = function (app) {
         .set('Authorization', `Bearer ${token}`)
         .expect(200)
         .end((err, res) => {
-          assert.isNotOk(err, 'Request returns error')
-          assert.isOk(res.body, 'Body is empty')
+          expect(err).toBeNull()
+          expect(res.body).toBeDefined()
           done()
         })
     })
@@ -56,8 +53,8 @@ module.exports = function (app) {
             .get(`/api/user/${user.id}`)
             .set('Authorization', `Bearer ${token}`)
             .end((err, res) => {
-              assert.isNotOk(err, 'Request returns error')
-              assert.equal(res.status, 401, 'Returns invalid status')
+              expect(err).toBeNull()
+              expect(res.status).toBe(401)
               done()
             })
         })

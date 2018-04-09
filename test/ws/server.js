@@ -1,8 +1,5 @@
-const chai = require('chai')
 const request = require('supertest')
 const WebSocket = require('uws')
-
-const { assert } = chai
 
 const {
   wss,
@@ -42,7 +39,7 @@ module.exports = function (app) {
     test('Returns error when no token is provided', (done) => {
       socket.on('message', (message) => {
         const msg = parse(message)
-        assert.equal(msg.type, 'AUTH_ERROR', 'Message type is invalid')
+        expect(msg.type).toBe('AUTH_ERROR')
         done()
       })
 
@@ -59,7 +56,7 @@ module.exports = function (app) {
     test('Returns error when wrong token is provided', (done) => {
       socket.on('message', (message) => {
         const msg = parse(message)
-        assert.equal(msg.type, 'AUTH_ERROR', 'Message type is invalid')
+        expect(msg.type).toBe('AUTH_ERROR')
         done()
       })
 
@@ -77,7 +74,7 @@ module.exports = function (app) {
     test('Does not crash on unknown type of message', (done) => {
       socket.on('message', (message) => {
         const msg = parse(message)
-        assert.equal(msg.type, 'TYPE_ERROR', 'Message type is invalid')
+        expect(msg.type).toBe('TYPE_ERROR')
         done()
       })
 
@@ -94,9 +91,9 @@ module.exports = function (app) {
 
     test('Calls handler with correct data', (done) => {
       const testHandler = (ws, data) => {
-        assert(data.payload.testId === 321, 'Returns wrong data')
-        assert.ok(data.user.id, 'It should send user id')
-        assert.notOk(data.payload.token, 'Should not send token back')
+        expect(data.payload.testId).toBe(321)
+        expect(data.user.id).toBeDefined()
+        expect(data.payload.token).not.toBeDefined()
         done()
       }
 

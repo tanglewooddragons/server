@@ -1,7 +1,4 @@
-const chai = require('chai')
 const request = require('supertest')
-
-const { assert } = chai
 
 module.exports = function (app) {
   describe('getStatuses', () => {
@@ -36,9 +33,9 @@ module.exports = function (app) {
         .set('Authorization', `Bearer ${token}`)
         .expect(200)
         .end((err, res) => {
-          assert.isNotOk(err, 'Request returned error')
-          assert(typeof res.body, 'object', 'Result body should be an array')
-          assert(res.body.length > 0, 'It should have entries')
+          expect(err).toBeNull()
+          expect(Array.isArray(res.body)).toBe(true)
+          expect(res.body.length).toBeGreaterThan(0)
           done()
         })
     })

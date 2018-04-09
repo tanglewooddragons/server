@@ -1,7 +1,4 @@
-const chai = require('chai')
 const request = require('supertest')
-
-const { assert } = chai
 
 module.exports = function (app) {
   describe('register', () => {
@@ -15,7 +12,7 @@ module.exports = function (app) {
         })
         .expect(422)
         .end((err) => {
-          assert.isNotOk(err, 'Request returned error')
+          expect(err).toBeNull()
           done()
         })
     })
@@ -30,7 +27,7 @@ module.exports = function (app) {
         })
         .expect(422)
         .end((err) => {
-          assert.isNotOk(err, 'Request returned error')
+          expect(err).toBeNull()
           done()
         })
     })
@@ -46,7 +43,7 @@ module.exports = function (app) {
         })
         .expect(400)
         .end((err) => {
-          assert.isNotOk(err, 'Request returned error')
+          expect(err).toBeNull()
           done()
         })
     })
@@ -62,7 +59,7 @@ module.exports = function (app) {
         })
         .expect(201)
         .end((err) => {
-          assert.isNotOk(err, 'Request returned error')
+          expect(err).toBeNull()
           done()
         })
     })
@@ -78,7 +75,7 @@ module.exports = function (app) {
         })
         .expect(403)
         .end((err) => {
-          assert.isNotOk(err, 'Request returned error')
+          expect(err).toBeNull()
           done()
         })
     })
@@ -94,7 +91,7 @@ module.exports = function (app) {
         })
         .expect(201)
         .end((err) => {
-          assert.isNotOk(err, 'Request returned error')
+          expect(err).toBeNull()
           done()
         })
     })

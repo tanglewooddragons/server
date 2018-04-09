@@ -1,7 +1,4 @@
-const chai = require('chai')
 const request = require('supertest')
-
-const { assert } = chai
 
 module.exports = function (app) {
   describe('createDragon', () => {
@@ -30,7 +27,7 @@ module.exports = function (app) {
         .set('Authorization', `Bearer ${token}`)
         .expect(422)
         .end((err) => {
-          assert.isNotOk(err, 'Request returned error')
+          expect(err).toBeNull()
           done()
         })
     })
@@ -45,7 +42,7 @@ module.exports = function (app) {
         .set('Authorization', `Bearer ${token}`)
         .expect(201)
         .end((err) => {
-          assert.isNotOk(err, 'Request returned error')
+          expect(err).toBeNull()
           done()
         })
     })
@@ -60,8 +57,8 @@ module.exports = function (app) {
         .set('Authorization', `Bearer ${token}`)
         .expect(201)
         .end((err, res) => {
-          assert.isNotOk(err, 'Request returned error')
-          assert.equal(res.body.owner, user.id, 'It didnt assigned correct id')
+          expect(err).toBeNull()
+          expect(res.body.owner).toBe(user.id)
           done()
         })
     })
@@ -76,7 +73,7 @@ module.exports = function (app) {
         .set('Authorization', `Bearer ${token}`)
         .expect(400)
         .end((err) => {
-          assert.isNotOk(err, 'Request returned error')
+          expect(err).toBeNull()
           done()
         })
     })

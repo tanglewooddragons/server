@@ -1,7 +1,4 @@
-const chai = require('chai')
 const request = require('supertest')
-
-const { assert } = chai
 
 const Dragon = require('../../src/db/models/dragon')
 
@@ -47,7 +44,7 @@ module.exports = function (app) {
         .set('Authorization', `Bearer ${token}`)
         .expect(400)
         .end((err) => {
-          assert.isNotOk(err, 'Request returned error')
+          expect(err).toBeNull()
           done()
         })
     })
@@ -58,8 +55,8 @@ module.exports = function (app) {
         .set('Authorization', `Bearer ${token}`)
         .expect(200)
         .end((err, res) => {
-          assert.isNotOk(err, 'Request returned error')
-          assert.equal(res.body.id, user.id, 'Returns wrong user')
+          expect(err).toBeNull()
+          expect(res.body.id).toBe(user.id)
           done()
         })
     })
@@ -70,8 +67,8 @@ module.exports = function (app) {
         .set('Authorization', `Bearer ${token}`)
         .expect(200)
         .end((err, res) => {
-          assert.isNotOk(err, 'Request returned error')
-          assert.equal(res.body.id, user.id, 'Returns wrong user')
+          expect(err).toBeNull()
+          expect(res.body.id).toBe(user.id)
           done()
         })
     })
@@ -82,9 +79,9 @@ module.exports = function (app) {
         .set('Authorization', `Bearer ${token}`)
         .expect(200)
         .end((err, res) => {
-          assert.isNotOk(err, 'Request returned error')
-          assert.equal(res.body.dragons.length, 2, 'Returns wrong amount of dragons')
-          assert.equal(res.body.dragons[0].owner, user.id, 'Returns wrong user dragons')
+          expect(err).toBeNull()
+          expect(res.body.dragons.length).toBe(2)
+          expect(res.body.dragons[0].owner).toBe(user.id)
           done()
         })
     })

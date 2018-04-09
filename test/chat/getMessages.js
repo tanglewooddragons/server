@@ -1,8 +1,4 @@
-const chai = require('chai')
-
 const getMessages = require('services/chat/getMessages')
-
-const { assert } = chai
 
 module.exports = function () {
   describe('getMessages', () => {
@@ -16,7 +12,7 @@ module.exports = function () {
       }
 
       const messages = await getMessages(socket, data)
-      assert.equal(messages, null, 'It returned messages')
+      expect(messages).toBeNull()
     })
 
     test('Should return null when channel is incorrect', async () => {
@@ -31,7 +27,7 @@ module.exports = function () {
       }
 
       const messages = await getMessages(socket, data)
-      assert.equal(messages, null, 'It returned messages')
+      expect(messages).toBeNull()
     })
 
     test('Should returns messages when channel is correct', async () => {
@@ -45,7 +41,7 @@ module.exports = function () {
       }
 
       const messages = await getMessages(socket, data)
-      assert.notEqual(messages.length, 0, 'It didnt return any messages')
+      expect(messages.length).toBeGreaterThan(0)
     })
   })
 }

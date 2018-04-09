@@ -1,14 +1,10 @@
-const chai = require('chai')
 const request = require('supertest')
-
-const { assert } = chai
 
 module.exports = function (app) {
   describe('deleteUser', async () => {
     /*
     Login to get token
     */
-    let user
     let token
     beforeAll((done) => {
       request(app)
@@ -18,7 +14,6 @@ module.exports = function (app) {
           password: 'test',
         })
         .end((err, res) => {
-          user = res.body
           token = res.body.token
           done()
         })
@@ -30,8 +25,8 @@ module.exports = function (app) {
         .set('Authorization', `Bearer ${token}`)
         .expect(200)
         .end((err, res) => {
-          assert.isNotOk(err, 'Request returned error')
-          assert.equal(res.body, true, 'It failed to delete user')
+          expect(err).toBeNull()
+          expect(res.body).toBe(true)
           done()
         })
     })
@@ -42,7 +37,7 @@ module.exports = function (app) {
         .set('Authorization', `Bearer ${token}`)
         .expect(401)
         .end((err) => {
-          assert.isNotOk(err, 'Request returned error')
+          expect(err).toBeNull()
           done()
         })
     })

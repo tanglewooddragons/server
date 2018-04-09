@@ -1,14 +1,10 @@
-const chai = require('chai')
 const request = require('supertest')
-
-const { assert } = chai
 
 module.exports = function (app) {
   describe('updateUser', async () => {
     /*
     Login to get token
     */
-    let user
     let token
     beforeAll((done) => {
       request(app)
@@ -18,7 +14,6 @@ module.exports = function (app) {
           password: 'test',
         })
         .end((err, res) => {
-          user = res.body
           token = res.body.token
           done()
         })
@@ -35,8 +30,8 @@ module.exports = function (app) {
         .set('Authorization', `Bearer ${token}`)
         .expect(200)
         .end((err, res) => {
-          assert.isNotOk(err, 'Request returned error')
-          assert.equal(res.body.profile.country, 'Poland', 'It did not update the field')
+          expect(err).toBeNull()
+          expect(res.body.profile.country).toBe('Poland')
           done()
         })
     })
@@ -50,8 +45,8 @@ module.exports = function (app) {
         .set('Authorization', `Bearer ${token}`)
         .expect(422)
         .end((err, res) => {
-          assert.isNotOk(err, 'Request returned error')
-          assert.deepEqual(res.body, {}, 'It updated secured field')
+          expect(err).toBeNull()
+          expect(res.body).toEqual({})
           done()
         })
     })

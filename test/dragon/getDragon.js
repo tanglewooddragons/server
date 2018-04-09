@@ -1,7 +1,4 @@
-const chai = require('chai')
 const request = require('supertest')
-
-const { assert } = chai
 
 module.exports = function (app) {
   describe('getDragon', () => {
@@ -40,8 +37,8 @@ module.exports = function (app) {
         .set('Authorization', `Bearer ${token}`)
         .expect(200)
         .end((err, res) => {
-          assert.isNotOk(err, 'Request returned error')
-          assert.equal(res.body.id, dragon.id, 'Returns wrong dragon')
+          expect(err).toBeNull()
+          expect(res.body.id).toBe(dragon.id)
           done()
         })
     })

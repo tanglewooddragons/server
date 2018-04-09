@@ -1,7 +1,4 @@
-const chai = require('chai')
 const request = require('supertest')
-
-const { assert } = chai
 
 const { createDragon } = require('db/dragon')
 
@@ -52,8 +49,8 @@ module.exports = function (app) {
         .set('Authorization', `Bearer ${token}`)
         .expect(200)
         .end((err, res) => {
-          assert.isNotOk(err, 'Request returned error')
-          assert.equal(res.body.id, dragon.id, 'Returns wrong dragon')
+          expect(err).toBeNull()
+          expect(res.body.id).toBe(dragon.id)
 
           const stats = Object
             .values(res.body.stats)
@@ -62,7 +59,7 @@ module.exports = function (app) {
               return acc
             }, 0)
 
-          assert.equal(stats, 0, 'It add statisctics to egg')
+          expect(stats).toBe(0)
           done()
         })
     })
@@ -76,7 +73,7 @@ module.exports = function (app) {
         .set('Authorization', `Bearer ${token}`)
         .expect(400)
         .end((err) => {
-          assert.isNotOk(err, 'Request returned error')
+          expect(err).toBeNull()
           done()
         })
     })
@@ -90,9 +87,9 @@ module.exports = function (app) {
         .set('Authorization', `Bearer ${token}`)
         .expect(200)
         .end((err, res) => {
-          assert.isNotOk(err, 'Request returned error')
-          assert.equal(res.body.fed, true, 'It didnt set dragon status as fed')
-          assert.equal(res.body.stats.str, 2, 'It didnt update the stats')
+          expect(err).toBeNull()
+          expect(res.body.fed).toBe(true)
+          expect(res.body.stats.str).toBe(2)
           done()
         })
     })
