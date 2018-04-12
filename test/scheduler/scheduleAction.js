@@ -29,7 +29,7 @@ module.exports = function () {
       const options = {
         scheduledBy: 'jest',
         type: 'test',
-        scheduledFor: Date.now() + 100,
+        scheduledFor: Date.now() + 150,
       }
 
       const resolve = async (data) => {
@@ -50,7 +50,7 @@ module.exports = function () {
       const options = {
         scheduledBy: 'jest',
         type: 'test',
-        scheduledFor: Date.now() + 100,
+        scheduledFor: Date.now() + 150,
       }
 
       const resolve = async () => {
