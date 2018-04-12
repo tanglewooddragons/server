@@ -5,6 +5,7 @@ const Dragon = require('db/models/dragon')
 const Token = require('db/models/token')
 const Schedule = require('db/models/schedule')
 const ChatMessage = require('db/models/chatMessage')
+const UserProfile = require('db/models/userProfile')
 
 const register = require('./auth/register')
 const login = require('./auth/login')
@@ -84,14 +85,17 @@ describe('#tanglewood-api', () => {
 afterAll(async () => {
   // Remove ghost tokens
   const tokens = await Token.filter({}).run()
-  tokens.forEach(async t => t.delete())
+  tokens.forEach(t => t.delete())
 
   // Remove test dragons
   const dragons = await Dragon.filter({}).run()
-  dragons.forEach(async dragon => dragon.delete())
+  dragons.forEach(dragon => dragon.delete())
 
   const schedules = await Schedule.filter({}).run()
-  schedules.forEach(async s => s.delete())
+  schedules.forEach(s => s.delete())
+
+  const profiles = await UserProfile.filter({}).run()
+  profiles.forEach(profile => profile.delete())
 
   // Close connection to db
   thinky.r.getPoolMaster().drain()
