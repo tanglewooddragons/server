@@ -23,15 +23,13 @@ module.exports = function (app) {
       request(app)
         .put('/api/user')
         .send({
-          profile: {
-            country: 'Poland',
-          },
+          country: 'Poland',
         })
         .set('Authorization', `Bearer ${token}`)
         .expect(200)
         .end((err, res) => {
           expect(err).toBeNull()
-          expect(res.body.profile.country).toBe('Poland')
+          expect(res.body.country).toBe('Poland')
           done()
         })
     })

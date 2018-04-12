@@ -1,4 +1,5 @@
 const User = require('./models/user')
+const UserProfile = require('./models/userProfile')
 const log = require('../util/log')
 
 async function emailTaken(email) {
@@ -12,6 +13,10 @@ async function createUser(options) {
     log.debug(`Creating new user: ${options.username}`)
     const user = new User(options)
     await user.save()
+    const profile = new UserProfile({
+      userId: user.id,
+    })
+    await profile.save()
     log.debug(`User ${options.username} created successfully!`)
     return user
   } catch (err) {
@@ -23,6 +28,11 @@ async function createUser(options) {
 async function getUserByEmail(email) {
   try {
     log.debug(`Fetching user by email: ${email}`)
+
+    /*
+      Fetching by email is used for login,
+      so joins are not needed
+    */
     const users = await User.filter({ email }).limit(1).run()
     const user = users[0]
 
@@ -37,7 +47,13 @@ async function getUserByEmail(email) {
 async function getUserById(id) {
   try {
     log.debug(`Getting user by id: ${id}`)
-    const user = await User.get(id).getJoin({ dragons: true }).run()
+    const user = await User
+      .get(id)
+      .getJoin({
+        dragons: true,
+        profile: true,
+      })
+      .run()
 
     if (!user) return null
     return user
@@ -47,16 +63,21 @@ async function getUserById(id) {
   }
 }
 
-async function updateUserById(id, update) {
+async function updateUserById(userId, update) {
   try {
-    log.debug(`Updating user by id: ${id}`)
-    const user = await User.get(id).run()
-    await user.merge(update)
-    await user.save()
-    log.debug(user, 'User updated successfully')
-    return user
+    log.debug(`Updating user by id: ${userId}`)
+    const entry = await UserProfile.filter({ userId }).run()
+    /*
+      Filter returns an array but it always
+      should be just one entry
+    */
+    const profile = entry[0]
+    await profile.merge(update)
+    await profile.save()
+    log.debug(profile, 'User profile updated successfully')
+    return profile
   } catch (err) {
-    log.error(`Error updating user: ${err}`)
+    log.error(`Error updating user profile: ${err}`)
     return null
   }
 }

@@ -1,5 +1,6 @@
 const thinky = require('../thinky')
 const Dragon = require('./dragon')
+const UserProfile = require('./userProfile')
 
 const User = thinky.createModel('User', {
   email: thinky.type
@@ -16,13 +17,6 @@ const User = thinky.createModel('User', {
     .min(3)
     .max(24)
     .required(),
-  profile: {
-    avatar: thinky.type.string(),
-    backgroundPicture: thinky.type.string(),
-    country: thinky.type.string(),
-    dateOfBirth: thinky.type.date(),
-    bio: thinky.type.string(),
-  },
   confirmed: thinky.type.boolean().default(false),
   premium: thinky.type.boolean().default(false),
   role: thinky.type.string().default('user'),
@@ -37,6 +31,7 @@ const User = thinky.createModel('User', {
     .default({ ingredients: {}, items: {} }),
 })
 
+User.hasOne(UserProfile, 'profile', 'id', 'userId')
 User.hasMany(Dragon, 'dragons', 'id', 'owner')
 
 module.exports = User
