@@ -23,7 +23,8 @@ async function restoreSchedules() {
     }
 
     // If schedule is past-due fire it immedietly
-    if (!(schedule.scheduledFor instanceof Date) || schedule.scheduledFor < Date.now()) {
+    const isDate = Date.parse(schedule.scheduledFor)
+    if (isDate || schedule.scheduledFor < Date.now()) {
       await handler(schedule)
       await markScheduleAsFired(schedule.id)
       return
