@@ -14,7 +14,7 @@ module.exports = function (app) {
           password: 'test',
         })
         .end((err, res) => {
-          token = res.body.token
+          token = res.body.accessToken
           done()
         })
     })
@@ -27,17 +27,6 @@ module.exports = function (app) {
         .end((err, res) => {
           expect(err).toBeNull()
           expect(res.body).toBe(true)
-          done()
-        })
-    })
-
-    test('Should delete token', (done) => {
-      request(app)
-        .get('/api/user/123')
-        .set('Authorization', `Bearer ${token}`)
-        .expect(401)
-        .end((err) => {
-          expect(err).toBeNull()
           done()
         })
     })

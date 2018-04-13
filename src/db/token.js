@@ -1,11 +1,11 @@
 const Token = require('./models/token')
 const log = require('../util/log')
 
-async function getTokens(userId) {
+async function getToken(token) {
   try {
-    log.debug(`Getting tokens for ${userId}..`)
-    const tokens = await Token.filter({ userId }).run()
-    log.debug(`Got tokens for ${userId}`)
+    log.debug(`Getting token ${token}..`)
+    const tokens = await Token.filter({ token }).run()
+    log.debug(`Got token ${token}`)
     return tokens
   } catch (err) {
     log.error(`Error getting tokens: ${err}`)
@@ -53,7 +53,7 @@ async function removeAllTokens(userId) {
 }
 
 module.exports = {
-  getTokens,
+  getToken,
   saveToken,
   removeToken,
   removeAllTokens,

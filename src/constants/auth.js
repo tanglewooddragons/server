@@ -1,0 +1,10 @@
+// 15 minutes
+const ACCESS_TOKEN_LIFETIME = 60 * 15
+
+// 1 day
+const REFRESH_TOKEN_LIFETIME = 60 * 60 * 24
+
+module.exports = {
+  ACCESS_TOKEN_LIFETIME,
+  REFRESH_TOKEN_LIFETIME,
+}

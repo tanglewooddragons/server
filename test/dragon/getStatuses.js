@@ -14,7 +14,7 @@ module.exports = function (app) {
           password: 'test',
         })
         .then((res) => {
-          token = res.body.token
+          token = res.body.accessToken
         })
 
       // Create dragon

@@ -15,7 +15,10 @@ locale(app)
 
 const jwt = require('./services/auth/middleware/jwt')
 
-const authRouter = require('./services/auth')
+const {
+  publicAuth,
+  privateAuth,
+} = require('./services/auth')
 const userRouter = require('./services/user')
 const dragonRouter = require('./services/dragon').router
 
@@ -23,12 +26,16 @@ const publicRouter = new Router({
   prefix: '/api',
 })
 
-publicRouter.use(authRouter.routes())
-publicRouter.use(authRouter.allowedMethods())
+publicRouter.use(publicAuth.routes())
+publicRouter.use(publicAuth.allowedMethods())
 
 const privateRouter = new Router({
   prefix: '/api',
 })
+
+// Auth
+privateRouter.use(privateAuth.routes())
+privateRouter.use(privateAuth.allowedMethods())
 
 // User routes
 privateRouter.use(userRouter.routes())

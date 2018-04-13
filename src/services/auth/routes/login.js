@@ -3,6 +3,11 @@ const { saveToken } = require('db/token')
 const { getUserByEmail } = require('db/user')
 const comparePasswords = require('util/comparePasswords')
 
+const {
+  ACCESS_TOKEN_LIFETIME,
+  REFRESH_TOKEN_LIFETIME,
+} = require('constants/auth')
+
 const login = async (ctx) => {
   const { email, password } = ctx.request.body
 
@@ -24,20 +29,25 @@ const login = async (ctx) => {
     role: user.role,
   }
 
-  const token = jwt.sign(tokenBody, process.env.JWT_SECRET, {
-    expiresIn: Date.now() + (60 * 60 * 24),
+  const accessToken = jwt.sign(tokenBody, process.env.JWT_SECRET, {
+    expiresIn: Date.now() + (ACCESS_TOKEN_LIFETIME),
+  })
+
+  const refreshToken = jwt.sign(tokenBody, process.env.JWT_SECRET, {
+    expiresIn: Date.now() + (REFRESH_TOKEN_LIFETIME),
   })
 
   await saveToken({
     userId: user.id,
-    token,
+    refreshToken,
   })
 
   user.password = null
 
   ctx.body = {
     ...user,
-    token,
+    accessToken,
+    refreshToken,
   }
 }
 

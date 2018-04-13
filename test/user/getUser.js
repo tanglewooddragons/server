@@ -18,7 +18,7 @@ module.exports = function (app) {
         })
 
       user = response.body
-      token = response.body.token
+      token = response.body.accessToken
 
       const d1 = new Dragon({
         name: 'Jeff',

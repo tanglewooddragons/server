@@ -1,10 +1,7 @@
 const { removeToken } = require('db/token')
 
 const logout = async (ctx) => {
-  const header = ctx.headers.authorization
-  if (!header) return
-  const token = header.split(' ')[1]
-
+  const token = ctx.request.body.refreshToken
   await removeToken(token)
 }
 

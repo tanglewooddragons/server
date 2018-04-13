@@ -24,7 +24,7 @@ module.exports = function (app) {
           password: 'test',
         })
 
-      token = response.body.token
+      token = response.body.accessToken
       wss.init()
     })
 

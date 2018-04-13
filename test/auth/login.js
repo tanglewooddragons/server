@@ -15,8 +15,9 @@ module.exports = function (app) {
         .expect(200)
         .end((err, res) => {
           expect(err).toBeNull()
-          expect(res.body.token).toBeDefined()
-          token = res.body.token
+          expect(res.body.accessToken).toBeDefined()
+          expect(res.body.refreshToken).toBeDefined()
+          token = res.body.accessToken
           user = res.body
           done()
         })
@@ -41,22 +42,6 @@ module.exports = function (app) {
           expect(err).toBeNull()
           expect(res.body).toBeDefined()
           done()
-        })
-    })
-
-    test('Should NOT be able to get resource with an old token', (done) => {
-      request(app)
-        .get('/api/logout')
-        .set('Authorization', `Bearer ${token}`)
-        .end(() => {
-          request(app)
-            .get(`/api/user/${user.id}`)
-            .set('Authorization', `Bearer ${token}`)
-            .end((err, res) => {
-              expect(err).toBeNull()
-              expect(res.status).toBe(401)
-              done()
-            })
         })
     })
   })

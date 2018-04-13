@@ -1,14 +1,20 @@
 const Router = require('koa-router')
 const register = require('./routes/register')
 const login = require('./routes/login')
+const refreshToken = require('./routes/refreshToken')
 const logout = require('./routes/logout')
 const logoutAll = require('./routes/logoutAll')
 
-const router = new Router()
+const publicAuth = new Router()
+publicAuth.post('/register', register)
+publicAuth.post('/login', login)
 
-router.post('/register', register)
-router.post('/login', login)
-router.get('/logout', logout)
-router.get('/logoutAll', logoutAll)
+const privateAuth = new Router()
+privateAuth.post('/refreshToken', refreshToken)
+privateAuth.get('/logout', logout)
+privateAuth.get('/logoutAll', logoutAll)
 
-module.exports = router
+module.exports = {
+  publicAuth,
+  privateAuth,
+}

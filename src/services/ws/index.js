@@ -1,10 +1,6 @@
 const ws = require('uws')
 const jwt = require('jsonwebtoken')
 
-const {
-  getTokens,
-} = require('db/token')
-
 const log = require('util/log')
 
 const {
@@ -79,20 +75,6 @@ class WSServer {
           decoded = jwt.verify(token, process.env.JWT_SECRET)
         } catch (err) {
           log.error(`Error decoding token: ${err}`)
-          socket.send(stringify({
-            type: 'AUTH_ERROR',
-            payload: {
-              message: 'Provided token is invalid',
-            },
-          }))
-          return
-        }
-
-        const entries = await getTokens(decoded.id)
-        const entry = entries.find(e => e.token === token)
-
-        if (!entry || entry.token !== token) {
-          // Return auth error - invalid token
           socket.send(stringify({
             type: 'AUTH_ERROR',
             payload: {

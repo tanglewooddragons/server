@@ -16,7 +16,7 @@ module.exports = function (app) {
         })
         .end((err, res) => {
           user = res.body
-          token = res.body.token
+          token = res.body.accessToken
           done()
         })
     })

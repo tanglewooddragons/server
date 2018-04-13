@@ -14,7 +14,7 @@ module.exports = function (app) {
           password: 'test',
         })
         .end((err, res) => {
-          token = res.body.token
+          token = res.body.accessToken
           done()
         })
     })
