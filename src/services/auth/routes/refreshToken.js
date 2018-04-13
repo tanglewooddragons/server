@@ -19,7 +19,10 @@ const refreshToken = async (ctx) => {
     return
   }
 
-  const tokenBody = ctx.state.user
+  const tokenBody = {
+    id: ctx.state.user.id,
+    role: ctx.state.user.role,
+  }
 
   const accessToken = jwt.sign(tokenBody, process.env.JWT_SECRET, {
     expiresIn: Date.now() + (ACCESS_TOKEN_LIFETIME),

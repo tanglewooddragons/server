@@ -9,6 +9,7 @@ const UserProfile = require('db/models/userProfile')
 
 const register = require('./auth/register')
 const login = require('./auth/login')
+const refreshToken = require('./auth/refreshToken')
 
 const getUser = require('./user/getUser')
 const updateUser = require('./user/updateUser')
@@ -49,6 +50,7 @@ describe('#tanglewood-api', () => {
   describe('#auth', () => {
     register(app)
     login(app)
+    refreshToken(app)
   })
 
   describe('#user', () => {
