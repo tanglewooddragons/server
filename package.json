@@ -3,16 +3,16 @@
   "version": "0.1.0",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_PATH=src NODE_ENV=debug node src/index.js | ./node_modules/.bin/bunyan -o short",
-    "start:production": "NODE_PATH=src NODE_ENV=production node src/index.js | ./node_modules/.bin/bunyan -o short",
+    "start": "cross-env NODE_PATH=src NODE_ENV=debug node src/index.js | ./node_modules/.bin/bunyan -o short",
+    "start:production": "cross-env NODE_PATH=src NODE_ENV=production node src/index.js | ./node_modules/.bin/bunyan -o short",
     "db:start": "docker start tanglewood",
     "db:create": "node util/createDb",
     "db:clean": "docker stop tanglewood && docker rm tanglewood",
-    "test": "NODE_PATH=src NODE_ENV=test jest",
-    "test:debug": "NODE_PATH=src NODE_ENV=debug jest | ./node_modules/.bin/bunyan -o short",
-    "test:watch": "NODE_PATH=src NODE_ENV=test jest --watch",
+    "test": "cross-env NODE_PATH=src NODE_ENV=test jest",
+    "test:debug": "cross-env NODE_PATH=src NODE_ENV=debug jest | ./node_modules/.bin/bunyan -o short",
+    "test:watch": "cross-env NODE_PATH=src NODE_ENV=test jest --watch",
     "lint": "eslint src/",
-    "profile:setup": "NODE_PATH=src NODE_ENV=production node --prof src/index.js",
+    "profile:setup": "cross-env NODE_PATH=src NODE_ENV=production node --prof src/index.js",
     "profile:run": "node util/profile.js"
   },
   "repository": "https://github.com/tanglewooddragons/server.git",
@@ -39,6 +39,7 @@
     "uws": "^9.14.0"
   },
   "devDependencies": {
+    "cross-env": "^5.1.4",
     "eslint": "^4.12.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
