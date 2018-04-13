@@ -5,6 +5,7 @@ const Dragon = require('db/models/dragon')
 const Token = require('db/models/token')
 const Schedule = require('db/models/schedule')
 const ChatMessage = require('db/models/chatMessage')
+const LoginInfo = require('db/models/loginInfo')
 const UserProfile = require('db/models/userProfile')
 
 const register = require('./auth/register')
@@ -42,6 +43,9 @@ beforeAll(async () => {
 
   const schedules = await Schedule.filter({}).run()
   schedules.forEach(s => s.delete())
+
+  const logins = await LoginInfo.filter({}).run()
+  logins.forEach(loginInfo => loginInfo.delete())
 })
 
 describe('#tanglewood-api', () => {

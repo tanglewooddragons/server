@@ -34,7 +34,6 @@ const register = async (ctx) => {
 
   await createUser(user)
     .then((newUser) => {
-      newUser.password = null
       ctx.status = 201
       ctx.body = newUser
     })

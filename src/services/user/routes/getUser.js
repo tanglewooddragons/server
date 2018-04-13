@@ -10,7 +10,6 @@ const getUser = async (ctx) => {
     ctx.throw(400, ctx.i18n.__('USER_NOT_FOUND'))
   }
 
-  delete user.password
   ctx.body = user
 }
 

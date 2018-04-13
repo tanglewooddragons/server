@@ -73,6 +73,18 @@ module.exports = function (app) {
         })
     })
 
+    test('Does NOT return user password', (done) => {
+      request(app)
+        .get('/api/user')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(200)
+        .end((err, res) => {
+          expect(err).toBeNull()
+          expect(res.body.password).not.toBeDefined()
+          done()
+        })
+    })
+
     test('Returns dragons', (done) => {
       request(app)
         .get(`/api/user/${user.id}`)
