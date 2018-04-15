@@ -52,9 +52,27 @@ async function removeAllTokens(userId) {
   }
 }
 
+async function removeExpiredTokens() {
+  try {
+    log.debug('Removing expired tokens..')
+    const expiredTokens = await Token
+      .filter(token => token.expires >= Date.now())
+      .run()
+
+    if (!expiredTokens) return true
+
+    expiredTokens.forEach(expiredToken => expiredToken.delete())
+    return true
+  } catch (err) {
+    log.error(`Error removing expired tokens: ${err}`)
+    return null
+  }
+}
+
 module.exports = {
   getToken,
   saveToken,
   removeToken,
   removeAllTokens,
+  removeExpiredTokens,
 }

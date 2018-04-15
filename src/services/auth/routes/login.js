@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+
 const { saveToken } = require('db/token')
 const {
   getLoginInfo,
@@ -35,16 +36,19 @@ const login = async (ctx) => {
   }
 
   const accessToken = jwt.sign(tokenBody, process.env.JWT_SECRET, {
-    expiresIn: Date.now() + (ACCESS_TOKEN_LIFETIME),
+    expiresIn: ACCESS_TOKEN_LIFETIME,
   })
 
   const refreshToken = jwt.sign(tokenBody, process.env.JWT_SECRET, {
-    expiresIn: Date.now() + (REFRESH_TOKEN_LIFETIME),
+    expiresIn: REFRESH_TOKEN_LIFETIME,
   })
+
+  const expires = Date.now() + REFRESH_TOKEN_LIFETIME
 
   await saveToken({
     userId: user.id,
     refreshToken,
+    expires,
   })
 
   ctx.body = {
