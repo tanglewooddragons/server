@@ -7,6 +7,11 @@ const {
 
 module.exports = function () {
   describe('scheduleAction', () => {
+    beforeAll(() => {
+      // Cancel all running jobs
+      const jobs = Object.keys(schedule.scheduledJobs)
+      jobs.forEach(id => schedule.cancelJob(id))
+    })
     test('Fails to schedule with missing data', async () => {
       const options = {
         scheduledBy: 'jest',
@@ -29,7 +34,7 @@ module.exports = function () {
       const options = {
         scheduledBy: 'jest',
         type: 'test',
-        scheduledFor: Date.now() + 150,
+        scheduledFor: Date.now() + 1000,
       }
 
       const resolve = async (data) => {
@@ -43,6 +48,7 @@ module.exports = function () {
         .then(() => {
           const registeredJobAmount = Object.keys(schedule.scheduledJobs).length
           expect(registeredJobAmount).toBe(1)
+          jest.runOnlyPendingTimers()
         })
     })
 
@@ -50,16 +56,20 @@ module.exports = function () {
       const options = {
         scheduledBy: 'jest',
         type: 'test',
-        scheduledFor: Date.now() + 150,
+        scheduledFor: Date.now() + 1000,
       }
 
-      const resolve = async () => {
-        expect(options.scheduledFor).toBeLessThanOrEqual(Date.now())
-        done()
-      }
+      const resolve = jest.fn()
 
       registerHandler('test', resolve)
       scheduleAction(options)
+        .then(() => {
+          expect(resolve).not.toBeCalled()
+          jest.advanceTimersByTime(1000)
+          expect(resolve).toBeCalled()
+          expect(resolve).toHaveBeenCalledTimes(1)
+          done()
+        })
     })
   })
 }

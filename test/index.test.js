@@ -22,6 +22,7 @@ const removeDragon = require('./dragon/removeDragon')
 const updateDragon = require('./dragon/updateDragon')
 const feedDragon = require('./dragon/feedDragon')
 const getStatuses = require('./dragon/getStatuses')
+const sendOnTask = require('./dragon/sendOnTask')
 
 const scheduleAction = require('./scheduler/scheduleAction')
 
@@ -29,6 +30,8 @@ const wsServer = require('./ws/server')
 
 const sendMessage = require('./chat/sendMessage')
 const getMessages = require('./chat/getMessages')
+
+jest.useFakeTimers()
 
 beforeAll(async () => {
   await thinky.dbReady()
@@ -70,6 +73,7 @@ describe('#tanglewood-api', () => {
     updateDragon(app)
     feedDragon(app)
     getStatuses(app)
+    sendOnTask(app)
   })
 
   describe('#scheduler', () => {

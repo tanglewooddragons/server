@@ -1,0 +1,7 @@
+const MIN_TASK_DURATION = 1
+const MAX_TASK_DURATION = 8
+
+module.exports = {
+  MIN_TASK_DURATION,
+  MAX_TASK_DURATION,
+}

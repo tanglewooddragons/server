@@ -9,9 +9,9 @@ const {
 async function getDragonStatus(dragonId) {
   log.debug(`Getting status of dragon ${dragonId}..`)
   try {
-    const status = DragonStatus.filter({ dragonId }).run()
-    log.debug(status, `Status of dragon ${dragonId}:`)
-    return status
+    const status = await DragonStatus.filter({ dragonId }).run()
+    log.debug(status[0], `Status of dragon ${dragonId}:`)
+    return status[0]
   } catch (err) {
     log.error(`Error getting dragon status: ${err}`)
     return null
@@ -21,6 +21,8 @@ async function getDragonStatus(dragonId) {
 async function isDragonBusy(dragonId) {
   log.debug(`Checking if dragon ${dragonId} is busy..`)
   const status = await getDragonStatus(dragonId)
+
+  if (!status) return null
 
   const now = new Date()
   const endTime = status.endTime
@@ -56,8 +58,22 @@ async function getUserDragonsStatuses(userId) {
   }
 }
 
+async function setDragonAsBusy(dragonId, task) {
+  log.debug(`Setting dragon ${dragonId} as busy..`)
+  try {
+    const status = await getDragonStatus(dragonId)
+    await status.merge(task)
+    await status.save()
+    return status
+  } catch (err) {
+    log.error(`Error setting dragon ${dragonId} as busy: ${err}`)
+    return null
+  }
+}
+
 module.exports = {
   getDragonStatus,
   isDragonBusy,
   getUserDragonsStatuses,
+  setDragonAsBusy,
 }

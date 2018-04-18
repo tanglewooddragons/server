@@ -4,7 +4,7 @@ const DragonStatus = thinky.createModel('DragonStatus', {
   dragonId: thinky.type.string().required(),
   type: thinky.type.string(),
   startTime: thinky.type.date().default(thinky.r.now()),
-  length: thinky.type.string(),
+  duration: thinky.type.number(),
   endTime: thinky.type.date().default(thinky.r.now()),
   details: thinky.type.object(),
 })

@@ -5,7 +5,7 @@ const scheduleSchema = joi => ({
     joi.string(),
     joi.object(),
   ).required(),
-  data: joi.object().optional(),
+  details: joi.object().optional(),
   type: joi.string().required(),
 })
 
