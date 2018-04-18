@@ -47,7 +47,7 @@ const login = async (ctx) => {
 
   await saveToken({
     userId: user.id,
-    refreshToken,
+    token: refreshToken,
     expires,
   })
 
