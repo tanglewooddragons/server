@@ -4,7 +4,6 @@ const LoginInfo = thinky.createModel('loginInfo', {
   userId: thinky.type.string().required(),
   email: thinky.type
     .string()
-    .email()
     .required(),
   password: thinky.type
     .string()
