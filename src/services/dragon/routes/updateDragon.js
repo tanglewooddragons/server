@@ -18,7 +18,7 @@ module.exports = async (ctx) => {
   }, {})
 
   if (!update) {
-    ctx.throw(400, ctx.i18n.__('NO_UPDATE_BODY'))
+    ctx.throw(400, ctx.i18n.__('dragon.error.no_update_body'))
   }
 
   const updated = await updateDragon(id, cleanedUpdate)

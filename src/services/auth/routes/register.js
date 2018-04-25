@@ -10,17 +10,17 @@ const register = async (ctx) => {
     await validate(data, 'register')
   } catch (err) {
     // @TODO Possibly add the result of validation to error
-    ctx.throw(422, ctx.i18n.__('REGISTER_VALIDATION_ERROR'))
+    ctx.throw(422, ctx.i18n.__('auth.error.register_validation'))
   }
 
   const exists = await emailTaken(data.email)
   if (exists) {
-    ctx.throw(403, ctx.i18n.__('EMAIL_TAKEN'))
+    ctx.throw(403, ctx.i18n.__('auth.error.email_taken'))
     return
   }
 
   if (data.password !== data.passwordRepeat) {
-    ctx.throw(400, ctx.i18n.__('PASSWORD_MISMATCH'))
+    ctx.throw(400, ctx.i18n.__('auth.error.password_mismatch'))
     return
   }
 
@@ -39,7 +39,7 @@ const register = async (ctx) => {
     })
     .catch((err) => {
       log.error(err)
-      ctx.throw(400, ctx.i18n.__('ERROR_CREATING_USER'))
+      ctx.throw(400, ctx.i18n.__('auth.error.create_user'))
     })
 }
 

@@ -19,11 +19,11 @@ const create = async (ctx) => {
   const amountOfDragons = user.dragons.length
 
   if (amountOfDragons >= DRAGON_LIMIT) {
-    ctx.throw(400, ctx.i18n.__('MAX_AMOUNT_OF_DRAGONS'))
+    ctx.throw(400, ctx.i18n.__('dragon.error.max_amount'))
   }
 
   if (!isBasicAspect(body.aspect)) {
-    ctx.throw(400, ctx.i18n.__('NOT_BASIC_TIER'))
+    ctx.throw(400, ctx.i18n.__('dragon.error.not_basic_tier'))
   }
 
   const dragonData = {
@@ -36,7 +36,7 @@ const create = async (ctx) => {
   const created = await createDragon(dragonData)
 
   if (!created) {
-    ctx.throw(400, ctx.i18n.__('ERROR_CREATING_DRAGON'))
+    ctx.throw(400, ctx.i18n.__('dragon.error.create_dragon'))
   }
 
   ctx.status = 201

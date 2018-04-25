@@ -16,7 +16,7 @@ const updateUser = async (ctx) => {
   const update = await updateUserById(id, updateData)
 
   if (!update) {
-    ctx.throw(400, ctx.i18n.__('UPDATING_USER_ERROR'))
+    ctx.throw(400, ctx.i18n.__('user.error.update'))
     return
   }
 

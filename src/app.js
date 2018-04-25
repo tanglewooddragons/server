@@ -50,7 +50,7 @@ privateRouter.use(messageRouter.allowedMethods())
 app.use((ctx, next) =>
   next().catch((err) => {
     if (err.status === 401) {
-      ctx.throw(401, ctx.i18n.__('AUTHORIZATION_ERROR'))
+      ctx.throw(401, ctx.i18n.__('auth.error.authorization'))
     } else {
       throw err
     }

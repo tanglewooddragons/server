@@ -7,7 +7,7 @@ const getUser = async (ctx) => {
   const user = await getUserById(id)
 
   if (!user) {
-    ctx.throw(400, ctx.i18n.__('USER_NOT_FOUND'))
+    ctx.throw(400, ctx.i18n.__('user.error.not_found'))
   }
 
   ctx.body = user

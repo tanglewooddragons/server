@@ -12,7 +12,7 @@ const deleteUser = async (ctx) => {
   await removeAllTokens(id)
 
   if (!deleted) {
-    ctx.throw(400, ctx.i18n.__('REMOVING_USER_ERROR'))
+    ctx.throw(400, ctx.i18n.__('user.error.remove'))
   }
 
   ctx.body = deleted

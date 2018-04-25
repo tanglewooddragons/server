@@ -24,7 +24,7 @@ const send = async (ctx) => {
   })
 
   if (!message) {
-    ctx.throw(400, 'Prombel')
+    ctx.throw(400, ctx.i18n.__('message.error.send'))
   }
 
   ctx.body = message

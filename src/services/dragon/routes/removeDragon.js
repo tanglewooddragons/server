@@ -8,7 +8,7 @@ const removeDragon = async (ctx) => {
   const deleted = await removeDragonById(id)
 
   if (!deleted) {
-    ctx.throw(400, ctx.i18n.__('REMOVING_DRAGON_ERROR'))
+    ctx.throw(400, ctx.i18n.__('dragon.error.remove'))
   }
 
   ctx.body = deleted

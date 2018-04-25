@@ -15,7 +15,7 @@ const refreshToken = async (ctx) => {
   const token = ctx.request.body.refreshToken
 
   if (await isRevoked(token)) {
-    ctx.throw(400, 'Token expired')
+    ctx.throw(400, ctx.i18n.__('auth.error.token_expires'))
     return
   }
 

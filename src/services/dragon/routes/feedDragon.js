@@ -14,7 +14,7 @@ module.exports = async (ctx) => {
   const dragon = await getDragonById(id)
 
   if (!dragon) {
-    ctx.throw(400, ctx.i18n.__('DRAGON_NOT_FOUND'))
+    ctx.throw(400, ctx.i18n.__('dragon.error.not_found'))
     return ctx
   }
 
@@ -26,9 +26,9 @@ module.exports = async (ctx) => {
   if (dragon.fed) {
     // Return appropriate errors
     if (isStillEgg) {
-      ctx.throw(400, ctx.i18n.__('EGG_ALREADY_WARMED'))
+      ctx.throw(400, ctx.i18n.__('dragon.error.egg_already_warmed'))
     } else {
-      ctx.throw(400, ctx.i18n.__('DRAGON_ALREADY_FED'))
+      ctx.throw(400, ctx.i18n.__('dragon.error.dragon_already_fed'))
     }
 
     return ctx
@@ -47,7 +47,7 @@ module.exports = async (ctx) => {
   const foodType = ctx.request.body.food.toLowerCase()
 
   if (!foodType) {
-    ctx.throw(400, ctx.i18n.__('NO_FOOD_TYPE'))
+    ctx.throw(400, ctx.i18n.__('dragon.error.no_food_type'))
     return ctx
   }
 
@@ -59,7 +59,7 @@ module.exports = async (ctx) => {
     }))[0]
 
   if (!stat) {
-    ctx.throw(400, ctx.i18n.__('INVALID_FOOD_TYPE'))
+    ctx.throw(400, ctx.i18n.__('dragon.error.invalid_food_type'))
     return ctx
   }
 

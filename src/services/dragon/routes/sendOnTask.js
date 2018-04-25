@@ -25,7 +25,7 @@ const sendOnTask = async (ctx) => {
   const status = await isDragonBusy(dragonId)
 
   if (status.isBusy) {
-    ctx.throw(400, status)
+    ctx.throw(400, ctx.i18n.__('dragon.error.is_busy'))
     return
   }
 
@@ -46,7 +46,7 @@ const sendOnTask = async (ctx) => {
     details,
   })
 
-  if (!set) ctx.throw(400, 'Error setting task')
+  if (!set) ctx.throw(400, ctx.i18n.__('dragon.error.setting_task'))
 
   await scheduleAction({
     scheduledBy: ctx.state.user.id,

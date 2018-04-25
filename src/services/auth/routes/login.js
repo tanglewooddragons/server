@@ -18,13 +18,13 @@ const login = async (ctx) => {
   const loginInfo = await getLoginInfo(email)
 
   if (!loginInfo) {
-    ctx.throw(400, ctx.i18n.__('WRONG_EMAIL'))
+    ctx.throw(400, ctx.i18n.__('auth.error.wrong_email'))
   }
 
   const isPasswordCorrect = await comparePasswords(password, loginInfo.password)
 
   if (!isPasswordCorrect) {
-    ctx.throw(401, ctx.i18n.__('WRONG_PASSWORD'))
+    ctx.throw(401, ctx.i18n.__('auth.error.wrong_password'))
     return
   }
 
