@@ -1,6 +1,6 @@
 const request = require('supertest')
 
-const Dragon = require('../../src/db/models/dragon')
+const { createDragon } = require('db/dragon')
 
 module.exports = function (app) {
   describe('getUser', async () => {
@@ -20,22 +20,19 @@ module.exports = function (app) {
       user = response.body
       token = response.body.accessToken
 
-      const d1 = new Dragon({
+      await createDragon({
         name: 'Jeff',
         gender: 'male',
         owner: user.id,
         aspect: 'light',
       })
 
-      const d2 = new Dragon({
+      await createDragon({
         name: 'Geoff',
         gender: 'male',
         owner: user.id,
         aspect: 'earth',
       })
-
-      await d1.save()
-      await d2.save()
     })
 
     test('Returns error when user does NOT exist', (done) => {
