@@ -21,6 +21,7 @@ const {
 } = require('./services/auth')
 const userRouter = require('./services/user')
 const dragonRouter = require('./services/dragon').router
+const messageRouter = require('./services/message')
 
 const publicRouter = new Router({
   prefix: '/api',
@@ -42,6 +43,8 @@ privateRouter.use(userRouter.routes())
 privateRouter.use(userRouter.allowedMethods())
 privateRouter.use(dragonRouter.routes())
 privateRouter.use(dragonRouter.allowedMethods())
+privateRouter.use(messageRouter.routes())
+privateRouter.use(messageRouter.allowedMethods())
 
 // Custom auth error handler
 app.use((ctx, next) =>

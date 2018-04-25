@@ -2,7 +2,6 @@ const thinky = require('../thinky')
 const User = require('./user')
 
 const Message = thinky.createModel('Message', {
-  userId: thinky.type.string().required(),
   topic: thinky.type.string().required(),
   text: thinky.type.string().required(),
   from: thinky.type.string().required(),
