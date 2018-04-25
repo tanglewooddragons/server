@@ -1,5 +1,5 @@
 const { sendMessage } = require('db/message')
-const validate = require('services/validate')
+const validate = require('services/validation')
 
 const send = async (ctx) => {
   try {

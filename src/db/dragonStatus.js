@@ -22,8 +22,6 @@ async function isDragonBusy(dragonId) {
   log.debug(`Checking if dragon ${dragonId} is busy..`)
   const status = await getDragonStatus(dragonId)
 
-  if (!status) return null
-
   const now = new Date()
   const endTime = status.endTime
 

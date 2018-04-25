@@ -7,6 +7,7 @@ const Schedule = require('db/models/schedule')
 const ChatMessage = require('db/models/chatMessage')
 const LoginInfo = require('db/models/loginInfo')
 const UserProfile = require('db/models/userProfile')
+const Message = require('db/models/message')
 
 const register = require('./auth/register')
 const login = require('./auth/login')
@@ -28,8 +29,10 @@ const scheduleAction = require('./scheduler/scheduleAction')
 
 const wsServer = require('./ws/server')
 
-const sendMessage = require('./chat/sendMessage')
-const getMessages = require('./chat/getMessages')
+const sendChatMessage = require('./chat/sendMessage')
+const getChatMessages = require('./chat/getMessages')
+
+const getMessages = require('./message/getMessages')
 
 jest.useFakeTimers()
 
@@ -49,6 +52,9 @@ beforeAll(async () => {
 
   const logins = await LoginInfo.filter({}).run()
   logins.forEach(loginInfo => loginInfo.delete())
+
+  const messages = await Message.run()
+  messages.forEach(message => message.delete())
 })
 
 describe('#tanglewood-api', () => {
@@ -85,8 +91,12 @@ describe('#tanglewood-api', () => {
   })
 
   describe('#chat', () => {
-    sendMessage()
-    getMessages()
+    sendChatMessage()
+    getChatMessages()
+  })
+
+  describe('#message', () => {
+    getMessages(app)
   })
 
   app.close()
