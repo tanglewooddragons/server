@@ -5,6 +5,7 @@ const dragon = require('./dragon.model')(joi)
 const schedule = require('./schedule.model')(joi)
 const chatMessage = require('./chatMessage.model')(joi)
 const task = require('./task.model')(joi)
+const message = require('./message.model')(joi)
 
 const schemas = Object.create({
   register,
@@ -13,6 +14,7 @@ const schemas = Object.create({
   schedule,
   chatMessage,
   task,
+  message,
 })
 
 const validate = (object, type) =>

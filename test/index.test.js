@@ -33,6 +33,9 @@ const sendChatMessage = require('./chat/sendMessage')
 const getChatMessages = require('./chat/getMessages')
 
 const getMessages = require('./message/getMessages')
+const getSentMessages = require('./message/getSentMessages')
+const getReceivedMessages = require('./message/getReceivedMessages')
+const sendMessage = require('./message/sendMessage')
 
 jest.useFakeTimers()
 
@@ -97,6 +100,9 @@ describe('#tanglewood-api', () => {
 
   describe('#message', () => {
     getMessages(app)
+    getSentMessages(app)
+    getReceivedMessages(app)
+    sendMessage(app)
   })
 
   app.close()
