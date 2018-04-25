@@ -30,9 +30,12 @@ const login = async (ctx) => {
 
   const user = await getUserById(loginInfo.userId)
 
+  const locale = ctx.getLocaleFromHeader()
+
   const tokenBody = {
     id: user.id,
     role: user.role,
+    locale,
   }
 
   const accessToken = jwt.sign(tokenBody, process.env.JWT_SECRET, {
