@@ -31,7 +31,7 @@ const sendMessage = async (socket, data) => {
     socket.send(stringify({
       type: SEND_MESSAGE,
       payload: {
-        error: 'Invalid channel',
+        error: socket.__('chat.error.invalid_channel'),
       },
     }))
 

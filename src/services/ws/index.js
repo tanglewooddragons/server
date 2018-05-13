@@ -2,11 +2,12 @@ const ws = require('uws')
 const jwt = require('jsonwebtoken')
 
 const log = require('util/log')
-
 const {
   parse,
   stringify,
 } = require('util/json')
+
+const getTranslatedMessage = require('./getTranslatedMessage')
 
 const handlers = {}
 
@@ -63,7 +64,7 @@ class WSServer {
           socket.send(stringify({
             type: 'AUTH_ERROR',
             payload: {
-              message: 'Token required to perform this action',
+              error: 'Token required to perform this action',
             },
           }))
           return
@@ -78,19 +79,25 @@ class WSServer {
           socket.send(stringify({
             type: 'AUTH_ERROR',
             payload: {
-              message: 'Provided token is invalid',
+              error: 'Provided token is invalid',
             },
           }))
           return
         }
+
+        const locale = decoded.locale
 
         // Attach user object to data
         const data = {
           payload: msg.payload,
           user: {
             id: decoded.id,
+            locale,
           },
         }
+
+        // Attach translated messages to socket
+        socket.__ = getTranslatedMessage(locale)
 
         socket.userId = data.user.id
 
@@ -104,7 +111,7 @@ class WSServer {
           socket.send(stringify({
             type: 'TYPE_ERROR',
             payload: {
-              message: 'Invalid type property',
+              error: socket.__('ws.error.invalid_type'),
             },
           }))
           return

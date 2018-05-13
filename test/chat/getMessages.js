@@ -4,7 +4,8 @@ module.exports = function () {
   describe('getMessages', () => {
     test('Should return null when no channel is specified', async () => {
       const socket = {
-        send: () => {},
+        send: jest.fn(),
+        __: jest.fn(),
       }
 
       const data = {
@@ -12,12 +13,15 @@ module.exports = function () {
       }
 
       const messages = await getMessages(socket, data)
+      expect(socket.send).toBeCalled()
+      expect(socket.__).toBeCalled()
       expect(messages).toBeNull()
     })
 
     test('Should return null when channel is incorrect', async () => {
       const socket = {
-        send: () => {},
+        send: jest.fn(),
+        __: jest.fn(),
       }
 
       const data = {
@@ -27,12 +31,14 @@ module.exports = function () {
       }
 
       const messages = await getMessages(socket, data)
+      expect(socket.send).toBeCalled()
+      expect(socket.__).toBeCalled()
       expect(messages).toBeNull()
     })
 
     test('Should returns messages when channel is correct', async () => {
       const socket = {
-        send: () => {},
+        send: jest.fn(),
       }
       const data = {
         payload: {
@@ -41,6 +47,7 @@ module.exports = function () {
       }
 
       const messages = await getMessages(socket, data)
+      expect(socket.send).toBeCalled()
       expect(messages.length).toBeGreaterThan(0)
     })
   })

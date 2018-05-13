@@ -30,7 +30,7 @@ const login = async (ctx) => {
 
   const user = await getUserById(loginInfo.userId)
 
-  const locale = ctx.getLocaleFromHeader()
+  const locale = ctx.getLocaleFromHeader() || 'en'
 
   const tokenBody = {
     id: user.id,
