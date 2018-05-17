@@ -1,0 +1,8 @@
+{
+  "name": "Diamond Mountains",
+  "goodTerrain": "Clouds",
+  "badTerrain": "Ground",
+  "ingredient": "Eastern Wind",
+  "stat": "agl",
+  "hierogliph": "Flowering Reeds"
+}

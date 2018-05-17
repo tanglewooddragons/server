@@ -1,6 +1,6 @@
 const thinky = require('../thinky')
 
-const LoginInfo = thinky.createModel('loginInfo', {
+const LoginInfo = thinky.createModel('LoginInfo', {
   userId: thinky.type.string().required(),
   email: thinky.type
     .string()

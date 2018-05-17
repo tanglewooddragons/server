@@ -19,6 +19,7 @@
   "dragon.error.invalid_food_type": "The food type is invalid",
   "dragon.error.remove": "There was an error removing dragon",
   "dragon.error.is_busy": "Dragon is already doing something else",
+  "dragon.error.invalid_location": "Provided location does not exist",
   "dragon.error.setting_task": "There was an error setting task",
   "dragon.error.no_update_body": "Please provide an update body",
   "message.error.send": "There was an error sending message",

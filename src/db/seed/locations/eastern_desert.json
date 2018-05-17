@@ -1,0 +1,8 @@
+{
+  "name": "Eastern Desert",
+  "goodTerrain": "Fog",
+  "badTerrain": "Upper Atmosphere",
+  "ingredient": "Poison Ivy",
+  "stat": "lck",
+  "hierogliph": "Knot"
+}

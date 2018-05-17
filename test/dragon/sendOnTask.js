@@ -46,7 +46,7 @@ module.exports = function (app) {
           location: 'Trash Can',
         })
         .set('Authorization', `Bearer ${token}`)
-        .expect(422)
+        .expect(400)
         .end((err, res) => {
           expect(err).toBeNull()
           expect(res.body).toEqual({})

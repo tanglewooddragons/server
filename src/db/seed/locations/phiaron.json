@@ -1,0 +1,8 @@
+{
+  "name": "Phiaron",
+  "goodTerrain": "Rainclouds",
+  "badTerrain": "Clear Sky",
+  "ingredient": "Spring Water",
+  "stat": "int",
+  "hierogliph": "Papyrus Stem"
+}

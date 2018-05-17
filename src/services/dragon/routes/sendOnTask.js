@@ -1,5 +1,6 @@
 const addHours = require('date-fns/add_hours')
 
+const { getLocation } = require('db/location')
 const validate = require('services/validation')
 const { scheduleAction } = require('services/scheduler')
 const {
@@ -21,6 +22,13 @@ const sendOnTask = async (ctx) => {
     duration,
     location,
   } = body
+
+  const locationExists = await getLocation(location)
+
+  if (!locationExists) {
+    ctx.throw(400, ctx.i18n.__('dragon.error.invalid_location'))
+    return
+  }
 
   const status = await isDragonBusy(dragonId)
 
