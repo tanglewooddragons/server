@@ -4,7 +4,12 @@ const log = require('util/log')
 async function getReceivedMessages(userId) {
   log.debug(`Getting received messages for user: ${userId}`)
   try {
-    const received = await Message.filter({ to: userId }).run()
+    const received = await Message
+      .filter({ to: userId })
+      .getJoin({
+        author: true,
+      })
+      .run()
     return received
   } catch (err) {
     log.error(`Error fetching messages: ${err}`)
@@ -15,7 +20,12 @@ async function getReceivedMessages(userId) {
 async function getSentMessages(userId) {
   log.debug(`Getting sent messages for user: ${userId}`)
   try {
-    const sent = await Message.filter({ from: userId }).run()
+    const sent = await Message
+      .filter({ from: userId })
+      .getJoin({
+        recipient: true,
+      })
+      .run()
     return sent
   } catch (err) {
     log.error(`Error fetching messages: ${err}`)
@@ -26,8 +36,10 @@ async function getSentMessages(userId) {
 async function getAllMessages(userId) {
   log.debug(`Getting all messages for user: ${userId}`)
   try {
-    const received = await Message.filter({ to: userId }).run()
-    const sent = await Message.filter({ from: userId }).run()
+    const [received, sent] = await Promise.all([
+      Message.filter({ to: userId }).getJoin({ author: true }).run(),
+      Message.filter({ from: userId }).getJoin({ recipient: true }).run(),
+    ])
     return {
       received,
       sent,

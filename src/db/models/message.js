@@ -6,6 +6,7 @@ const Message = thinky.createModel('Message', {
   text: thinky.type.string().required(),
   from: thinky.type.string().required(),
   to: thinky.type.string().required(),
+  sent: thinky.type.date().default(thinky.r.now()),
 })
 
 Message.belongsTo(User, 'author', 'from', 'id')
