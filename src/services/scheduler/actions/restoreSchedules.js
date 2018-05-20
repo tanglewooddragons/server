@@ -1,13 +1,11 @@
-const scheduleJob = require('./scheduleJob')
-
 const {
   getUnfiredSchedules,
   markScheduleAsFired,
 } = require('db/schedule')
-const {
-  getHandler,
-} = require('../handlers')
 const log = require('util/log')
+
+const scheduleJob = require('./scheduleJob')
+const { getHandler } = require('../handlers')
 
 async function restoreSchedules() {
   const schedules = await getUnfiredSchedules()
@@ -24,7 +22,7 @@ async function restoreSchedules() {
 
     // If schedule is past-due fire it immedietly
     const isDate = Date.parse(schedule.scheduledFor)
-    if (isDate || schedule.scheduledFor < Date.now()) {
+    if (isDate && schedule.scheduledFor < Date.now()) {
       await handler(schedule)
       await markScheduleAsFired(schedule.id)
       return
