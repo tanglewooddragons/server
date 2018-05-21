@@ -1,9 +1,8 @@
 const jwt = require('jsonwebtoken')
 
 const { getToken } = require('db/token')
-const {
-  ACCESS_TOKEN_LIFETIME,
-} = require('constants/auth')
+const { getLoginInfo } = require('db/user')
+const { ACCESS_TOKEN_LIFETIME } = require('constants/auth')
 
 const isRevoked = async (token) => {
   const entry = await getToken(token)
@@ -16,6 +15,14 @@ const refreshToken = async (ctx) => {
 
   if (await isRevoked(token)) {
     ctx.throw(400, ctx.i18n.__('auth.error.token_expires'))
+    return
+  }
+
+  const email = ctx.state.user.email
+  const { isBanned } = await getLoginInfo(email)
+
+  if (isBanned) {
+    ctx.throw(403, ctx.i18n.__('auth.error.banned'))
     return
   }
 

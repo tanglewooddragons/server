@@ -28,6 +28,13 @@ const login = async (ctx) => {
     return
   }
 
+  // Do not log in banned user
+  if (loginInfo.isBanned) {
+    // @TODO Add ban lift date to data sent to user
+    ctx.throw(403, ctx.i18n.__('auth.error.banned'))
+    return
+  }
+
   const user = await getUserById(loginInfo.userId)
 
   const locale = ctx.getLocaleFromHeader() || 'en'
@@ -36,6 +43,7 @@ const login = async (ctx) => {
     id: user.id,
     role: user.role,
     locale,
+    email: loginInfo.email,
   }
 
   const accessToken = jwt.sign(tokenBody, process.env.JWT_SECRET, {

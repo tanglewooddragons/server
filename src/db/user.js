@@ -96,6 +96,8 @@ async function deleteUserById(id) {
     await user.delete()
     const userProfile = await UserProfile.filter({ userId: id }).run()
     await userProfile[0].delete()
+    const loginInfo = await LoginInfo.filter({ userId: id }).run()
+    await loginInfo[0].delete()
     log.debug(`User ${id} has been removed`)
     return true
   } catch (err) {

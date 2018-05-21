@@ -1,5 +1,7 @@
 const request = require('supertest')
 
+const LoginInfo = require('db/models/loginInfo')
+
 module.exports = function (app) {
   describe('login', () => {
     let token
@@ -43,6 +45,29 @@ module.exports = function (app) {
           expect(res.body).toBeDefined()
           done()
         })
+    })
+
+    test('Should not log in if user is banned', async () => {
+      // Ban account
+      const loginInfo = await LoginInfo.filter({ email: 'test2@test.com' }).run()
+      const banDate = Date.now() + (60 * 60 * 1000000)
+      loginInfo[0].bannedUntil = banDate
+      await loginInfo[0].save()
+
+      // Test login
+      const response = await request(app)
+        .post('/api/login')
+        .send({
+          email: 'test2@test.com',
+          password: 'test',
+        })
+
+      expect(response.status).toBe(403)
+      expect(response.error).toBeDefined()
+
+      // Lift the ban back for further testing
+      loginInfo[0].bannedUntil = null
+      await loginInfo[0].save()
     })
   })
 }

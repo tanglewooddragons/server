@@ -1,4 +1,5 @@
 {
+  "auth.error.banned": "Your account has been banned",
   "auth.error.wrong_password": "The password is incorrect",
   "auth.error.wrong_email": "The email is not a registered account",
   "auth.error.email_taken": "The email is already taken",
