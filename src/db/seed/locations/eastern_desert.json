@@ -2,7 +2,7 @@
   "name": "Eastern Desert",
   "goodTerrain": "Fog",
   "badTerrain": "Upper Atmosphere",
-  "ingredient": "Poison Ivy",
+  "possibleDrop": ["Poison Ivy"],
   "stat": "lck",
   "hierogliph": "Knot"
 }

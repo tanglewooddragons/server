@@ -2,7 +2,7 @@
   "name": "Fields of Summer",
   "goodTerrain": "Ground",
   "badTerrain": "Clouds",
-  "ingredient": "Cherry Petals",
+  "possibleDrop": ["Cherry Petals"],
   "stat": "con",
   "hierogliph": "Boundary Stone"
 }

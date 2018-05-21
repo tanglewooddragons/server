@@ -2,7 +2,7 @@
   "name": "Githan Volcano",
   "goodTerrain": "Upper Atmosphere",
   "badTerrain": "Rainclouds",
-  "ingredient": "Gunpowder",
+  "possibleDrop": ["Gunpowder"],
   "stat": "str",
   "hierogliph": "Brazier"
 }
