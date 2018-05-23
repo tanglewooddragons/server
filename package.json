@@ -46,5 +46,8 @@
     "eslint-plugin-import": "^2.8.0",
     "jest": "^22.4.3",
     "supertest": "^3.0.0"
+  },
+  "jest": {
+    "verbose": true
   }
 }

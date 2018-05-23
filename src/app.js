@@ -19,7 +19,7 @@ const {
   publicAuth,
   privateAuth,
 } = require('./services/auth')
-const userRouter = require('./services/user')
+const userRouter = require('./services/user').router
 const dragonRouter = require('./services/dragon').router
 const messageRouter = require('./services/message')
 

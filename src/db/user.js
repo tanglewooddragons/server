@@ -73,6 +73,21 @@ async function getUserById(id) {
 async function updateUserById(userId, update) {
   try {
     log.debug(`Updating user by id: ${userId}`)
+    const entry = await User.filter({ userId }).run()
+    const user = entry[0]
+    await user.merge(update)
+    await user.save()
+    log.debug(user, 'User updated successfully')
+    return user
+  } catch (err) {
+    log.error(`Error updating user: ${err}`)
+    return null
+  }
+}
+
+async function updateUserProfileById(userId, update) {
+  try {
+    log.debug(`Updating user by id: ${userId}`)
     const entry = await UserProfile.filter({ userId }).run()
     /*
       Filter returns an array but it always
@@ -112,5 +127,6 @@ module.exports = {
   createUser,
   getUserById,
   updateUserById,
+  updateUserProfileById,
   deleteUserById,
 }

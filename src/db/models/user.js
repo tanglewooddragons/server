@@ -15,13 +15,10 @@ const User = thinky.createModel('User', {
   role: thinky.type.string().default('user'),
   silver: thinky.type.number().default(0),
   sapphires: thinky.type.number().default(0),
-  inventory: thinky.type
-    .object()
-    .schema({
-      ingredients: thinky.type.object(),
-      items: thinky.type.object(),
-    })
-    .default({ ingredients: {}, items: {} }),
+  inventory: {
+    ingredients: thinky.type.object().default({}),
+    items: thinky.type.array().default([]),
+  },
 })
 
 User.hasOne(LoginInfo, 'login', 'id', 'userId')

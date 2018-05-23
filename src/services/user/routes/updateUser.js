@@ -1,5 +1,5 @@
 const {
-  updateUserById,
+  updateUserProfileById,
 } = require('db/user')
 const validate = require('services/validation')
 
@@ -13,7 +13,7 @@ const updateUser = async (ctx) => {
     ctx.throw(422, validationError)
   }
 
-  const update = await updateUserById(id, updateData)
+  const update = await updateUserProfileById(id, updateData)
 
   if (!update) {
     ctx.throw(400, ctx.i18n.__('user.error.update'))
