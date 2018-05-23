@@ -53,21 +53,17 @@ module.exports = async (ctx) => {
 
   const stat = (Object
     .entries(food)
-    .filter((type) => {
-      if (type[1] === foodType) return true
-      return false
-    }))[0]
+    .filter(type => type[1] === foodType)
+  )[0]
 
   if (!stat) {
     ctx.throw(400, ctx.i18n.__('dragon.error.invalid_food_type'))
     return ctx
   }
 
-  const statIndex = Object.keys(food).indexOf(stat[0])
-
   // Get the aspect bonus to stats
   const modifier = getModifier(dragon.aspect)
-  const bonus = modifier[statIndex] + 1
+  const bonus = modifier[stat[0]] + 1
 
   // Add stat to dragon
   dragon.stats[stat[0]] += bonus

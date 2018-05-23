@@ -1,47 +1,75 @@
 const { aspects } = require('constants/aspects')
 
-function getAllModifiers(aspect) {
-  const entry = aspects[aspect]
-  if (entry.modifier) {
-    return entry.modifier
-  }
-  return entry.parents.map(asp => getAllModifiers(asp))
+const baseAspects = Object
+  .entries(aspects)
+  // eslint-disable-next-line
+  .filter(([key, value]) => value.modifier)
+  .map(([key]) => key)
+
+const statDict = {
+  earth: 'con',
+  water: 'int',
+  fire: 'str',
+  air: 'agl',
+  order: 'wlp',
+  chaos: 'lck',
 }
 
-// Transform nested arrays to tiered form
-function transform(stats, level = 1, result = {}) {
-  stats.forEach((sub) => {
-    if (Array.isArray(sub)) {
-      transform(sub, level + 1, result)
-    } else {
-      if (!result[level]) result[level] = []
-      result[level].push(sub)
-    }
-  })
+function mapAspectsNames(aspect, result = {}, depth = 1) {
+  const entry = aspects[aspect]
+
+  if (baseAspects.includes(aspect)) {
+    if (!result[depth]) result[depth] = []
+    result[depth].push(aspect)
+  }
+
+  if (entry.parents) {
+    entry
+      .parents
+      .forEach(parent =>
+        mapAspectsNames(parent, result, depth + 1)
+      )
+  }
+
   return result
 }
 
-function calculateStats(tiers) {
-  let finalStats = [0, 0, 0, 0, 0, 0]
+function calculateStats(aspectsTree) {
+  const current = {
+    earth: 0,
+    water: 0,
+    fire: 0,
+    air: 0,
+    order: 0,
+    chaos: 0,
+  }
 
   Object
-    .keys(tiers)
-    .forEach((tier) => {
-      const summedStats = tiers[tier]
-        .reduce((stats, stat, index) => {
-          stats[index % 6] += stat
-          return stats
-        }, [0, 0, 0, 0, 0, 0])
+    .entries(aspectsTree)
+    .forEach(([tier, tierAspects]) => {
+      const instances = tierAspects.reduce((acc, asp) => {
+        if (!acc[asp]) acc[asp] = 1
+        else acc[asp] += 1
+        return acc
+      }, {})
 
-      finalStats = finalStats.map((stat, index) => {
-        const newStat = stat + (+(summedStats[index] / Math.sqrt(tier)).toFixed(2))
-        return newStat
-      })
+      Object
+        .keys(instances)
+        .forEach((aspect) => {
+          const rowTotal = instances[aspect] / Math.sqrt(tier)
+          current[aspect] += rowTotal
+        })
     })
 
-  return finalStats
+  const final = Object
+    .keys(current)
+    .reduce((acc, aspect) => {
+      const stat = statDict[aspect]
+      acc[stat] = Number(current[aspect].toFixed(2))
+      return acc
+    }, {})
+
+  return final
 }
 
-const getModifier = type => calculateStats(transform(getAllModifiers(type)))
-
-module.exports = getModifier
+module.exports = aspect => calculateStats(mapAspectsNames(aspect))
