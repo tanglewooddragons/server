@@ -5,6 +5,7 @@ const login = require('./routes/login')
 const refreshToken = require('./routes/refreshToken')
 const logout = require('./routes/logout')
 const logoutAll = require('./routes/logoutAll')
+const acceptToS = require('./routes/acceptToS')
 
 const { removeExpiredTokens } = require('db/token')
 const {
@@ -20,6 +21,7 @@ const privateAuth = new Router()
 privateAuth.post('/refreshToken', refreshToken)
 privateAuth.get('/logout', logout)
 privateAuth.get('/logoutAll', logoutAll)
+privateAuth.get('/acceptToS', acceptToS)
 
 function initSchedules() {
   removeExpiredTokens()

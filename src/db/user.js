@@ -121,6 +121,25 @@ async function deleteUserById(id) {
   }
 }
 
+async function markToSAsAccepted(userId) {
+  const update = {
+    termsOfService: {
+      accepted: true,
+      acceptDate: new Date(),
+    },
+  }
+
+  try {
+    const user = await getUserById(userId)
+    await user.merge(update)
+    await user.save()
+    return user
+  } catch (err) {
+    log.error(`Error updating ToS info: ${err}`)
+    return null
+  }
+}
+
 module.exports = {
   emailTaken,
   getLoginInfo,
@@ -129,4 +148,5 @@ module.exports = {
   updateUserById,
   updateUserProfileById,
   deleteUserById,
+  markToSAsAccepted,
 }

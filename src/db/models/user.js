@@ -12,6 +12,10 @@ const User = thinky.createModel('User', {
     .required(),
   confirmed: thinky.type.boolean().default(false),
   premium: thinky.type.boolean().default(false),
+  termsOfService: {
+    accepted: thinky.type.boolean().default(false),
+    acceptDate: thinky.type.date(),
+  },
   role: thinky.type.string().default('user'),
   silver: thinky.type.number().default(0),
   sapphires: thinky.type.number().default(0),

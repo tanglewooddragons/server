@@ -12,6 +12,7 @@ const Message = require('db/models/message')
 const register = require('./auth/register')
 const login = require('./auth/login')
 const refreshToken = require('./auth/refreshToken')
+const acceptToS = require('./auth/acceptToS')
 
 const getUser = require('./user/getUser')
 const updateUser = require('./user/updateUser')
@@ -67,6 +68,7 @@ describe('#tanglewood-api', () => {
     register(app)
     login(app)
     refreshToken(app)
+    acceptToS(app)
   })
 
   describe('#user', () => {
