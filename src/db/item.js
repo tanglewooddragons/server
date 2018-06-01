@@ -3,7 +3,12 @@ const log = require('util/log')
 
 async function getItem(name) {
   try {
-    const item = await Item.filter({ name }).run()
+    const item = await Item
+      .filter({ name })
+      .getJoin({
+        rarityData: true,
+      })
+      .run()
     return item[0]
   } catch (err) {
     log.error(`Failed to get item: ${err}`)
