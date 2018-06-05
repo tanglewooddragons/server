@@ -1,5 +1,4 @@
-const { getLocation } = require('db/location')
-const { getItem } = require('db/item')
+const random = require('util/random')
 
 /*
   Resolving a task should consist of:
@@ -9,7 +8,10 @@ const { getItem } = require('db/item')
     - sending a message to user
 */
 
-module.exports = async (data) => {
+const makeResolveTask = ({
+  getLocation,
+  getItem,
+}) => async (data) => {
   // --- Generate the loot ---
   const duration = data.duration
   const locationName = data.location
@@ -20,11 +22,32 @@ module.exports = async (data) => {
     .map(getItem)
   )
 
-  // @TODO
-  // For every hour of task, for every item:
-  // Pick a random number <0,1>
-  // If it's bigger than the item drop chance:
-  //   Randomize amount
-  //   Add the item to drops
+  const rounds = Array(duration)
+  const loot = rounds.reduce((acc) => {
+    possibleDrop.forEach((drop) => {
+      const roll = Math.random()
+      const dropped = roll >= drop.rarityData.chance
+
+      if (!dropped) return
+
+      if (drop.unique) {
+        acc.items = acc.items.concat([drop])
+        return
+      }
+
+      const amountDropped = random(
+        drop.rarityData.min,
+        drop.rarityData.max
+      )
+
+      acc[drop.name] = amountDropped
+    })
+
+    return acc
+  }, {})
   // ---
+
+  return loot
 }
+
+module.exports = makeResolveTask

@@ -9,14 +9,21 @@ const getStatuses = require('./routes/getStatuses')
 const sendOnTask = require('./routes/sendOnTask')
 
 const { resetFeedStatus } = require('db/dragon')
+const { getLocation } = require('db/location')
+const { getItem } = require('db/item')
 
 const {
   registerHandler,
   scheduleAction,
 } = require('services/scheduler')
 
-const resolveTask = require('./resolvers/resolveTask')
+const makeResolveTask = require('./resolvers/resolveTask')
 const resolveTraining = require('./resolvers/resolveTraining')
+
+const resolveTask = makeResolveTask({
+  getLocation,
+  getItem,
+})
 
 function initSchedules() {
   registerHandler('task', resolveTask)
