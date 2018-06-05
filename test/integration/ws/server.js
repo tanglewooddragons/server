@@ -11,6 +11,8 @@ const {
   stringify,
 } = require('util/json')
 
+const port = 8081
+
 module.exports = function (app) {
   describe('Server', async () => {
     let token
@@ -25,11 +27,11 @@ module.exports = function (app) {
         })
 
       token = response.body.accessToken
-      wss.init()
+      wss.init({ port })
     })
 
     beforeEach(() => {
-      socket = new WebSocket('ws://localhost:8081')
+      socket = new WebSocket(`ws://localhost:${port}`)
     })
 
     afterEach(() => {
