@@ -4,73 +4,129 @@ const log = require('../util/log')
 
 async function createDragon(options) {
   try {
-    log.debug(`Creating new dragon: ${options.name}`)
     const dragon = new Dragon(options)
     await dragon.save()
     const status = new DragonStatus({
       dragonId: dragon.id,
     })
     await status.save()
-    log.debug(`Dragon ${options.name} created successfully!`)
     return dragon
-  } catch (err) {
-    log.error(`Error creating dragon: ${err}`)
+  } catch (error) {
+    log.error({
+      action: 'create-dragon',
+      status: 'failed',
+      error,
+      data: {
+        options,
+      },
+    })
+
     return null
   }
 }
 
 async function updateDragon(id, update) {
   try {
-    log.debug(update, `Updating dragon by id: ${id}`)
     const dragon = await Dragon.get(id).run()
     await dragon.merge(update)
     await dragon.save()
-    log.debug(dragon, 'Dragon updated successfully')
     return dragon
-  } catch (err) {
-    log.error(`Error updating dragon: ${err}`)
+  } catch (error) {
+    log.error({
+      action: 'update-dragon',
+      status: 'failed',
+      error,
+      data: {
+        id,
+        update,
+      },
+    })
+
     return null
   }
 }
 
 async function removeDragonById(id) {
+  log.info({
+    action: 'remove-dragon',
+    status: 'pending',
+    data: {
+      id,
+    },
+  })
+
   try {
-    log.debug(`Removing dragon: ${id}`)
     const dragon = await Dragon.get(id).run()
     await dragon.delete()
-    log.debug(`Dragon ${id} has been removed`)
+
+    log.info({
+      action: 'remove-dragon',
+      status: 'success',
+      data: {
+        id,
+      },
+    })
+
     return true
-  } catch (err) {
-    log.error(`Error removing dragon: ${err}`)
+  } catch (error) {
+    log.error({
+      action: 'remove-dragon',
+      status: 'failed',
+      error,
+      data: {
+        id,
+      },
+    })
+
     return null
   }
 }
 
 async function getDragonById(id) {
   try {
-    log.debug(`Getting dragon by id: ${id}`)
     const dragon = await Dragon.get(id).run()
 
     if (!dragon) return null
     return dragon
   } catch (err) {
-    log.error(`Error fetching dragon: ${err}`)
+    log.error({
+      action: 'get-dragon-by-id',
+      status: 'failed',
+      error: err,
+      data: {
+        id,
+      },
+    })
+
     return null
   }
 }
 
 async function resetFeedStatus() {
-  log.debug('Reseting dragons feed status..')
+  log.info({
+    action: 'reset-feed-status',
+    status: 'pending',
+  })
+
   try {
     const dragons = await Dragon.filter({}).run()
     dragons.forEach(async (dragon) => {
       dragon.fed = false
       await dragon.save()
     })
-    log.debug('Successfully reseted dragons feed status')
+
+    log.info({
+      action: 'reset-feed-status',
+      status: 'success',
+    })
+
     return true
   } catch (err) {
-    log.error(`Error reseting feed status: ${err}`)
+    log.error({
+      action: 'reset-feed-status',
+      status: 'failed',
+      error: err,
+    })
     return null
   }
 }

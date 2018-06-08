@@ -21,7 +21,6 @@ async function getMessagesByChannel(channel) {
 
   if (!messages) return null
 
-  log.debug(`Got ${messages.length} messages`)
   return messages
 }
 
@@ -31,7 +30,6 @@ async function addMessage(message) {
   try {
     const newMessage = new ChatMessage(message)
     await newMessage.save()
-    log.debug('Message added successfully')
     return newMessage
   } catch (err) {
     log.error(`Error adding message to db: ${err}`)
