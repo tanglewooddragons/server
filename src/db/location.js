@@ -5,8 +5,16 @@ async function getLocation(name) {
   try {
     const location = await Location.filter({ name }).run()
     return location[0]
-  } catch (err) {
-    log.error(`Location not found: ${name}`)
+  } catch (error) {
+    log.error({
+      action: 'get-location',
+      status: 'failed',
+      error,
+      data: {
+        name,
+      },
+    })
+
     return null
   }
 }
