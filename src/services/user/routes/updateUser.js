@@ -2,6 +2,7 @@ const {
   updateUserProfileById,
 } = require('db/user')
 const validate = require('services/validation')
+const log = require('util/log')
 
 const updateUser = async (ctx) => {
   const id = ctx.state.user.id
@@ -10,6 +11,15 @@ const updateUser = async (ctx) => {
   try {
     await validate(updateData, 'updateUser')
   } catch (validationError) {
+    log.error({
+      action: 'update-user',
+      status: 'failed',
+      error: validationError,
+      data: {
+        userId: id,
+        update: updateData,
+      },
+    })
     ctx.throw(422, validationError)
   }
 

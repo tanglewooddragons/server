@@ -10,19 +10,30 @@ const {
   CHANNELS,
 } = require('constants/chat')
 const validate = require('services/validation')
+const log = require('util/log')
 
 const sendMessage = async (socket, data) => {
   const msgData = data.payload
 
   try {
     await validate(msgData, 'chatMessage')
-  } catch (err) {
+  } catch (error) {
     socket.send(stringify({
       type: SEND_MESSAGE,
       payload: {
-        error: err,
+        error,
       },
     }))
+
+    log.error({
+      action: 'send-chat-message',
+      status: 'failed',
+      error,
+      data: {
+        socket,
+        data,
+      },
+    })
 
     return null
   }

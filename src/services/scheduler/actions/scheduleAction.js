@@ -9,8 +9,16 @@ async function scheduleAction(options) {
   // Validate task options
   try {
     await validate(options, 'schedule')
-  } catch (err) {
-    log.error(err)
+  } catch (error) {
+    log.error({
+      action: 'schedule-action',
+      status: 'failed',
+      error,
+      data: {
+        options,
+      },
+    })
+
     return
   }
 

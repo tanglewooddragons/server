@@ -1,10 +1,18 @@
 const { sendMessage } = require('db/message')
 const validate = require('services/validation')
+const log = require('util/log')
 
 const send = async (ctx) => {
   try {
     await validate(ctx.request.body, 'message')
   } catch (validationError) {
+    log.error({
+      action: 'send-chat-message',
+      status: 'failed',
+      error: validationError,
+      data: ctx.request.body,
+    })
+
     ctx.throw(422, validationError)
   }
 

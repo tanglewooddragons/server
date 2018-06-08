@@ -36,8 +36,6 @@ class WSServer {
 
   initHandlers() {
     this.wss.on('connection', (socket) => {
-      log.debug(socket, 'New WebSocket connection')
-
       socket.broadcast = (message) => {
         if (!this.wss.clients) return
 
@@ -51,9 +49,6 @@ class WSServer {
       socket.on('message', async (message) => {
         // Parse the message
         const msg = parse(message)
-
-        log.debug(msg, 'Received Websocket message')
-
         if (!msg.payload) return
 
         // Check if user is authenticated
@@ -74,8 +69,17 @@ class WSServer {
 
         try {
           decoded = jwt.verify(token, process.env.JWT_SECRET)
-        } catch (err) {
-          log.error(`Error decoding token: ${err}`)
+        } catch (error) {
+          log.error({
+            action: 'ws-on-message',
+            status: 'failed',
+            error,
+            data: {
+              socket,
+              message,
+            },
+          })
+
           socket.send(stringify({
             type: 'AUTH_ERROR',
             payload: {
