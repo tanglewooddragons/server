@@ -4,28 +4,33 @@ const UserProfile = require('./models/userProfile')
 const log = require('../util/log')
 
 async function emailTaken(email) {
-  log.debug(email, 'Checking if email is available')
   const emails = await LoginInfo.filter({ email }).run()
   return emails.length > 0
 }
 
 async function getLoginInfo(email) {
   try {
-    log.debug(`Fetching user login info by email: ${email}`)
     const users = await LoginInfo.filter({ email }).limit(1).run()
     const user = users[0]
 
     if (!user) return null
     return user
-  } catch (err) {
-    log.error(`Error fetching user login info: ${err}`)
+  } catch (error) {
+    log.error({
+      action: 'get-login-info',
+      status: 'failed',
+      error,
+      data: {
+        email,
+      },
+    })
+
     return null
   }
 }
 
 async function createUser(options) {
   try {
-    log.debug(`Creating new user: ${options.username}`)
     const user = new User({
       username: options.username,
     })
@@ -43,17 +48,26 @@ async function createUser(options) {
     })
     await profile.save()
 
-    log.debug(`User ${options.username} created successfully!`)
     return user
-  } catch (err) {
-    log.error(`Error creating user: ${err}`)
+  } catch (error) {
+    // Remove password from logs
+    options.password = undefined
+
+    log.error({
+      action: 'create-user',
+      status: 'failed',
+      error,
+      data: {
+        options,
+      },
+    })
+
     return null
   }
 }
 
 async function getUserById(id) {
   try {
-    log.debug(`Getting user by id: ${id}`)
     const user = await User
       .get(id)
       .getJoin({
@@ -64,30 +78,45 @@ async function getUserById(id) {
 
     if (!user) return null
     return user
-  } catch (err) {
-    log.error(`Error fetching user: ${err}`)
+  } catch (error) {
+    log.error({
+      action: 'get-user-by-id',
+      status: 'failed',
+      error,
+      data: {
+        id,
+      },
+    })
+
     return null
   }
 }
 
 async function updateUserById(userId, update) {
   try {
-    log.debug(`Updating user by id: ${userId}`)
     const entry = await User.filter({ userId }).run()
     const user = entry[0]
     await user.merge(update)
     await user.save()
-    log.debug(user, 'User updated successfully')
+
     return user
-  } catch (err) {
-    log.error(`Error updating user: ${err}`)
+  } catch (error) {
+    log.error({
+      action: 'update-user-by-id',
+      status: 'failed',
+      error,
+      data: {
+        userId,
+        update,
+      },
+    })
+
     return null
   }
 }
 
 async function updateUserProfileById(userId, update) {
   try {
-    log.debug(`Updating user by id: ${userId}`)
     const entry = await UserProfile.filter({ userId }).run()
     /*
       Filter returns an array but it always
@@ -96,27 +125,58 @@ async function updateUserProfileById(userId, update) {
     const profile = entry[0]
     await profile.merge(update)
     await profile.save()
-    log.debug(profile, 'User profile updated successfully')
     return profile
-  } catch (err) {
-    log.error(`Error updating user profile: ${err}`)
+  } catch (error) {
+    log.error({
+      action: 'update-user-profile-by-id',
+      status: 'failed',
+      error,
+      data: {
+        userId,
+        update,
+      },
+    })
+
     return null
   }
 }
 
 async function deleteUserById(id) {
   try {
-    log.debug(`Deleting user: ${id}`)
+    log.info({
+      action: 'delete-user-by-id',
+      status: 'pending',
+      data: {
+        id,
+      },
+    })
+
     const user = await User.get(id).run()
     await user.delete()
     const userProfile = await UserProfile.filter({ userId: id }).run()
     await userProfile[0].delete()
     const loginInfo = await LoginInfo.filter({ userId: id }).run()
     await loginInfo[0].delete()
-    log.debug(`User ${id} has been removed`)
+
+    log.info({
+      action: 'delete-user-by-id',
+      status: 'success',
+      data: {
+        id,
+      },
+    })
+
     return true
-  } catch (err) {
-    log.error(`Error deleting user: ${err}`)
+  } catch (error) {
+    log.error({
+      action: 'delete-user-by-id',
+      status: 'failed',
+      error,
+      data: {
+        id,
+      },
+    })
+
     return null
   }
 }
@@ -133,9 +193,26 @@ async function markToSAsAccepted(userId) {
     const user = await getUserById(userId)
     await user.merge(update)
     await user.save()
+
+    log.info({
+      action: 'mark-tos-as-accepted',
+      status: 'success',
+      data: {
+        userId,
+      },
+    })
+
     return user
-  } catch (err) {
-    log.error(`Error updating ToS info: ${err}`)
+  } catch (error) {
+    log.error({
+      action: 'mark-tos-as-accepted',
+      status: 'failed',
+      error,
+      data: {
+        userId,
+      },
+    })
+
     return null
   }
 }
