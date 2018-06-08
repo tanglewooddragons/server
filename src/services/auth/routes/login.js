@@ -6,6 +6,7 @@ const {
   getUserById,
 } = require('db/user')
 const comparePasswords = require('util/comparePasswords')
+const log = require('util/log')
 
 const {
   ACCESS_TOKEN_LIFETIME,
@@ -19,12 +20,29 @@ const login = async (ctx) => {
 
   if (!loginInfo) {
     ctx.throw(400, ctx.i18n.__('auth.error.wrong_email'))
+    log.error({
+      action: 'login',
+      status: 'failed',
+      error: 'Invalid email address',
+      data: {
+        email,
+      },
+    })
+    return
   }
 
   const isPasswordCorrect = await comparePasswords(password, loginInfo.password)
 
   if (!isPasswordCorrect) {
     ctx.throw(401, ctx.i18n.__('auth.error.wrong_password'))
+    log.error({
+      action: 'login',
+      status: 'failed',
+      error: 'Incorrect password',
+      data: {
+        email,
+      },
+    })
     return
   }
 
@@ -32,6 +50,14 @@ const login = async (ctx) => {
   if (loginInfo.isBanned) {
     // @TODO Add ban lift date to data sent to user
     ctx.throw(403, ctx.i18n.__('auth.error.banned'))
+    log.error({
+      action: 'login',
+      status: 'failed',
+      error: 'User is banned',
+      data: {
+        email,
+      },
+    })
     return
   }
 
