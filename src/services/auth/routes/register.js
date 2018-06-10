@@ -8,7 +8,17 @@ const register = async (ctx) => {
 
   try {
     await validate(data, 'register')
-  } catch (err) {
+  } catch (error) {
+    data.password = undefined
+    data.passwordRepeat = undefined
+
+    log.error({
+      action: 'register',
+      status: 'failed',
+      error,
+      data,
+    })
+
     // @TODO Possibly add the result of validation to error
     ctx.throw(422, ctx.i18n.__('auth.error.register_validation'))
   }
@@ -32,15 +42,15 @@ const register = async (ctx) => {
     username: data.username,
   }
 
-  await createUser(user)
-    .then((newUser) => {
-      ctx.status = 201
-      ctx.body = newUser
-    })
-    .catch((err) => {
-      log.error(err)
-      ctx.throw(400, ctx.i18n.__('auth.error.create_user'))
-    })
+  const newUser = await createUser(user)
+
+  if (!newUser) {
+    ctx.throw(400, ctx.i18n.__('auth.error.create_user'))
+    return
+  }
+
+  ctx.status = 201
+  ctx.body = newUser
 }
 
 module.exports = register

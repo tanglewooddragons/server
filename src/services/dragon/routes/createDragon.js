@@ -3,6 +3,7 @@ const { getUserById } = require('db/user')
 const { isBasicAspect } = require('constants/aspects')
 const { DRAGON_LIMIT } = require('constants/dragon')
 const validate = require('services/validation')
+const log = require('util/log')
 
 const getRandomGender = () => ((Math.random() > 0.5) ? 'male' : 'female')
 
@@ -12,7 +13,19 @@ const create = async (ctx) => {
   try {
     await validate(body, 'dragon')
   } catch (validationError) {
-    ctx.throw(422, validationError)
+    log.error({
+      action: 'create-dragon',
+      status: 'failed',
+      error: validationError,
+      data: body,
+    })
+
+    ctx.throw(422, {
+      message: {
+        status: 422,
+        details: validationError.details,
+      },
+    })
   }
 
   const user = await getUserById(ctx.state.user.id)

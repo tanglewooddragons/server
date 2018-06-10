@@ -10,8 +10,16 @@ async function getItem(name) {
       })
       .run()
     return item[0]
-  } catch (err) {
-    log.error(`Failed to get item: ${err}`)
+  } catch (error) {
+    log.error({
+      action: 'get-item',
+      status: 'failed',
+      error,
+      data: {
+        name,
+      },
+    })
+
     return null
   }
 }

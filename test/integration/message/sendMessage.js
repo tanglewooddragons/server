@@ -26,7 +26,7 @@ module.exports = function (app) {
         .set('Authorization', `Bearer ${token}`)
         .expect(422)
         .then((res) => {
-          expect(res.body).toEqual({})
+          expect(res.body.error).toBeTruthy()
         })
     )
 

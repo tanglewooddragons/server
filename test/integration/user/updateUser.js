@@ -44,7 +44,7 @@ module.exports = function (app) {
         .expect(422)
         .end((err, res) => {
           expect(err).toBeNull()
-          expect(res.body).toEqual({})
+          expect(res.body.error).toBeTruthy()
           done()
         })
     })

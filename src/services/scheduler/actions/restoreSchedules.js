@@ -9,6 +9,7 @@ const { getHandler } = require('../handlers')
 
 async function restoreSchedules() {
   const schedules = await getUnfiredSchedules()
+  log.info(`[Schedule] Restoring ${schedules.length} unfired schedules..`)
 
   schedules.forEach(async (schedule) => {
     // get resolver for schedule type

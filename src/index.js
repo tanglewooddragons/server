@@ -9,11 +9,11 @@ const initDragonSchedules = require('services/dragon').initSchedules
 const initAuthSchedules = require('services/auth').initSchedules
 
 thinky.dbReady().then(() => {
-  log.info('Database ready, starting server...')
+  log.info('Database ready, starting server..')
   app.listen(process.env.APP_PORT, function () {
     const host = this.address().address
     const port = this.address().port
-    log.info(`listening at http://${host}:${port}`)
+    log.info(`Server listening at http://${host}:${port}`)
     wss.init({ port: process.env.WS_PORT })
     initChatService()
     initAuthSchedules()

@@ -7,6 +7,7 @@ const {
   isDragonBusy,
   setDragonAsBusy,
 } = require('db/dragonStatus')
+const log = require('util/log')
 
 const sendOnTask = async (ctx) => {
   const body = ctx.request.body
@@ -14,6 +15,15 @@ const sendOnTask = async (ctx) => {
   try {
     await validate(body, 'task')
   } catch (validationError) {
+    log.error({
+      action: 'send-on-task',
+      status: 'failed',
+      error: validationError,
+      data: {
+        body,
+      },
+    })
+
     ctx.throw(422, validationError)
   }
 
