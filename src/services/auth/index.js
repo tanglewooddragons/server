@@ -13,15 +13,13 @@ const {
   scheduleAction,
 } = require('services/scheduler')
 
-const publicAuth = new Router()
-publicAuth.post('/register', register)
-publicAuth.post('/login', login)
-
-const privateAuth = new Router()
-privateAuth.post('/refreshToken', refreshToken)
-privateAuth.get('/logout', logout)
-privateAuth.get('/logoutAll', logoutAll)
-privateAuth.get('/acceptToS', acceptToS)
+const router = new Router()
+router.post('/register', register)
+router.post('/login', login)
+router.post('/refreshToken', refreshToken)
+router.get('/logout', logout)
+router.get('/logoutAll', logoutAll)
+router.get('/acceptToS', acceptToS)
 
 function initSchedules() {
   removeExpiredTokens()
@@ -36,7 +34,6 @@ function initSchedules() {
 }
 
 module.exports = {
-  publicAuth,
-  privateAuth,
+  router,
   initSchedules,
 }

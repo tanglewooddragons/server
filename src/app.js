@@ -17,36 +17,23 @@ locale(app)
 
 const jwt = require('./services/auth/middleware/jwt')
 
-const {
-  publicAuth,
-  privateAuth,
-} = require('./services/auth')
-const userRouter = require('./services/user').router
-const dragonRouter = require('./services/dragon').router
+const { router: authRouter } = require('./services/auth')
+const { router: userRouter } = require('./services/user')
+const { router: dragonRouter } = require('./services/dragon')
 const messageRouter = require('./services/message')
 
-const publicRouter = new Router({
+const router = new Router({
   prefix: '/api',
 })
 
-publicRouter.use(publicAuth.routes())
-publicRouter.use(publicAuth.allowedMethods())
-
-const privateRouter = new Router({
-  prefix: '/api',
-})
-
-// Auth
-privateRouter.use(privateAuth.routes())
-privateRouter.use(privateAuth.allowedMethods())
-
-// User routes
-privateRouter.use(userRouter.routes())
-privateRouter.use(userRouter.allowedMethods())
-privateRouter.use(dragonRouter.routes())
-privateRouter.use(dragonRouter.allowedMethods())
-privateRouter.use(messageRouter.routes())
-privateRouter.use(messageRouter.allowedMethods())
+router.use(authRouter.routes())
+router.use(authRouter.allowedMethods())
+router.use(userRouter.routes())
+router.use(userRouter.allowedMethods())
+router.use(dragonRouter.routes())
+router.use(dragonRouter.allowedMethods())
+router.use(messageRouter.routes())
+router.use(messageRouter.allowedMethods())
 
 app
   .use(bodyparser())
@@ -59,20 +46,14 @@ app
   }))
   .use(cors())
   .use(jwt.unless({
-    // Public paths
-    // @TODO Merge public and private router now
-    // as public paths are stated here.
+    // Public paths (available without token)
     path: [
       '/api/register',
       '/api/login',
     ],
   }))
   .use(logger)
-  // Public routes
-  .use(publicRouter.routes())
-  .use(publicRouter.allowedMethods())
-  // Private routes (token required)
-  .use(privateRouter.routes())
-  .use(privateRouter.allowedMethods())
+  .use(router.routes())
+  .use(router.allowedMethods())
 
 module.exports = app
