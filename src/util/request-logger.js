@@ -3,8 +3,10 @@ const shortId = require('shortid')
 const log = require('./log')
 
 const sanitizeHeaders = (headers) => {
-  // Copy headers, we don't want
-  // to modify the real ones
+  /*
+   * Copy headers, we don't want
+   * to modify the real ones
+   */
   const cleanHeaders = Object.assign(
     {},
     headers,
@@ -76,18 +78,18 @@ const logger = async (ctx, next) => {
     })
   } catch (err) {
     /*
-    Error example:
-    ctx.throw(400, {
-      message: {
-        status: 400,
-        text: 'Invalid E-mail',
-      },
-    })
-
-    Validation error (422) have a `details` key
-    instead of the usual text `key` containing
-    an array of all fields that failed validation
-    */
+     * Error example:
+     * ctx.throw(400, {
+     *   message: {
+     *     status: 400,
+     *     text: 'Invalid E-mail',
+     *   },
+     * })
+     *
+     * Validation error (422) have a `details` key
+     * instead of the usual text `key` containing
+     * an array of all fields that failed validation
+     */
 
     const status = err.message.status
       ? err.message.status
@@ -123,8 +125,10 @@ const logger = async (ctx, next) => {
       return
     }
 
-    // If error is written as:
-    // ctx.throw(403, 'Forbidden')
+    /*
+     * If error is written as:
+     * ctx.throw(403, 'Forbidden')
+     */
     if (typeof err.message === 'string') {
       ctx.body = {
         error: true,
@@ -167,8 +171,10 @@ const logger = async (ctx, next) => {
       return
     }
 
-    // Internal server error
-    // Do not leak internal messages to user
+    /*
+     * Internal server error
+     * Do not leak internal messages to user
+     */
     if (status === 500) {
       log.warn('Internal server error', err)
 

@@ -18,8 +18,10 @@ module.exports = async (ctx) => {
     return ctx
   }
 
-  // Dragons of level lesser than 6 are still eggs,
-  // so their stats are not being modified yet
+  /*
+   * Dragons of level lesser than 6 are still eggs,
+   * so their stats are not being modified yet
+   */
   const isStillEgg = dragon.level <= DRAGON_IS_STILL_EGG
 
   // Check if dragon was already fed/warmed

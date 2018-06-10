@@ -22,6 +22,8 @@
       "arrays": "always-multiline",
       "objects": "always-multiline",
       "functions": "ignore"
-    }]
+    }],
+    "multiline-comment-style": ["error", "starred-block"],
+    "spaced-comment": ["error", "always"]
   }
 }

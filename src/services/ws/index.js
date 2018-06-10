@@ -131,9 +131,9 @@ class WSServer {
     if (!this.wss.clients) return
 
     /*
-      Think about holding a clients map as this loop
-      could easily go out of hand with a lot of users
-    */
+     * Think about holding a clients map as this loop
+     * could easily go out of hand with a lot of users
+     */
 
     this.wss.clients.forEach((client) => {
       if (client.userId === userId) {

@@ -23,9 +23,9 @@ async function scheduleAction(options) {
   }
 
   /*
-    Schedules set by system use cron time so they
-    are not valid date and should not be saved in db
-  */
+   * Schedules set by system use cron time so they
+   * are not valid date and should not be saved in db
+   */
   const isDate = Date.parse(options.scheduledFor)
 
   if (isDate) {
@@ -34,9 +34,9 @@ async function scheduleAction(options) {
     scheduleJob(job)
   } else {
     /*
-      This should be a system schedule so it will be set up
-      automatically on restart anyway
-    */
+     * This should be a system schedule so it will be set up
+     * automatically on restart anyway
+     */
     const job = {
       ...options,
       id: options.type,

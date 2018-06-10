@@ -119,9 +119,9 @@ async function updateUserProfileById(userId, update) {
   try {
     const entry = await UserProfile.filter({ userId }).run()
     /*
-      Filter returns an array but it always
-      should be just one entry
-    */
+     * Filter returns an array but it always
+     * should be just one entry
+     */
     const profile = entry[0]
     await profile.merge(update)
     await profile.save()

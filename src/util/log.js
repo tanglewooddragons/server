@@ -27,10 +27,11 @@ if (process.env.NODE_ENV === 'production') {
   const dir = getLogDirectory()
 
   /*
-    Create log directory on server boot
-    if it does not exist, as bunyan will crash
-    otherwise
-  */
+   * Create log directory on server boot
+   * if it does not exist, as bunyan will crash
+   * otherwise
+   */
+
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir)
   }

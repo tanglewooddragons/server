@@ -1,12 +1,12 @@
 const random = require('util/random')
 
 /*
-  Resolving a task should consist of:
-    - generating loot
-    - adding loot to users inventory
-    - pushing a notification to user
-    - sending a message to user
-*/
+ * Resolving a task should consist of:
+ *  - generating loot
+ *  - adding loot to users inventory
+ *  - pushing a notification to user
+ *  - sending a message to user
+ */
 
 const makeResolveTask = ({
   getLocation,
