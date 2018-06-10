@@ -20,7 +20,12 @@ const create = async (ctx) => {
       data: body,
     })
 
-    ctx.throw(422, validationError)
+    ctx.throw(422, {
+      message: {
+        status: 422,
+        details: validationError.details,
+      },
+    })
   }
 
   const user = await getUserById(ctx.state.user.id)

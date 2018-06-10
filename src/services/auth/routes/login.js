@@ -88,6 +88,13 @@ const login = async (ctx) => {
     expires,
   })
 
+  ctx.state.user = {
+    id: user.id,
+    role: user.role,
+    locale,
+    email: loginInfo.email,
+  }
+
   ctx.body = {
     ...user,
     accessToken,

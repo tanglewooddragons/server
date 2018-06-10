@@ -22,7 +22,7 @@ const validate = (object, type) =>
     const { error, value } = joi.validate(object, schemas[type])
 
     if (error) {
-      reject(new Error(error))
+      reject(error)
     }
 
     resolve(value)

@@ -10,6 +10,8 @@ const compress = require('koa-compress')
 const cors = require('@koa/cors')
 const path = require('path')
 
+const logger = require('util/request-logger')
+
 const app = new Koa()
 locale(app)
 
@@ -46,17 +48,6 @@ privateRouter.use(dragonRouter.allowedMethods())
 privateRouter.use(messageRouter.routes())
 privateRouter.use(messageRouter.allowedMethods())
 
-// Custom auth error handler
-app.use((ctx, next) =>
-  next().catch((err) => {
-    if (err.status === 401) {
-      ctx.throw(401, ctx.i18n.__('auth.error.authorization'))
-    } else {
-      throw err
-    }
-  })
-)
-
 app
   .use(bodyparser())
   .use(compress())
@@ -67,10 +58,19 @@ app
     locales: ['en', 'pl'],
   }))
   .use(cors())
+  .use(jwt.unless({
+    // Public paths
+    // @TODO Merge public and private router now
+    // as public paths are stated here.
+    path: [
+      '/api/register',
+      '/api/login',
+    ],
+  }))
+  .use(logger)
   // Public routes
   .use(publicRouter.routes())
   .use(publicRouter.allowedMethods())
-  .use(jwt)
   // Private routes (token required)
   .use(privateRouter.routes())
   .use(privateRouter.allowedMethods())

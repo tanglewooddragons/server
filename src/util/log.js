@@ -25,7 +25,7 @@ const logger = bunyan.createLogger({
 if (process.env.NODE_ENV === 'production') {
   logger.addStream({
     type: 'rotating-file',
-    path: getLogDirectory(),
+    path: path.join(getLogDirectory(), 'tanglewood.log'),
     period: '1d',
     count: 14,
   })
