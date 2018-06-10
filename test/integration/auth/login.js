@@ -64,7 +64,7 @@ module.exports = function (app) {
 
       expect(response.status).toBe(403)
       expect(response.error).toBeDefined()
-      expect(response.body).toEqual({})
+      expect(response.body.error).toBeTruthy()
 
       // Lift the ban back for further testing
       loginInfo[0].bannedUntil = null
