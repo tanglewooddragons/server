@@ -16,7 +16,7 @@ const logger = bunyan.createLogger({
   name: 'tanglewood-api',
   streams: [
     {
-      stream: process.stderr,
+      stream: process.stdout,
       level: getConsoleLogLevel(),
     },
   ],
