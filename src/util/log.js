@@ -1,5 +1,6 @@
 const bunyan = require('bunyan')
 const path = require('path')
+const fs = require('fs')
 
 const getConsoleLogLevel = () => {
   const env = process.env.NODE_ENV
@@ -23,9 +24,20 @@ const logger = bunyan.createLogger({
 })
 
 if (process.env.NODE_ENV === 'production') {
+  const dir = getLogDirectory()
+
+  /*
+    Create log directory on server boot
+    if it does not exist, as bunyan will crash
+    otherwise
+  */
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir)
+  }
+
   logger.addStream({
     type: 'rotating-file',
-    path: path.join(getLogDirectory(), 'tanglewood.log'),
+    path: path.join(dir, 'tanglewood.log'),
     period: '1d',
     count: 14,
   })
