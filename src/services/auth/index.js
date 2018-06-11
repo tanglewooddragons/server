@@ -17,7 +17,7 @@ const router = new Router()
 router.post('/register', register)
 router.post('/login', login)
 router.post('/refreshToken', refreshToken)
-router.get('/logout', logout)
+router.post('/logout', logout)
 router.get('/logoutAll', logoutAll)
 router.get('/acceptToS', acceptToS)
 

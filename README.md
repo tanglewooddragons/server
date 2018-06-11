@@ -68,7 +68,7 @@ The body of a request made to the API must be a valid JSON, and the request must
 
   - [/user](/user) - :key: __[GET]__ Get current user profile
   - [/user/:id](/user/:id) - :key: __[GET]__ Get profile of user with given id
-  - [/user](/user) - :key: __[PUT]__ Update current user profile
+  - [/user](/user) - :key: __[POST]__ Update current user profile
   - [/user](/user) - :key: __[DELETE]__ Delete current user profile (__Note:__ :wrench: This route if definietly going to be reworked with need to provide password at least)
 
 ------

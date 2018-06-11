@@ -21,7 +21,7 @@ module.exports = function (app) {
 
     test('Should update fields', (done) => {
       request(app)
-        .put('/api/user')
+        .post('/api/user')
         .send({
           country: 'Poland',
         })
@@ -36,7 +36,7 @@ module.exports = function (app) {
 
     test('Should NOT update secured fields', (done) => {
       request(app)
-        .put('/api/user')
+        .post('/api/user')
         .send({
           role: 'admin',
         })
