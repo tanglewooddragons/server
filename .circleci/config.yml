@@ -18,9 +18,9 @@ jobs:
       - run: npm run db:seed
 
       - run:
-        name: Run tests
-        environment:
-          DB_DATABASE: tanglewood_test
-          DB_PASSWORD: test
-          JWT_SECRET: alpaca
-        command: npm test
+          name: Run tests
+          environment:
+            DB_DATABASE: tanglewood_test
+            DB_PASSWORD: test
+            JWT_SECRET: alpaca
+          command: npm test
