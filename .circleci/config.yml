@@ -3,6 +3,11 @@ jobs:
   build:
     working_directory: ~/tmp
 
+    environment:
+      DB_DATABASE: tanglewood_test
+      DB_PASSWORD: test
+      JWT_SECRET: alpaca
+
     docker:
       - image: circleci/node:10
       - image: rethinkdb:latest
@@ -17,10 +22,4 @@ jobs:
 
       - run: npm run db:seed
 
-      - run:
-          name: Run tests
-          environment:
-            DB_DATABASE: tanglewood_test
-            DB_PASSWORD: test
-            JWT_SECRET: alpaca
-          command: npm test
+      - run: npm test
