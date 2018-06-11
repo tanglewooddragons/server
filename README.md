@@ -231,12 +231,17 @@ Their indexes should be matching so messages[0] should be the error for fields[0
 
 ------
 
-Websocket errors have the same response type as success responses but instead of data they provide error message
+Websocket errors have special response types and they provide only the error message:
+
 ```json
 {
-  "type": "MESSAGES",
+  "type": "ERROR",
   "payload": {
     "error": "Big scary error message in users browser language (or English if unknown)"
   }
 }
 ```
+
+  - [ERROR](ERROR) - Is a generic error type, like missing data in request
+  - [TYPE_ERROR](TYPE_ERROR) - Requested type is not handled by the server (propably misspell) [__NOTE:__ This should not happen in production as the types should be constant in the app and matching the server-side ones]
+  - [AUTH_ERROR](AUTH_ERROR) - Token is missing or is expired

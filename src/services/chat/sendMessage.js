@@ -9,6 +9,7 @@ const {
   NEW_MESSAGE,
   CHANNELS,
 } = require('constants/chat')
+const { ERROR_TYPE } = require('constants/ws')
 const validate = require('services/validation')
 const log = require('util/log')
 
@@ -19,7 +20,7 @@ const sendMessage = async (socket, data) => {
     await validate(msgData, 'chatMessage')
   } catch (error) {
     socket.send(stringify({
-      type: SEND_MESSAGE,
+      type: ERROR_TYPE,
       payload: {
         error,
       },
@@ -40,7 +41,7 @@ const sendMessage = async (socket, data) => {
 
   if (!CHANNELS.includes(msgData.channel.toLowerCase())) {
     socket.send(stringify({
-      type: SEND_MESSAGE,
+      type: ERROR_TYPE,
       payload: {
         error: socket.__('chat.error.invalid_channel'),
       },

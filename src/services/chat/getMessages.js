@@ -5,6 +5,7 @@ const {
   CHANNELS,
   MESSAGES_TYPE,
 } = require('constants/chat')
+const { ERROR_TYPE } = require('constants/ws')
 const {
   stringify,
 } = require('util/json')
@@ -14,7 +15,7 @@ const getMessages = async (socket, data) => {
 
   if (!channel) {
     socket.send(stringify({
-      type: MESSAGES_TYPE,
+      type: ERROR_TYPE,
       payload: {
         error: socket.__('chat.error.no_channel'),
       },
@@ -25,7 +26,7 @@ const getMessages = async (socket, data) => {
 
   if (!CHANNELS.includes(channel.toLowerCase())) {
     socket.send(stringify({
-      type: MESSAGES_TYPE,
+      type: ERROR_TYPE,
       payload: {
         error: socket.__('chat.error.invalid_channel'),
       },
