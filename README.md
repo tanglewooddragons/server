@@ -1,7 +1,7 @@
 # Tanglewood Dragons API
 
 <!-- Badges -->
-
+[![CircleCI](https://circleci.com/gh/tanglewooddragons/server.svg?style=shield)](https://circleci.com/gh/tanglewooddragons/server)
 <!-- /Badges -->
 
 # Table of Contents
