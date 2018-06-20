@@ -7,8 +7,8 @@ const Location = thinky.createModel('Location', {
   possibleDrop: [{
     itemId: thinky.type.string().required(),
     chance: thinky.type.number().required(),
-    min: thinky.type.number().required(),
-    max: thinky.type.number().required(),
+    min: thinky.type.number(),
+    max: thinky.type.number(),
   }],
   stat: thinky.type.string().required(),
   hierogliph: thinky.type.string().required(),
