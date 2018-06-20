@@ -23,46 +23,40 @@ const addToInventory = makeAddToInventory({
   updateUserById,
 })
 
-describe.only('addToInventory', () => {
+describe('addToInventory', () => {
   beforeEach(() => {
-    user.inventory = {
-      ingredients: {},
-      items: [],
-    }
+    user.inventory = []
   })
 
   test('Adds items to inventory', async () => {
-    const ingredients = {
-      'Cherry Petals': 3,
-    }
+    const ingredients = [{
+      id: 'Cherry Petals',
+      amount: 3,
+    }]
 
-    const updated = await addToInventory('test', {
-      ingredients,
-    })
+    const updated = await addToInventory('test', ingredients)
 
-    expect(updated.inventory.ingredients).toEqual(ingredients)
+    expect(updated.inventory).toEqual(ingredients)
   })
 
   test('Correctly add ingredient quantity', async () => {
-    const batch1 = {
-      'Sword Pearls': 3,
-    }
+    const batch1 = [{
+      id: 'Sword Pearls',
+      amount: 3,
+    }]
 
-    const batch2 = {
-      'Sword Pearls': 5,
-    }
+    const batch2 = [{
+      id: 'Sword Pearls',
+      amount: 5,
+    }]
 
-    await addToInventory('test', {
-      ingredients: batch1,
-    })
+    await addToInventory('test', batch1)
 
-    const updated = await addToInventory('test', {
-      ingredients: batch2,
-    })
+    const updated = await addToInventory('test', batch2)
 
-    const ingredients = updated.inventory.ingredients
-    const pearls = ingredients['Sword Pearls']
+    const inv = updated.inventory
+    const pearls = inv.find(x => x.id === 'Sword Pearls')
 
-    expect(pearls).toBe(8)
+    expect(pearls.amount).toBe(8)
   })
 })
