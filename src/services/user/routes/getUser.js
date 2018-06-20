@@ -1,10 +1,10 @@
 const {
-  getUserById,
+  getFullUserById,
 } = require('db/user')
 
 const getUser = async (ctx) => {
   const id = (ctx.params.id) ? ctx.params.id : ctx.state.user.id
-  const user = await getUserById(id)
+  const user = await getFullUserById(id)
 
   if (!user) {
     ctx.throw(400, ctx.i18n.__('user.error.not_found'))

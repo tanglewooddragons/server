@@ -1,7 +1,9 @@
+const log = require('util/log')
+
 const User = require('./models/user')
 const LoginInfo = require('./models/loginInfo')
 const UserProfile = require('./models/userProfile')
-const log = require('../util/log')
+const { getItem } = require('./item')
 
 async function emailTaken(email) {
   const emails = await LoginInfo.filter({ email }).run()
@@ -72,10 +74,8 @@ async function getUserById(id) {
       .get(id)
       .getJoin({
         dragons: true,
-        profile: true,
       })
       .run()
-
     if (!user) return null
     return user
   } catch (error) {
@@ -92,10 +92,51 @@ async function getUserById(id) {
   }
 }
 
+async function getFullUserById(id) {
+  try {
+    const user = await User
+      .get(id)
+      .getJoin({
+        dragons: true,
+        profile: true,
+      })
+      .run()
+
+    if (!user) return null
+
+    // Get full details of every item
+    const inventory = await Promise.all(
+      user.inventory.map(async ({ id: itemId, amount }) => {
+        const item = await getItem(itemId)
+
+        return {
+          ...item,
+          amount,
+        }
+      })
+    )
+
+    return {
+      ...user,
+      inventory,
+    }
+  } catch (error) {
+    log.error({
+      action: 'get-full-user-by-id',
+      status: 'failed',
+      error,
+      data: {
+        id,
+      },
+    })
+
+    return null
+  }
+}
+
 async function updateUserById(userId, update) {
   try {
-    const entry = await User.filter({ userId }).run()
-    const user = entry[0]
+    const user = await User.get(userId).run()
     await user.merge(update)
     await user.save()
 
@@ -190,7 +231,7 @@ async function markToSAsAccepted(userId) {
   }
 
   try {
-    const user = await getUserById(userId)
+    const user = await User.get(userId).run()
     await user.merge(update)
     await user.save()
 
@@ -222,6 +263,7 @@ module.exports = {
   getLoginInfo,
   createUser,
   getUserById,
+  getFullUserById,
   updateUserById,
   updateUserProfileById,
   deleteUserById,

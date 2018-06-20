@@ -4,8 +4,7 @@ const log = require('util/log')
 async function getItem(id) {
   try {
     const item = await Item.get(id).run()
-
-    return item[0]
+    return item
   } catch (error) {
     log.error({
       action: 'get-item',
