@@ -2,7 +2,14 @@
   "name": "Fields of Summer",
   "goodTerrain": "Ground",
   "badTerrain": "Clouds",
-  "possibleDrop": ["Cherry Petals"],
+  "possibleDrop": [
+    {
+      "name": "Cherry Petals",
+      "chance": 0.20,
+      "min": 1,
+      "max": 12
+    }
+  ],
   "stat": "con",
   "hierogliph": "Boundary Stone"
 }

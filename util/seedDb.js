@@ -1,17 +1,17 @@
+require('dotenv').load()
+
 const fs = require('fs')
 const path = require('path')
 const { promisify } = require('util')
 
 const thinky = require('../src/db/thinky')
-const { addLocation } = require('../src/db/location')
-const { addRarity } = require('../src/db/rarity')
 const { addItem } = require('../src/db/item')
+const { addLocation } = require('../src/db/location')
 
 const readDir = promisify(fs.readdir)
 const readFile = promisify(fs.readFile)
 
 const locationsPath = path.resolve('./src/db/seed/locations')
-const raritiesPath = path.resolve('./src/db/seed/rarities')
 const ingredientsPath = path.resolve('./src/db/seed/ingredients')
 
 const addEntities = async (entitiesPath, adder) => {
@@ -33,9 +33,26 @@ const addEntities = async (entitiesPath, adder) => {
 const run = async () => {
   await thinky.dbReady()
 
-  await addEntities(locationsPath, addLocation)
-  await addEntities(raritiesPath, addRarity)
-  await addEntities(ingredientsPath, addItem)
+  const items = {}
+
+  await addEntities(ingredientsPath, async (item) => {
+    const newItem = await addItem(item)
+    items[newItem.name] = newItem.id
+  })
+
+  await addEntities(locationsPath, async (location) => {
+    const updatedDrop = location.possibleDrop.map(item =>
+      Object.assign({}, item, {
+        itemId: items[item.name],
+        name: undefined,
+      })
+    )
+
+    await addLocation(Object.assign({}, location, {
+      possibleDrop: updatedDrop,
+    }))
+  })
+
 
   thinky.r.getPoolMaster().drain()
 }

@@ -2,7 +2,14 @@
   "name": "Phiaron",
   "goodTerrain": "Rainclouds",
   "badTerrain": "Clear Sky",
-  "possibleDrop": ["Spring Water"],
+  "possibleDrop": [
+    {
+      "name": "Spring Water",
+      "chance": 0.20,
+      "min": 1,
+      "max": 12
+    }
+  ],
   "stat": "int",
   "hierogliph": "Papyrus Stem"
 }

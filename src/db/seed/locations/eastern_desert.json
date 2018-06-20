@@ -2,7 +2,14 @@
   "name": "Eastern Desert",
   "goodTerrain": "Fog",
   "badTerrain": "Upper Atmosphere",
-  "possibleDrop": ["Poison Ivy"],
+  "possibleDrop": [
+    {
+      "name": "Poison Ivy",
+      "chance": 0.20,
+      "min": 1,
+      "max": 12
+    }
+  ],
   "stat": "lck",
   "hierogliph": "Knot"
 }

@@ -4,7 +4,12 @@ const Location = thinky.createModel('Location', {
   name: thinky.type.string().required(),
   goodTerrain: thinky.type.string().required(),
   badTerrain: thinky.type.string().required(),
-  possibleDrop: [thinky.type.string()],
+  possibleDrop: [{
+    itemId: thinky.type.string().required(),
+    chance: thinky.type.number().required(),
+    min: thinky.type.number().required(),
+    max: thinky.type.number().required(),
+  }],
   stat: thinky.type.string().required(),
   hierogliph: thinky.type.string().required(),
 })
