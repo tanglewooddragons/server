@@ -19,6 +19,9 @@ const sendOnTask = require('./dragon/sendOnTask')
 
 const wsServer = require('./ws/server')
 
+const sendChatMessage = require('./chat/sendMessage')
+const getChatMessages = require('./chat/getMessages')
+
 const getMessages = require('./message/getMessages')
 const getSentMessages = require('./message/getSentMessages')
 const getReceivedMessages = require('./message/getReceivedMessages')
@@ -52,6 +55,11 @@ describe('#tanglewood-api', () => {
 
   describe('#ws', () => {
     wsServer(app)
+  })
+
+  describe('#chat', () => {
+    sendChatMessage()
+    getChatMessages()
   })
 
   describe('#message', () => {

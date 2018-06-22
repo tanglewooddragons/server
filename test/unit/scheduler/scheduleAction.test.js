@@ -1,4 +1,3 @@
-// jest.useFakeTimers()
 const schedule = require('node-schedule')
 
 const {
@@ -11,6 +10,12 @@ const sleep = async ms => new Promise((resolve) => {
 })
 
 describe('scheduleAction', () => {
+  beforeEach(() => {
+    Object
+      .values(schedule.scheduledJobs)
+      .forEach(job => job.cancel())
+  })
+
   test('Fails to schedule with missing data', async () => {
     const options = {
       scheduledBy: 'jest',
@@ -36,17 +41,13 @@ describe('scheduleAction', () => {
       scheduledFor: Date.now() + 500,
     }
 
-    const resolve = async (job) => {
-      expect(job.scheduledBy).toBe(options.scheduledBy)
-    }
+    const resolve = () => {}
 
     registerHandler('schedule-test', resolve)
 
     await scheduleAction(options)
     const registeredJobAmount = Object.keys(schedule.scheduledJobs).length
     expect(registeredJobAmount).toBe(1)
-    // jest.runOnlyPendingTimers()
-    await sleep(500)
   })
 
   test('Calls the resolve function on scheduled time', async () => {
@@ -59,12 +60,9 @@ describe('scheduleAction', () => {
     const resolve = jest.fn()
 
     registerHandler('call-test', resolve)
-    await scheduleAction(options)
 
-    expect(resolve).not.toBeCalled()
-    // jest.runOnlyPendingTimers()
-    await sleep(500)
+    await scheduleAction(options)
+    await sleep(600)
     expect(resolve).toBeCalled()
-    expect(resolve).toHaveBeenCalledTimes(1)
   })
 })

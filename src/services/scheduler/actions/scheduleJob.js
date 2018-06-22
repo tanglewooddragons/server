@@ -17,11 +17,10 @@ const scheduleJob = function (job) {
       const handler = getHandler(job.type)
       try {
         await handler(job)
+        await markScheduleAsFired(job.id)
       } catch (handlerErr) {
         log.error(`[Schedule] Handler for ${job.id} returned error: ${handlerErr}`)
-        return
       }
-      await markScheduleAsFired(job.id)
     }
   )
 }
