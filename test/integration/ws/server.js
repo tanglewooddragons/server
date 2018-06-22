@@ -1,4 +1,3 @@
-const request = require('supertest')
 const WebSocket = require('uws')
 
 const {
@@ -19,15 +18,8 @@ module.exports = function (app) {
     let socket
 
     beforeAll(async () => {
-      // Login to get token
-      const response = await request(app)
-        .post('/api/login')
-        .send({
-          email: 'test@test.com',
-          password: 'test',
-        })
-
-      token = response.body.accessToken
+      const user = await global.login(app)
+      token = user.accessToken
       wss.init({ port })
     })
 

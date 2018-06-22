@@ -6,14 +6,7 @@ module.exports = function (app) {
     let token
 
     beforeAll(async () => {
-      const response = await request(app)
-        .post('/api/login')
-        .send({
-          email: 'test@test.com',
-          password: 'test',
-        })
-
-      user = response.body
+      user = await global.login(app)
       token = user.accessToken
     })
 

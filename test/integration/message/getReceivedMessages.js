@@ -5,14 +5,8 @@ module.exports = function (app) {
     let token
 
     beforeAll(async () => {
-      const response = await request(app)
-        .post('/api/login')
-        .send({
-          email: 'test@test.com',
-          password: 'test',
-        })
-
-      token = response.body.accessToken
+      const user = await global.login(app)
+      token = user.accessToken
     })
 
     test('Returns only received messages', async () =>

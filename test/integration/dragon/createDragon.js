@@ -6,18 +6,9 @@ module.exports = function (app) {
     let token
     let dragon
 
-    beforeAll((done) => {
-      request(app)
-        .post('/api/login')
-        .send({
-          email: 'test@test.com',
-          password: 'test',
-        })
-        .end((err, res) => {
-          user = res.body
-          token = res.body.accessToken
-          done()
-        })
+    beforeAll(async () => {
+      user = await global.login(app)
+      token = user.accessToken
     })
 
     test('Fails to register with missing name', (done) => {

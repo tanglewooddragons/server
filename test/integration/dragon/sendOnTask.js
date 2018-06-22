@@ -6,16 +6,8 @@ module.exports = function (app) {
     let token
 
     beforeAll(async () => {
-      await request(app)
-        .post('/api/login')
-        .send({
-          email: 'test@test.com',
-          password: 'test',
-        })
-        .then((res) => {
-          user = res.body
-          token = res.body.accessToken
-        })
+      user = await global.login(app)
+      token = user.accessToken
     })
 
     test('Fails to send on task when duration is off limits', (done) => {

@@ -5,18 +5,10 @@ module.exports = function (app) {
     let accessToken
     let refreshToken
 
-    beforeAll((done) => {
-      request(app)
-        .post('/api/login')
-        .send({
-          email: 'test@test.com',
-          password: 'test',
-        })
-        .end((err, res) => {
-          accessToken = res.body.accessToken
-          refreshToken = res.body.refreshToken
-          done()
-        })
+    beforeAll(async () => {
+      const user = await global.login(app)
+      accessToken = user.accessToken
+      refreshToken = user.refreshToken
     })
 
     test('Should NOT return new access token when no refresh token was provided', (done) => {

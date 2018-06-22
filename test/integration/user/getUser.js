@@ -8,15 +8,8 @@ module.exports = function (app) {
     let token
 
     beforeAll(async () => {
-      const response = await request(app)
-        .post('/api/login')
-        .send({
-          email: 'test@test.com',
-          password: 'test',
-        })
-
-      user = response.body
-      token = response.body.accessToken
+      user = await global.login(app)
+      token = user.accessToken
 
       await createDragon({
         name: 'Jeff',

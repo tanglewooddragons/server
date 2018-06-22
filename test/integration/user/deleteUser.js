@@ -4,17 +4,15 @@ module.exports = function (app) {
   describe('deleteUser', async () => {
     let token
 
-    beforeAll((done) => {
-      request(app)
+    beforeAll(async () => {
+      const response = await request(app)
         .post('/api/login')
         .send({
           email: 'test2@test.com',
           password: 'test',
         })
-        .end((err, res) => {
-          token = res.body.accessToken
-          done()
-        })
+
+      token = response.body.accessToken
     })
 
     test('Should delete tokens owner', (done) => {

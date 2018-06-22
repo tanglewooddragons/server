@@ -5,15 +5,8 @@ module.exports = function (app) {
     let token
 
     beforeAll(async () => {
-      await request(app)
-        .post('/api/login')
-        .send({
-          email: 'test@test.com',
-          password: 'test',
-        })
-        .then((res) => {
-          token = res.body.accessToken
-        })
+      const user = await global.login(app)
+      token = user.accessToken
 
       // Create dragon
       await request(app)

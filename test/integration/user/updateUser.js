@@ -4,17 +4,9 @@ module.exports = function (app) {
   describe('updateUser', async () => {
     let token
 
-    beforeAll((done) => {
-      request(app)
-        .post('/api/login')
-        .send({
-          email: 'test@test.com',
-          password: 'test',
-        })
-        .end((err, res) => {
-          token = res.body.accessToken
-          done()
-        })
+    beforeAll(async () => {
+      const user = await global.login(app)
+      token = user.accessToken
     })
 
     test('Should update fields', (done) => {

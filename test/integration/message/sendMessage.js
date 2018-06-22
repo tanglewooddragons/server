@@ -2,19 +2,12 @@ const request = require('supertest')
 
 module.exports = function (app) {
   describe('sendMessage', () => {
-    let token
     let user
+    let token
 
     beforeAll(async () => {
-      const response = await request(app)
-        .post('/api/login')
-        .send({
-          email: 'test@test.com',
-          password: 'test',
-        })
-
-      token = response.body.accessToken
-      user = response.body
+      user = await global.login(app)
+      token = user.accessToken
     })
 
     test('Fails to send the message with missing parameters', async () =>
