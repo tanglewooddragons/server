@@ -2,7 +2,14 @@
   "name": "Sword Coast",
   "goodTerrain": "Clear Sky",
   "badTerrain": "Fog",
-  "possibleDrop": ["Sword Pearls"],
+  "possibleDrop": [
+    {
+      "name": "Sword Pearls",
+      "chance": 0.20,
+      "min": 1,
+      "max": 12
+    }
+  ],
   "stat": "wlp",
   "hierogliph": "Twisted Flax"
 }

@@ -21,6 +21,9 @@ const logger = bunyan.createLogger({
       level: getConsoleLogLevel(),
     },
   ],
+  serializers: {
+    error: err => err.toString(),
+  },
 })
 
 if (process.env.NODE_ENV === 'production') {

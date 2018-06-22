@@ -1,22 +1,17 @@
 const Item = require('./models/item')
 const log = require('util/log')
 
-async function getItem(name) {
+async function getItem(id) {
   try {
-    const item = await Item
-      .filter({ name })
-      .getJoin({
-        rarityData: true,
-      })
-      .run()
-    return item[0]
+    const item = await Item.get(id).run()
+    return item
   } catch (error) {
     log.error({
       action: 'get-item',
       status: 'failed',
       error,
       data: {
-        name,
+        id,
       },
     })
 

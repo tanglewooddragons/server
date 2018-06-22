@@ -2,7 +2,14 @@
   "name": "Githan Volcano",
   "goodTerrain": "Upper Atmosphere",
   "badTerrain": "Rainclouds",
-  "possibleDrop": ["Gunpowder"],
+  "possibleDrop": [
+    {
+      "name": "Gunpowder",
+      "chance": 0.20,
+      "min": 1,
+      "max": 12
+    }
+  ],
   "stat": "str",
   "hierogliph": "Brazier"
 }

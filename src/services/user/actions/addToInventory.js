@@ -1,22 +1,24 @@
 const makeAddToInventory = ({
   getUserById,
   updateUserById,
-}) => async (userId, { ingredients, items }) => {
+}) => async (userId, items) => {
   const user = await getUserById(userId)
+  const inventory = user.inventory.slice()
 
-  const updatedIngredients = Object.keys(ingredients).reduce((acc, ingredient) => {
-    if (!acc[ingredient]) acc[ingredient] = 0
-    acc[ingredient] += ingredients[ingredient]
-    return acc
-  }, Object.assign({}, user.inventory.ingredients))
+  items.forEach((item) => {
+    const id = item.id
 
-  const updatedItems = user.inventory.items.concat(items)
+    const exists = inventory.find(x => x.id === id)
+
+    if (!exists) {
+      inventory.push(item)
+    } else {
+      exists.amount += item.amount
+    }
+  })
 
   return updateUserById(userId, {
-    inventory: {
-      ingredients: updatedIngredients,
-      items: updatedItems,
-    },
+    inventory,
   })
 }
 

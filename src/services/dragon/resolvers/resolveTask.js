@@ -19,32 +19,49 @@ const makeResolveTask = ({
   const location = await getLocation(locationName)
   const possibleDrop = await Promise.all(location
     .possibleDrop
-    .map(getItem)
+    .map(async (drop) => {
+      const item = await getItem(drop.itemId)
+
+      return Object.assign({}, drop, item)
+    })
   )
 
-  const rounds = Array(duration)
+  const rounds = Array(duration).fill()
   const loot = rounds.reduce((acc) => {
     possibleDrop.forEach((drop) => {
       const roll = Math.random()
-      const dropped = roll >= drop.rarityData.chance
+      const dropped = roll >= (1 - drop.chance)
 
       if (!dropped) return
 
       if (drop.unique) {
-        acc.items = acc.items.concat([drop])
+        acc.push({
+          id: drop.itemId,
+        })
         return
       }
 
       const amountDropped = random(
-        drop.rarityData.min,
-        drop.rarityData.max
+        drop.min,
+        drop.max
       )
 
-      acc[drop.name] = amountDropped
+      const ingredient = acc.find(
+        ing => ing.id === drop.itemId
+      )
+
+      if (ingredient) {
+        ingredient.amount += amountDropped
+      } else {
+        acc.push({
+          id: drop.itemId,
+          amount: amountDropped,
+        })
+      }
     })
 
     return acc
-  }, {})
+  }, [])
   // ---
 
   return loot
