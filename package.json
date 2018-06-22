@@ -49,6 +49,9 @@
     "supertest": "^3.1.0"
   },
   "jest": {
-    "verbose": true
+    "verbose": true,
+    "testEnvironment": "node",
+    "globalSetup": "<rootDir>/test/setup.js",
+    "globalTeardown": "<rootDir>/test/teardown.js"
   }
 }

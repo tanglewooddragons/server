@@ -1,13 +1,4 @@
 const server = require('app')
-const thinky = require('db/thinky')
-const User = require('db/models/user')
-const Dragon = require('db/models/dragon')
-const Token = require('db/models/token')
-const Schedule = require('db/models/schedule')
-const ChatMessage = require('db/models/chatMessage')
-const LoginInfo = require('db/models/loginInfo')
-const UserProfile = require('db/models/userProfile')
-const Message = require('db/models/message')
 
 const register = require('./auth/register')
 const login = require('./auth/login')
@@ -35,27 +26,6 @@ const getMessages = require('./message/getMessages')
 const getSentMessages = require('./message/getSentMessages')
 const getReceivedMessages = require('./message/getReceivedMessages')
 const sendMessage = require('./message/sendMessage')
-
-beforeAll(async () => {
-  await thinky.dbReady()
-  const users = await User.filter({}).run()
-  users.forEach(user => user.delete())
-
-  const dragons = await Dragon.filter({}).run()
-  dragons.forEach(dragon => dragon.delete())
-
-  const chatMessages = await ChatMessage.filter({}).run()
-  chatMessages.forEach(msg => msg.delete())
-
-  const schedules = await Schedule.filter({}).run()
-  schedules.forEach(s => s.delete())
-
-  const logins = await LoginInfo.filter({}).run()
-  logins.forEach(loginInfo => loginInfo.delete())
-
-  const messages = await Message.run()
-  messages.forEach(message => message.delete())
-})
 
 describe('#tanglewood-api', () => {
   const app = server.listen(3000)
@@ -102,23 +72,4 @@ describe('#tanglewood-api', () => {
   afterAll(() => {
     app.close()
   })
-})
-
-afterAll(async () => {
-  // Remove ghost tokens
-  const tokens = await Token.filter({}).run()
-  tokens.forEach(t => t.delete())
-
-  // Remove test dragons
-  const dragons = await Dragon.filter({}).run()
-  dragons.forEach(dragon => dragon.delete())
-
-  const schedules = await Schedule.filter({}).run()
-  schedules.forEach(s => s.delete())
-
-  const profiles = await UserProfile.filter({}).run()
-  profiles.forEach(profile => profile.delete())
-
-  // Close connection to db
-  thinky.r.getPoolMaster().drain()
 })
