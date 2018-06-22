@@ -16,11 +16,12 @@ module.exports = function (app) {
           done()
         })
     })
+
     test('Fails to register when data is NOT valid', (done) => {
       request(app)
         .post('/api/register')
         .send({
-          email: 'test@test.com',
+          email: 'registertest@test.com',
           username: 'tester',
           password: 't',
           passwordRepeat: 't',
@@ -36,7 +37,7 @@ module.exports = function (app) {
       request(app)
         .post('/api/register')
         .send({
-          email: 'test@test.com',
+          email: 'registertest@test.com',
           username: 'tester',
           password: 'test',
           passwordRepeat: 'tstetes',
@@ -52,7 +53,7 @@ module.exports = function (app) {
       request(app)
         .post('/api/register')
         .send({
-          email: 'test@test.com',
+          email: 'registertest@test.com',
           username: 'tester',
           password: 'test',
           passwordRepeat: 'test',
@@ -68,7 +69,7 @@ module.exports = function (app) {
       request(app)
         .post('/api/register')
         .send({
-          email: 'test@test.com',
+          email: 'registertest@test.com',
           username: 'tester',
           password: 'test',
           passwordRepeat: 'test',

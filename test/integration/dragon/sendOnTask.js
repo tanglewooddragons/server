@@ -2,11 +2,9 @@ const request = require('supertest')
 
 module.exports = function (app) {
   describe('sendOnTask', () => {
-    /*
-    Login to get token
-    */
     let user
     let token
+
     beforeAll(async () => {
       await request(app)
         .post('/api/login')

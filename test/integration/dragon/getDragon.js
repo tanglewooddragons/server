@@ -2,11 +2,9 @@ const request = require('supertest')
 
 module.exports = function (app) {
   describe('getDragon', () => {
-    /*
-    Login to get token
-    */
     let dragon
     let token
+
     beforeAll(async () => {
       await request(app)
         .post('/api/login')

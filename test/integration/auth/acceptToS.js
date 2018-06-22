@@ -4,6 +4,7 @@ module.exports = function (app) {
   describe('acceptToS', () => {
     let user
     let token
+
     beforeAll(async () => {
       const response = await request(app)
         .post('/api/login')

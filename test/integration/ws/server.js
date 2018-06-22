@@ -17,6 +17,7 @@ module.exports = function (app) {
   describe('Server', async () => {
     let token
     let socket
+
     beforeAll(async () => {
       // Login to get token
       const response = await request(app)

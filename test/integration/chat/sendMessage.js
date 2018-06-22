@@ -1,8 +1,5 @@
 const sendMessage = require('services/chat/sendMessage')
-
-const {
-  getMessagesByChannel,
-} = require('db/chatMessage')
+const { getMessagesByChannel } = require('db/chatMessage')
 
 module.exports = function () {
   describe('sendMessage', () => {

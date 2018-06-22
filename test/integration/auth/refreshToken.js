@@ -4,6 +4,7 @@ module.exports = function (app) {
   describe('refreshToken', () => {
     let accessToken
     let refreshToken
+
     beforeAll((done) => {
       request(app)
         .post('/api/login')

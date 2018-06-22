@@ -17,7 +17,7 @@ module.exports = function (app) {
       user = response.body
     })
 
-    it('Fails to send the message with missing parameters', async () =>
+    test('Fails to send the message with missing parameters', async () =>
       request(app)
         .post('/api/message')
         .send({
@@ -30,7 +30,7 @@ module.exports = function (app) {
         })
     )
 
-    it('Send message successfully when body is correct', async () => {
+    test('Send message successfully when body is correct', async () => {
       const message = {
         to: '[TEST]',
         topic: 'Send test',

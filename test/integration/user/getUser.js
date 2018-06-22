@@ -4,11 +4,9 @@ const { createDragon } = require('db/dragon')
 
 module.exports = function (app) {
   describe('getUser', async () => {
-    /*
-    Login to get token
-    */
     let user
     let token
+
     beforeAll(async () => {
       const response = await request(app)
         .post('/api/login')

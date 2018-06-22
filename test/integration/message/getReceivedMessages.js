@@ -15,7 +15,7 @@ module.exports = function (app) {
       token = response.body.accessToken
     })
 
-    it('Returns only received messages', async () =>
+    test('Returns only received messages', async () =>
       request(app)
         .get('/api/message/received')
         .set('Authorization', `Bearer ${token}`)

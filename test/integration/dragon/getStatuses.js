@@ -2,10 +2,8 @@ const request = require('supertest')
 
 module.exports = function (app) {
   describe('getStatuses', () => {
-    /*
-    Login to get token
-    */
     let token
+
     beforeAll(async () => {
       await request(app)
         .post('/api/login')

@@ -2,11 +2,10 @@ const request = require('supertest')
 
 module.exports = function (app) {
   describe('createDragon', () => {
-    /*
-    Login to get token
-    */
     let user
     let token
+    let dragon
+
     beforeAll((done) => {
       request(app)
         .post('/api/login')
@@ -32,37 +31,6 @@ module.exports = function (app) {
         })
     })
 
-    test('Creates dragon with proper data provided', (done) => {
-      request(app)
-        .post('/api/dragon/create')
-        .send({
-          name: 'Geoff',
-          aspect: 'fire',
-        })
-        .set('Authorization', `Bearer ${token}`)
-        .expect(201)
-        .end((err) => {
-          expect(err).toBeNull()
-          done()
-        })
-    })
-
-    test('Sets current user as dragon owner', (done) => {
-      request(app)
-        .post('/api/dragon/create')
-        .send({
-          name: 'Geoff',
-          aspect: 'fire',
-        })
-        .set('Authorization', `Bearer ${token}`)
-        .expect(201)
-        .end((err, res) => {
-          expect(err).toBeNull()
-          expect(res.body.owner).toBe(user.id)
-          done()
-        })
-    })
-
     test('Fails to create dragon with non-basic tier provided', (done) => {
       request(app)
         .post('/api/dragon/create')
@@ -74,6 +42,34 @@ module.exports = function (app) {
         .expect(400)
         .end((err) => {
           expect(err).toBeNull()
+          done()
+        })
+    })
+
+    test('Creates dragon with proper data provided', (done) => {
+      request(app)
+        .post('/api/dragon/create')
+        .send({
+          name: 'Geoff',
+          aspect: 'fire',
+        })
+        .set('Authorization', `Bearer ${token}`)
+        .expect(201)
+        .end((err, res) => {
+          expect(err).toBeNull()
+          dragon = res.body
+          done()
+        })
+    })
+
+    test('Sets current user as dragon owner', (done) => {
+      request(app)
+        .get(`/api/dragon/${dragon.id}`)
+        .set('Authorization', `Bearer ${token}`)
+        .expect(200)
+        .end((err, res) => {
+          expect(err).toBeNull()
+          expect(res.body.owner).toBe(user.id)
           done()
         })
     })

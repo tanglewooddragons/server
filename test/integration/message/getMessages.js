@@ -19,7 +19,7 @@ module.exports = function (app) {
       user = response.body
     })
 
-    it('Returns nothing when there are no messages', async () =>
+    test('Returns nothing when there are no messages', async () =>
       request(app)
         .get('/api/message/all')
         .set('Authorization', `Bearer ${token}`)
@@ -34,7 +34,7 @@ module.exports = function (app) {
         })
     )
 
-    it('Returns both sent and received messages when they are present', async () => {
+    test('Returns both sent and received messages when they are present', async () => {
       await Promise.all([
         sendMessage({
           to: user.id,

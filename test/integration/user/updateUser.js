@@ -2,10 +2,8 @@ const request = require('supertest')
 
 module.exports = function (app) {
   describe('updateUser', async () => {
-    /*
-    Login to get token
-    */
     let token
+
     beforeAll((done) => {
       request(app)
         .post('/api/login')
